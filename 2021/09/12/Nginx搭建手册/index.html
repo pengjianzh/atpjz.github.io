@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/head.webp">
+  <title>Nginx搭建手册 | 小窝吧</title>
+  <meta name="author" content="pengjianzhong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Nginx" />
+  
+  <meta name="description" content="Nginx安装配置手册所需依赖：gcc、g++、patch、ssl、pcre、zlib  检查是否已安装gcc：gcc -v  查看是否安装gcc-c++：g++ -v  查看是否安装patch命令： patch -v  查看make命令是否安装：make -v   如果提示没有安装，根据服务器操作系统自行安装 下载nginx及所需依赖包下载nginx进入下载页，选择稳定版，这里演示下载的是1.2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx搭建手册">
+<meta property="og:url" content="http://example.com/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="小窝吧">
+<meta property="og:description" content="Nginx安装配置手册所需依赖：gcc、g++、patch、ssl、pcre、zlib  检查是否已安装gcc：gcc -v  查看是否安装gcc-c++：g++ -v  查看是否安装patch命令： patch -v  查看make命令是否安装：make -v   如果提示没有安装，根据服务器操作系统自行安装 下载nginx及所需依赖包下载nginx进入下载页，选择稳定版，这里演示下载的是1.2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/head.webp">
+<meta property="article:published_time" content="2021-09-12T15:57:46.000Z">
+<meta property="article:modified_time" content="2021-09-12T15:58:31.154Z">
+<meta property="article:author" content="pengjianzhong">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/head.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">小窝吧</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>小窝吧</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">Nginx搭建手册</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 pengjianzhong</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~6.09K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1631462311154"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C"><span class="toc-number">1.</span> <span class="toc-text">Nginx安装配置手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx%E5%8F%8A%E6%89%80%E9%9C%80%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="toc-number">1.1.</span> <span class="toc-text">下载nginx及所需依赖包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx"><span class="toc-number">1.1.1.</span> <span class="toc-text">下载nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDopenssl"><span class="toc-number">1.1.2.</span> <span class="toc-text">下载openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDpcre"><span class="toc-number">1.1.3.</span> <span class="toc-text">下载pcre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDzlib"><span class="toc-number">1.1.4.</span> <span class="toc-text">下载zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx%E6%8F%92%E4%BB%B6"><span class="toc-number">1.1.5.</span> <span class="toc-text">下载nginx插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.1.6.</span> <span class="toc-text">上传到服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">开始安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pcre"><span class="toc-number">1.2.1.</span> <span class="toc-text">安装pcre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85zlib"><span class="toc-number">1.2.2.</span> <span class="toc-text">安装zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85openssl"><span class="toc-number">1.2.3.</span> <span class="toc-text">安装openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85nginx"><span class="toc-number">1.2.4.</span> <span class="toc-text">编译安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8nginx"><span class="toc-number">1.2.5.</span> <span class="toc-text">启动nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx-upstream-check-module%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.6.</span> <span class="toc-text">安装nginx_upstream_check_module模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0sticky%EF%BC%8Cstub-status%EF%BC%8Cgzip%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91%E5%90%AF%E5%8A%A8"><span class="toc-number">1.2.7.</span> <span class="toc-text">添加sticky，stub_status，gzip重新编译启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-number">1.3.</span> <span class="toc-text">修改配置</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="Nginx安装配置手册"><a href="#Nginx安装配置手册" class="headerlink" title="Nginx安装配置手册"></a>Nginx安装配置手册</h1><p>所需依赖：gcc、g++、patch、ssl、pcre、zlib</p>
+<ol>
+<li><p>检查是否已安装gcc：<code>gcc -v</code></p>
+</li>
+<li><p>查看是否安装gcc-c++：<code>g++ -v</code></p>
+</li>
+<li><p>查看是否安装patch命令： <code>patch -v</code></p>
+</li>
+<li><p>查看make命令是否安装：<code>make -v</code></p>
+</li>
+</ol>
+<p>如果提示没有安装，根据服务器操作系统自行安装</p>
+<h2 id="下载nginx及所需依赖包"><a href="#下载nginx及所需依赖包" class="headerlink" title="下载nginx及所需依赖包"></a>下载nginx及所需依赖包</h2><h3 id="下载nginx"><a href="#下载nginx" class="headerlink" title="下载nginx"></a>下载nginx</h3><p>进入<a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">下载页</a>，选择稳定版，这里演示下载的是<code>1.20.1</code></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/DAF6F255E82E40B582AF6F6FFCE1B13B?method=download&shareKey=3c89b3fb521693f11421f2fb9bc65b2f" alt="image-20210908153737052"></p>
+<h3 id="下载openssl"><a href="#下载openssl" class="headerlink" title="下载openssl"></a>下载openssl</h3><p>进入<a target="_blank" rel="noopener" href="https://www.openssl.org/source/">下载页</a>，页面往下拉选择<code>openssl-1-1-1l</code>这个版本</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/924D624C94A9449FA53E62D6256DD7AF?method=download&shareKey=8659954cfd0ff7f86799ed54c90b3f16" alt="image-20210908154157873"></p>
+<h3 id="下载pcre"><a href="#下载pcre" class="headerlink" title="下载pcre"></a>下载pcre</h3><p><a target="_blank" rel="noopener" href="https://ftp.pcre.org/pub/pcre/">点击这里进入下载页</a>，也可以<a target="_blank" rel="noopener" href="https://ftp.pcre.org/pub/pcre/pcre-8.45.tar.gz">点击这里直接下载</a><code>pcre-8.45</code>版本，这里用这个版本演示</p>
+<h3 id="下载zlib"><a href="#下载zlib" class="headerlink" title="下载zlib"></a>下载zlib</h3><p><a target="_blank" rel="noopener" href="http://www.zlib.net/">点击这里进入下载页</a>，也可以<a target="_blank" rel="noopener" href="http://www.zlib.net/zlib-1.2.11.tar.gz">点击这里直接下载</a><code>zlib-1.2.11</code>，这里用这个版本演示</p>
+<h3 id="下载nginx插件"><a href="#下载nginx插件" class="headerlink" title="下载nginx插件"></a>下载nginx插件</h3><p><a target="_blank" rel="noopener" href="https://codeload.github.com/yaoweibin/nginx_upstream_check_module/zip/master">点击这里下载</a>nginx心跳检测插件</p>
+<p><a target="_blank" rel="noopener" href="https://bitbucket.org/nginx-goodies/nginx-sticky-module-ng/downloads/">点击这里下载</a>sticky插件</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/969DE7A7D3BB40288A7FF36CCDE8458A?method=download&shareKey=bb6e357d9113199b991a6786c44374c7" alt="image-20210908163824648"></p>
+<h3 id="上传到服务器"><a href="#上传到服务器" class="headerlink" title="上传到服务器"></a>上传到服务器</h3><p>这里放到<code>/home/pengjianzhong/下载/nginx</code>目录下载并全部解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ unzip nginx-goodies-nginx-sticky-module-ng-08a395c66e42.zip </span><br><span class="line">$ unzip nginx_upstream_check_module-master.zip</span><br><span class="line">$ tar -zxvf zlib-1.2.11.tar.gz </span><br><span class="line">$ tar -zxvf nginx-1.20.1.tar.gz </span><br><span class="line">$ tar -zxvf pcre-8.45.tar.gz </span><br><span class="line">$ tar -zxvf openssl-1.1.1l.tar.gz </span><br></pre></td></tr></table></figure>
+
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><p>现在所需包就下载完成了，下面开始安装</p>
+<h3 id="安装pcre"><a href="#安装pcre" class="headerlink" title="安装pcre"></a>安装pcre</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> pcre-8.45/</span><br><span class="line">$ ./configure</span><br><span class="line">$ sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装zlib"><a href="#安装zlib" class="headerlink" title="安装zlib"></a>安装zlib</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ../zlib-1.2.11</span><br><span class="line">$ ./configure </span><br><span class="line">$ sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装openssl"><a href="#安装openssl" class="headerlink" title="安装openssl"></a>安装openssl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ../openssl-1.1.1l/</span><br><span class="line">$ ./config </span><br><span class="line">$ sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译安装nginx"><a href="#编译安装nginx" class="headerlink" title="编译安装nginx"></a>编译安装nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ../nginx-1.20.1/</span><br><span class="line"><span class="comment">#先不添加任何模块</span></span><br><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/nginx </span><br><span class="line">$ sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="启动nginx"><a href="#启动nginx" class="headerlink" title="启动nginx"></a>启动nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx/sbin</span><br><span class="line">$ sudo ./nginx</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问<code>http://ip:80</code>显示<code>Welcome to nginx!</code>则启动成功，访问不了先检查下是不是端口没开放</p>
+<h3 id="安装nginx-upstream-check-module模块"><a href="#安装nginx-upstream-check-module模块" class="headerlink" title="安装nginx_upstream_check_module模块"></a>安装nginx_upstream_check_module模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#停掉nginx 进程</span></span><br><span class="line">$ sudo ./nginx  -s quit</span><br><span class="line"><span class="comment"># 进入nginx目录</span></span><br><span class="line">$ <span class="built_in">cd</span> /home/pengjianzhong/下载/nginx/nginx-1.20.1</span><br><span class="line"><span class="comment"># 这里nginx版本是1.20.1所以补丁选择1.20.1+</span></span><br><span class="line"><span class="comment">#nginx_upstream_check_module-master 文件夹和nginx-1.20.1文件夹同级目录，用-p1</span></span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module-master/check_1.20.1+.patch </span><br><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/nginx --add-module=../nginx_upstream_check_module-master</span><br><span class="line"><span class="comment">#试下能否编译成功</span></span><br><span class="line">$ sudo make</span><br><span class="line"><span class="comment">#如果没报错，则安装模块成功</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="添加sticky，stub-status，gzip重新编译启动"><a href="#添加sticky，stub-status，gzip重新编译启动" class="headerlink" title="添加sticky，stub_status，gzip重新编译启动"></a>添加sticky，stub_status，gzip重新编译启动</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/nginx --add-module=../nginx-goodies-nginx-sticky-module-ng-08a395c66e42 --add-module=../nginx_upstream_check_module-master --with-http_stub_status_module  --with-http_stub_status_module --with-http_gzip_static_module</span><br><span class="line">$ sudo make</span><br></pre></td></tr></table></figure>
+
+<p>可能会报错</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/7D55A9B5F4DB4086954C1450634B2AE0?method=download&shareKey=c676c2517cdb8bae923ca3fda9fea290" alt="image-20210908200859608"></p>
+<p>修改sticky包下的<code>ngx_http_sticky_misc.c</code>文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim ../nginx-goodies-nginx-sticky-module-ng-08a395c66e42/ngx_http_sticky_misc.c<span class="comment"># 加入这两行代码，保存退出#include &lt;openssl/sha.h&gt;#include &lt;openssl/md5.h&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/975301AB2C2948D0B846F22E79403C5F?method=download&shareKey=091ce9911ef6ab615a685f5e5b181575" alt="image-20210908202031062"></p>
+<p>再次编译，就能通过了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译$ sudo make# 编译通过的话安装$ sudo make install</span></span><br></pre></td></tr></table></figure>
+
+<p>安装完成后进入安装目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/<span class="built_in">local</span>/nginx$ sudo ./sbin/nginx -t<span class="comment"># 显示如下信息则安装成功</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/95E91E4F2968451E9E1D0440CAED4B9A?method=download&shareKey=30aef46c14ddcb41e41f6593ee0f5a75" alt="image-20210907111645147"></p>
+<p>启动试下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./sbin/nginx<span class="comment"># 浏览器访问下,能访问就没问题# 然后停掉nginx$ sudo ./sbin/nginx  -s quit</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h2><p>附件里提供了一个默认配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以直接用包里面的nginx.conf替换现有配置$ sudo cp /home/pengjianzhong/下载/nginx/nginx.conf  /usr/local/nginx/conf/nginx.conf# 修改配置$ sudo vim conf/nginx.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>修改http下的<code>upstream</code>和http下server中的<code>location</code></p>
+<p>修改<code>worker_processes</code> 和<code>worker_cpu_affinity</code></p>
+<p>修改<code>worker_rlimit_nofile</code> 为 <code>ulimit -n</code> 的值</p>
+<p>其他的基本不用修改</p>
+<p>配置说明看下面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#nginx服务进程数，建议和cpu核心数一样，这里配置成8worker_processes  8;#绑定Nginx进程到不同的CPU上，这个配置得和上面的进程数匹配worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;#与 ulimit -n 的结果保持一致worker_rlimit_nofile 1024;events &#123; 	use epoll;	#每个进程允许的最多连接数    worker_connections  65535;&#125;http &#123;    include       mime.types;    default_type  application/octet-stream;    sendfile        on;    keepalive_timeout  65;    reset_timedout_connection on;        #开启gzip压缩    gzip on;    #当返回内容大于此值时才会使用gzip进行压缩,以K为单位,当值为0时，所有页面都进行压缩     gzip_min_length   1024;    #设置gzip压缩等级，等级越底压缩速度越快文件压缩比越小，反之速度越慢文件压缩比越大 这里设置为2    gzip_comp_level 2;    #设置需要压缩的MIME类型,非设置值不进行压缩    gzip_types text/plain application/x-javascript text/css application/xml;    #加个vary头    gzip_vary on;    	#这里配置负载均衡，有多少服务配置多少个    upstream spxt &#123;    	# session粘滞策略，需要安装了nginx-sticky-module模块才能开启        sticky;        # 服务的ip，端口，权重，最大失败次数和失败后暂停的时间，这里服务布了多少个节点就写多少个，没有特殊需求的话权重都设置成一样 也可以不设置，使用默认值        server 172.25.8.55:8080 weight=1 max_fails=1 fail_timeout=15s;        server 172.25.8.55:8090 weight=1 max_fails=1 fail_timeout=15s;        # 心跳检测 安装了nginx_upstream_check_module模块才能使用        # 这里配置的时候3s进行一次检测，连续5次失败表示服务不可用，连续成功2次服务可用，每次检测超时时间1s，类型是http        check interval=3000 rise=2 fall=5 timeout=1000 type=http;        # 向目标url发送HEAD请求 ，这里的/spxt记得修改为正确的服务名        check_http_send &quot;HEAD /spxt HTTP/1.0\r\n\r\n&quot;;        # 返回2xx或者3xx表示成功        check_http_expect_alive http_2xx http_3xx;    &#125;	      upstream laxt &#123;        sticky;        server 172.25.8.66:7777 weight=1 max_fails=1 fail_timeout=15s;        server 172.25.8.66:8888 weight=1 max_fails=1 fail_timeout=15s;        server 172.25.8.66:9999 weight=1 max_fails=1 fail_timeout=15s;        check interval=3000 rise=2 fall=5 timeout=1000 type=http;        check_http_send &quot;HEAD /laxt HTTP/1.0\r\n\r\n&quot;;        check_http_expect_alive http_2xx http_3xx;    &#125;		# 配置反向代理    server &#123;        listen       80;        server_name  localhost;        location / &#123;            root   html;            index  index.html index.htm;        &#125;                # 有多少个服务复制多少个，修改对应的服务名        location /spxt &#123;        	# 转发路径，这里http://后面的名字和upstream中定义的一样            proxy_pass   http://spxt;           	#真实Ip端口            proxy_set_header Host $host:$server_port;            proxy_set_header X-Real-IP $remote_addr;            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;            # 超时设置            proxy_connect_timeout 10s;	        proxy_read_timeout 300s;	        proxy_send_timeout 10s;        &#125;                 location /laxt &#123;            proxy_pass   http://laxt;            proxy_set_header Host $host:$server_port;            proxy_set_header X-Real-IP $remote_addr;            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;            proxy_connect_timeout 10s;	        proxy_read_timeout 300s;	        proxy_send_timeout 10s;        &#125;                # 可查看查看心跳检测的状态，安装了nginx_upstream_check_module模块才能使用        location /check_status &#123;            check_status;            access_log off;        &#125;                #stub_status访问路径，查看nginx状态        location /stub_status&#123;            stub_status on;            access_log off;        &#125;        error_page   500 502 503 504  /50x.html;        location = /50x.html &#123;            root   html;        &#125;    &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问<a target="_blank" rel="noopener" href="http://nginxip/check_status">http://nginxip/check_status</a> 查看服务状态</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/65B4D5385F114BDABA51AD731797B37A?method=download&shareKey=564f9140c78e6c77e7e0520f0fe29fbe" alt="image-20210909140927841"></p>
+<p><a target="_blank" rel="noopener" href="https://note.youdao.com/yws/api/personal/file/4C2B023473A445F6A577C639BB713A8F?method=download&shareKey=e37f62942e5131993821a3f20027d153">安装包下载</a></p>
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/";
+            const title         = "「Nginx搭建手册」";
+            const excerpt       = `Nginx安装配置手册所需依赖：gcc、g++、patch、ssl、pcre、zlib
+
+检查是否已安装gcc：gcc -v
+
+查看是否安装gcc-c++：g++ -v
+
+查看是否安装patch命令： patch -v
+
+查看make...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Nginx/" rel="tag">Nginx</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-09-12</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Java集合分享" href="/2021/09/12/Java集合分享/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/head.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">爱的小窝吧</p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Nginx%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%89%8B%E5%86%8C"><span class="toc-text">Nginx安装配置手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx%E5%8F%8A%E6%89%80%E9%9C%80%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="toc-text">下载nginx及所需依赖包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx"><span class="toc-text">下载nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDopenssl"><span class="toc-text">下载openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDpcre"><span class="toc-text">下载pcre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDzlib"><span class="toc-text">下载zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BDnginx%E6%8F%92%E4%BB%B6"><span class="toc-text">下载nginx插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">上传到服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="toc-text">开始安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pcre"><span class="toc-text">安装pcre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85zlib"><span class="toc-text">安装zlib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85openssl"><span class="toc-text">安装openssl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85nginx"><span class="toc-text">编译安装nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8nginx"><span class="toc-text">启动nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx-upstream-check-module%E6%A8%A1%E5%9D%97"><span class="toc-text">安装nginx_upstream_check_module模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0sticky%EF%BC%8Cstub-status%EF%BC%8Cgzip%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91%E5%90%AF%E5%8A%A8"><span class="toc-text">添加sticky，stub_status，gzip重新编译启动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE"><span class="toc-text">修改配置</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/Java/" style="font-size: 0.67em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.67em;">Nginx</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/arthas/" style="font-size: 0.6em;">arthas</a> <a href="/tags/guava/" style="font-size: 0.6em;">guava</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E7%89%87%E6%BA%90/" style="font-size: 0.6em;">片源</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" style="font-size: 0.6em;">系统检测</a> <a href="/tags/%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" style="font-size: 0.6em;">配置修改</a> <a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" style="font-size: 0.6em;">问题排查</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 0.67em;">集合</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/"><i class="fa  fa-book"></i> Nginx搭建手册</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/"><i class="fa  fa-book"></i> Java集合分享</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/arthas-and-javaagent/"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/guava-collect/"><i class="fa  fa-book"></i> guava-collect</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Windows%E4%B8%8B%E5%AE%89%E8%A3%85nodejs/"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 小窝吧 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="776590239"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/head.webp">
+  <title>Java集合分享 | 小窝吧</title>
+  <meta name="author" content="pengjianzhong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Java, 集合" />
+  
+  <meta name="description" content="集合继承体系    List平时都用到那哪些方式遍历一个list？ 每种方式之前有什么区别吗？ 1234567891011121314151617181920List&lt;Integer&gt; list &#x3D; Lists.newArrayList(1, 2, 3, 4, 5);&#x2F;&#x2F;1. 通过下标遍历for (int i &#x3D; 0; i &lt; list.size(); i++) &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合分享">
+<meta property="og:url" content="http://example.com/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/index.html">
+<meta property="og:site_name" content="小窝吧">
+<meta property="og:description" content="集合继承体系    List平时都用到那哪些方式遍历一个list？ 每种方式之前有什么区别吗？ 1234567891011121314151617181920List&lt;Integer&gt; list &#x3D; Lists.newArrayList(1, 2, 3, 4, 5);&#x2F;&#x2F;1. 通过下标遍历for (int i &#x3D; 0; i &lt; list.size(); i++) &amp;#123;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/head.webp">
+<meta property="article:published_time" content="2021-09-12T15:57:00.000Z">
+<meta property="article:modified_time" content="2021-09-12T15:57:34.690Z">
+<meta property="article:author" content="pengjianzhong">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="集合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/head.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">小窝吧</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>小窝吧</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">Java集合分享</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 pengjianzhong</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~20.54K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1631462254690"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB"><span class="toc-number">1.</span> <span class="toc-text">集合继承体系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-number">2.</span> <span class="toc-text">List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList"><span class="toc-number">3.</span> <span class="toc-text">ArrayList</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">3.0.1.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9"><span class="toc-number">3.0.2.</span> <span class="toc-text">扩容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fail-fast"><span class="toc-number">3.1.</span> <span class="toc-text">fail-fast</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fail-safe"><span class="toc-number">3.2.</span> <span class="toc-text">fail-safe</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="toc-number">3.2.1.</span> <span class="toc-text">一些问题及可能会踩的坑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map"><span class="toc-number">4.</span> <span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-number">4.1.</span> <span class="toc-text">HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#put"><span class="toc-number">4.1.2.</span> <span class="toc-text">put</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="toc-number">4.1.3.</span> <span class="toc-text">扩容机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#guava%E6%89%A9%E5%B1%95%E9%9B%86%E5%90%88"><span class="toc-number">5.</span> <span class="toc-text">guava扩展集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiset"><span class="toc-number">5.1.</span> <span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multimap"><span class="toc-number">5.2.</span> <span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BiMap"><span class="toc-number">5.3.</span> <span class="toc-text">BiMap</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h2 id="集合继承体系"><a href="#集合继承体系" class="headerlink" title="集合继承体系"></a>集合继承体系</h2><img src ="https://note.youdao.com/yws/api/personal/file/519447B623FB40C69F96B50B9E631274?method=download&shareKey=266bde3c328c7af93126bda9ea6d4b50" width ="700"/>
+
+<img src ="https://note.youdao.com/yws/api/personal/file/04925CC841D74CD98653C7AE05B964E9?method=download&shareKey=39ec82037fa4f24917ad44cce331b964" width ="700"/>
+
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><p><strong>平时都用到那哪些方式遍历一个list？</strong> 每种方式之前有什么区别吗？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//1. 通过下标遍历</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">    System.out.println(list.get(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2. 增强for</span></span><br><span class="line"><span class="keyword">for</span>(Integer i:list)&#123;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3. 迭代器</span></span><br><span class="line">Iterator&lt;Integer&gt; = list.iterator();</span><br><span class="line"><span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">    System.out.println(iterator.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//4. forEach</span></span><br><span class="line">list.forEach( integer -&gt; System.out.println(integer));</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h2><p>先来看几个问题</p>
+<ol>
+<li>ArrayList的数据结构</li>
+<li>构造方法有哪些，区别是什么</li>
+<li>默认初始化大小是多少</li>
+<li>什么时候扩容，扩容时做了什么</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Default initial capacity.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY  = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Shared empty array instance used for empty instances.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Shared empty array instance used for default sized empty instances. We</span></span><br><span class="line"><span class="comment"> * distinguish this from EMPTY_ELEMENTDATA to know how much to inflate when</span></span><br><span class="line"><span class="comment"> * first element is added.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The array buffer into which the elements of the ArrayList are stored.</span></span><br><span class="line"><span class="comment"> * The capacity of the ArrayList is the length of this array buffer. Any</span></span><br><span class="line"><span class="comment"> * empty ArrayList with elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA</span></span><br><span class="line"><span class="comment"> * will be expanded to DEFAULT_CAPACITY when the first element is added.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">transient</span> Object[] elementData; <span class="comment">// non-private to simplify nested class access</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * The size of the ArrayList (the number of elements it contains).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@serial</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//无参</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化大小</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.elementData = <span class="keyword">new</span> Object[initialCapacity];</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Illegal Capacity: &quot;</span>+</span><br><span class="line">                                               initialCapacity);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用Collection初始化</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">        elementData = c.toArray();</span><br><span class="line">        <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">            <span class="keyword">if</span> (elementData.getClass() != Object[].class)</span><br><span class="line">                elementData = Arrays.copyOf(elementData, size, Object[].class);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// replace with empty array.</span></span><br><span class="line">            <span class="keyword">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="扩容"><a href="#扩容" class="headerlink" title="扩容"></a>扩容</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureExplicitCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        modCount++;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// overflow-conscious code</span></span><br><span class="line">        <span class="keyword">if</span> (minCapacity - elementData.length &gt; <span class="number">0</span>)</span><br><span class="line">            grow(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Increases the capacity to ensure that it can hold at least the</span></span><br><span class="line"><span class="comment">     * number of elements specified by the minimum capacity argument.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> minCapacity the desired minimum capacity</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">grow</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// overflow-conscious code</span></span><br><span class="line">        <span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line">        <span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">            newCapacity = minCapacity;</span><br><span class="line">        <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE &gt; <span class="number">0</span>)</span><br><span class="line">            newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">        <span class="comment">// minCapacity is usually close to size, so this is a win:</span></span><br><span class="line">        elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//         List&lt;Integer&gt; list = new ArrayList&lt;&gt;(); 10 --&gt;15 --&gt;22</span></span><br><span class="line"><span class="comment">//        List&lt;Integer&gt; list = new ArrayList&lt;&gt;(0); 1 2 3 4 6 9 13 19 28 </span></span><br><span class="line"><span class="comment">//        List&lt;Integer&gt; list = new ArrayList&lt;&gt;(20); 20 </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) &#123;</span><br><span class="line">            list.add(i);</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这三种创建list方式，分别要执行多少次扩容方法？</p>
+<h3 id="fail-fast"><a href="#fail-fast" class="headerlink" title="fail-fast"></a>fail-fast</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(Integer integer : list)&#123;</span><br><span class="line">    <span class="keyword">if</span> (integer.equals(<span class="number">3</span>))&#123;</span><br><span class="line">        list.remove(integer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AbstractList：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="keyword">int</span> modCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="fail-safe"><a href="#fail-safe" class="headerlink" title="fail-safe"></a>fail-safe</h3><p>采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容，在拷贝的集合上进行遍历。</p>
+<p>原理：由于迭代时是对原集合的拷贝进行遍历，所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会触发Concurrent Modification Exception。</p>
+<p>缺点：基于拷贝内容的优点是避免了Concurrent Modification Exception，但同样地，迭代器并不能访问到修改后的内容，即：迭代器遍历的是开始遍历那一刻拿到的集合拷贝，在遍历期间原集合发生的修改迭代器是不知道的。</p>
+<p>ArrayList使用fail-fast机制自然的英明因为它增强了数据的安全性但在某些场景，我们可能想避免。fail-fast机制产生的错误，我们这时就要将ArrayList替换为使用故障安全机制的CopyOnWriteArrayList。</p>
+<h4 id="一些问题及可能会踩的坑"><a href="#一些问题及可能会踩的坑" class="headerlink" title="一些问题及可能会踩的坑"></a>一些问题及可能会踩的坑</h4><p>ArrayList和LinkedList的选取</p>
+<p>Collections.emptyList()与直接new一个实例的区别</p>
+<p>add(int index, E element) 向指定位置写入数据</p>
+<p>Arrays.asList返回的 ArrayList 并非 “ArrayList”</p>
+<p>Collections#unmodifiableList 粗糙的不可变集合</p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>键值对结构key–&gt;value</p>
+<p>我们平时使用map来做啥？</p>
+<h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><p>还是先来看几个问题</p>
+<ol>
+<li>HashMap的数据结构</li>
+<li>构造方法有哪些，区别是什么</li>
+<li>默认初始化大小是多少</li>
+<li>什么时候扩容，扩容时做了什么</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始容量</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>;</span><br><span class="line"><span class="comment">//最大容量</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line"><span class="comment">//负载系数</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line"><span class="comment">//转红黑树的阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line"><span class="comment">//转链表阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line"><span class="comment">//最小树形化容量阈值</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//无参构造    public HashMap() &#123;        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted    &#125;//指定初始化大小    public HashMap(int initialCapacity) &#123;        this(initialCapacity, DEFAULT_LOAD_FACTOR);    &#125;//指定初始化大小与负载因子    public HashMap(int initialCapacity, float loadFactor) &#123;        if (initialCapacity &lt; 0)            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +                                               initialCapacity);        if (initialCapacity &gt; MAXIMUM_CAPACITY)            initialCapacity = MAXIMUM_CAPACITY;        if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +                                               loadFactor);        this.loadFactor = loadFactor;        this.threshold = tableSizeFor(initialCapacity);    &#125;//使用已有的map构造    public HashMap(Map&lt;? extends K, ? extends V&gt; m) &#123;        this.loadFactor = DEFAULT_LOAD_FACTOR;        putMapEntries(m, false);    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>内部使用一个Node数组存放数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;</span><br></pre></td></tr></table></figure>
+
+<p>数组的每个元素是一个Node对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;        <span class="keyword">final</span> <span class="keyword">int</span> hash;        <span class="keyword">final</span> K key;        V value;        Node&lt;K,V&gt; next;        Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;            <span class="keyword">this</span>.hash = hash;            <span class="keyword">this</span>.key = key;            <span class="keyword">this</span>.value = value;            <span class="keyword">this</span>.next = next;        &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">getKey</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> key; &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getValue</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> value; &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> key + <span class="string">&quot;=&quot;</span> + value; &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;            <span class="keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);        &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">setValue</span><span class="params">(V newValue)</span> </span>&#123;            V oldValue = value;            value = newValue;            <span class="keyword">return</span> oldValue;        &#125;        <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;            <span class="keyword">if</span> (o == <span class="keyword">this</span>)                <span class="keyword">return</span> <span class="keyword">true</span>;            <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map.Entry) &#123;                Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;                <span class="keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;                    Objects.equals(value, e.getValue()))                    <span class="keyword">return</span> <span class="keyword">true</span>;            &#125;            <span class="keyword">return</span> <span class="keyword">false</span>;        &#125;    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认初始容量为 16，默认负载因子为 0.75</p>
+<p>threshold = 数组长度 * loadFactor，当元素个数超过threshold(容量阈值)时，HashMap 会进行扩容操作</p>
+<p>这里需要注意的一点是 table 数组并不是在构造方法里面初始化的，它是在 resize(扩容)方法里进行初始化的。</p>
+<p>table 数组长度永远为 2 的幂次方</p>
+<p>HashMap 是通过一个名为 tableSizeFor 的方法来确保 HashMap 数组长度永远为2的幂次方的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*找到大于或等于 cap 的最小2的幂，用来做容量阈值*/</span>  <span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tableSizeFor</span><span class="params">(<span class="keyword">int</span> cap)</span> </span>&#123;      <span class="keyword">int</span> n = cap - <span class="number">1</span>;      n |= n &gt;&gt;&gt; <span class="number">1</span>;      n |= n &gt;&gt;&gt; <span class="number">2</span>;      n |= n &gt;&gt;&gt; <span class="number">4</span>;      n |= n &gt;&gt;&gt; <span class="number">8</span>;      n |= n &gt;&gt;&gt; <span class="number">16</span>;      <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="put"><a href="#put" class="headerlink" title="put"></a>put</h4><p><img src="https://note.youdao.com/yws/api/personal/file/20214021F0BA49A5BFDBC4A361D7F3CF?method=download&shareKey=bc95649064bb0302af257adb3f24673f"></p>
+<ol>
+<li><p>判断Node数组table是否为空或为null，为空或为null执行resize()进行扩容；</p>
+</li>
+<li><p>根据键值key计算hash值得到插入的数组索引i，如果table[i]==null，直接新建节点添加，转向6，如果table[i]不为空，转向③；</p>
+</li>
+<li><p>判断table[i]的首个元素是否key一样，如果相同直接覆盖value，否则转向4，这里的相同指的是hashCode以及equals；</p>
+</li>
+<li><p>判断table[i] 是否为treeNode，即table[i] 是否是红黑树，如果是红黑树，则直接在树中插入键值对，否则转向5；</p>
+</li>
+<li><p>遍历table[i]，判断链表长度是否大于8，大于8的话把链表转换为红黑树，在红黑树中执行插入操作，否则进行链表的插入操作；遍历过程中若发现key已经存在直接覆盖value即可；</p>
+</li>
+<li><p>插入成功后，判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。</p>
+</li>
+</ol>
+<h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>指定位置插入元素</p>
+<p>判断插入元素后的size是否大于阈值</p>
+<p>大于则扩容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**     * Implements Map.put and related methods.     *     * <span class="doctag">@param</span> hash hash for key     * <span class="doctag">@param</span> key the key     * <span class="doctag">@param</span> value the value to put     * <span class="doctag">@param</span> onlyIfAbsent if true, don&#x27;t change existing value     * <span class="doctag">@param</span> evict if false, the table is in creation mode.     * <span class="doctag">@return</span> previous value, or null if none     */</span>    <span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent,                   <span class="keyword">boolean</span> evict)</span> </span>&#123;        Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="keyword">int</span> n, i;        <span class="comment">//1. 判断数组是否为空，为空则扩容（初始化）        if ((tab = table) == null || (n = tab.length) == 0)            n = (tab = resize()).length;        //2. 计算桶位置 并判断该位置没有元素，直接创建一个新Node        if ((p = tab[i = (n - 1) &amp; hash]) == null)            tab[i] = newNode(hash, key, value, null);        else &#123;            //3. 数组位置已经有元素了            Node&lt;K,V&gt; e; K k;            //4. key已经存在，直接覆盖            if (p.hash == hash &amp;&amp;                ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))                e = p;            //5. 是一个树节点            else if (p instanceof TreeNode)                e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);            else &#123;                //6.链表                for (int binCount = 0; ; ++binCount) &#123;                    //7. 链表的下一个节点为null，即遍历完了，创建一个新节点到尾部                    if ((e = p.next) == null) &#123;                        p.next = newNode(hash, key, value, null);                        // 链表长度达到8 ，转为红黑树                        if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st                            treeifyBin(tab, hash);                        break;                    &#125;                    //8. 遇到key相同的，直接覆盖                    if (e.hash == hash &amp;&amp;                        ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))                        break;                    p = e;                &#125;            &#125;            if (e != null) &#123; // existing mapping for key                V oldValue = e.value;                if (!onlyIfAbsent || oldValue == null)                    e.value = value;                afterNodeAccess(e);                return oldValue;            &#125;        &#125;        ++modCount;        //9. 长度大于阈值        if (++size &gt; threshold)            resize();        afterNodeInsertion(evict);        return null;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>resize</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> Node&lt;K,V&gt;[] resize() &#123;        Node&lt;K,V&gt;[] oldTab = table;        <span class="keyword">int</span> oldCap = (oldTab == <span class="keyword">null</span>) ? <span class="number">0</span> : oldTab.length;        <span class="keyword">int</span> oldThr = threshold;        <span class="keyword">int</span> newCap, newThr = <span class="number">0</span>;        <span class="keyword">if</span> (oldCap &gt; <span class="number">0</span>) &#123;            <span class="comment">//如果原来的容量已经大于了最大容量,则把threshold设置成最大int值，并且不需要扩容了            if (oldCap &gt;= MAXIMUM_CAPACITY) &#123;                threshold = Integer.MAX_VALUE;                return oldTab;            &#125;              //扩容1倍后小于最大容量且之前容量大于默认容量16 容量扩大1倍            else if ((newCap = oldCap &lt;&lt; 1) &lt; MAXIMUM_CAPACITY &amp;&amp;                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)                newThr = oldThr &lt;&lt; 1; // double threshold        &#125;        else if (oldThr &gt; 0) // initial capacity was placed in threshold            newCap = oldThr;    	//第一次put元素        else &#123;               // zero initial threshold signifies using defaults            newCap = DEFAULT_INITIAL_CAPACITY;            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);        &#125;        if (newThr == 0) &#123;            float ft = (float)newCap * loadFactor;            newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (float)MAXIMUM_CAPACITY ?                      (int)ft : Integer.MAX_VALUE);        &#125;        threshold = newThr;        @SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)        Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];        table = newTab;        	//如果是第一次扩容的时候,也就是原来没有元素,下面的代码不会运行        //如果原来有元素,则将原来的元素,进行放到新扩容的数组里面        if (oldTab != null) &#123;            //循环            for (int j = 0; j &lt; oldCap; ++j) &#123;                Node&lt;K,V&gt; e;                if ((e = oldTab[j]) != null) &#123;                    oldTab[j] = null;                                    //==null 说明链表只有一个元素,直接重新计算下标并放置元素                    if (e.next == null)                        newTab[e.hash &amp; (newCap - 1)] = e;                    //如果是红黑树,则进行红黑树的复制                    else if (e instanceof TreeNode)                        ((TreeNode&lt;K,V&gt;)e).split(this, newTab, j, oldCap);                    	//这一块是处理原来的HashMap冲突的，因为容量扩容了	//原来通过 &amp; 运算出来的hash冲突的key,与新的容量 &amp; 可能位置会发生改变	//比如之前的冲突的两个key （k1,k2）的hash 分别为 1101，11101	//初始化默认的容量是16 二进制就是 10000， 16-1的二进制就是 1111 与key进行&amp; 运算结果都是 1101，但是与11111(36-1)进行 一个是1101 另一是11101	//所以需要重新计算下标，通过与oldCap 进行 &amp; 运算 分为低位和高位，因为和oldCap &amp;运算只有两种结果，一种是0 另一种是oldCap	//将结果=0的设置成低位，将等于oldCap的保存到高位，	//低位的hash值肯定小于oldCap，所以下标还是在原来的位置	//高位的hash一定大于oldCap，在二进制最左至少会多一个1（有可能还有前面还有其他二进制数字，但运算结果都是一样的）计算正好是原来位置加上新的容量                    else &#123; // preserve order                                                //低位位链表头和尾                        Node&lt;K,V&gt; loHead = null, loTail = null;                        //高位链表头和尾                        Node&lt;K,V&gt; hiHead = null, hiTail = null;                        Node&lt;K,V&gt; next;                        do &#123;                            //获取当前节点的下一个元素                            next = e.next;                                                    if ((e.hash &amp; oldCap) == 0) &#123;                                //如果loTail==null说明是第一个元素,把这个元素赋值给loHead                                if (loTail == null)                                    loHead = e;                                else                                    //如果不是第一个元素,就把他加到后面                                    loTail.next = e;                                loTail = e;                            &#125;                            else &#123;                                 //高位节点的流程                                if (hiTail == null)                                    hiHead = e;                                else                                    hiTail.next = e;                                hiTail = e;                            &#125;                        &#125; while ((e = next) != null);                        if (loTail != null) &#123;                            loTail.next = null;                            //将原来下标指向低位的链表                            newTab[j] = loHead;                        &#125;                        if (hiTail != null) &#123;                            //下标 j + oldCap 计算出来的新下标正好是原来位置索引加上新的容量                            hiTail.next = null;                            newTab[j + oldCap] = hiHead;                        &#125;                    &#125;                &#125;            &#125;        &#125;        return newTab;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="guava扩展集合"><a href="#guava扩展集合" class="headerlink" title="guava扩展集合"></a>guava扩展集合</h2><p>com.google.common.collect</p>
+<p>guava对jdk集合类的扩展，包括不可变集合，新集合类型:，集合工具类: 提供java.util.Collections中没有的集合工具，扩展工具类：让实现和扩展集合类变得更容易，比如创建Collection的装饰器，或实现迭代器。</p>
+<h3 id="Multiset"><a href="#Multiset" class="headerlink" title="Multiset"></a>Multiset</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Multiset multiset = HashMultiset.create(Lists.newArrayList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>));System.out.println(multiset);<span class="comment">//[1 x 2, 2 x 2, 3 x 2, 4, 5]</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Map&lt;E, Count&gt; backingMap;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到他的实际存储结构为一个Map，key为存储元素，Count类型存储是key这个元素的个数</p>
+<p>HashMultiset是最常用的，其实现是以Map&lt;T,Count&gt;为存储结构，其中的add和remove方法是对Count进行的操作（Count并不是线程安全的），Multiset与Map&lt;T,Integer&gt;最大的不同是，Multiset遍历时可以遍历出Map.keySize * count个元素，而map却不可以</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span>    <span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;      <span class="keyword">if</span> (occurrencesLeft == <span class="number">0</span>) &#123;        currentEntry = entryIterator.next();        occurrencesLeft = currentEntry.getValue().get();      &#125;      occurrencesLeft--;      canRemove = <span class="keyword">true</span>;      <span class="keyword">return</span> currentEntry.getKey();    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于Multiset和Map的显著区别还包括：</p>
+<ul>
+<li><p>Multiset中的元素计数只能是正数。</p>
+</li>
+<li><p>multiset.size()返回集合的大小，等同于所有元素计数的总和。对于不重复元素的个数，应使用elementSet().size()方法。（因此，add(E)把multiset.size()增加1）</p>
+</li>
+<li><p>multiset.iterator()会迭代重复元素，因此迭代长度等于multiset.size()。</p>
+</li>
+<li><p>Multiset支持直接增加、减少或设置元素的计数。setCount(elem, 0)等同于移除所有elem。</p>
+</li>
+<li><p>对multiset 中没有的元素，multiset.count(elem)始终返回0。</p>
+</li>
+</ul>
+<h3 id="Multimap"><a href="#Multimap" class="headerlink" title="Multimap"></a>Multimap</h3><p>大家一定写过Map&lt;K, List&gt;或Map&lt;K, Set&gt;这样的结构，Guava的 Multimap可以很容易地把一个键映射到多个值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Map&lt;K, Collection&lt;V&gt;&gt; map;  <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> totalSize;</span><br></pre></td></tr></table></figure>
+
+<p>Multimap底层是一个Map&lt;K, Collection<V>&gt;结构，并且有一个totalSize记录总的键值对数量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">put</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value)</span> </span>&#123;    Collection&lt;V&gt; collection = map.get(key);    <span class="keyword">if</span> (collection == <span class="keyword">null</span>) &#123;      collection = createCollection(key);      <span class="keyword">if</span> (collection.add(value)) &#123;        totalSize++;        map.put(key, collection);        <span class="keyword">return</span> <span class="keyword">true</span>;      &#125; <span class="keyword">else</span> &#123;        <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(<span class="string">&quot;New Collection violated the Collection spec&quot;</span>);      &#125;    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (collection.add(value)) &#123;      totalSize++;      <span class="keyword">return</span> <span class="keyword">true</span>;    &#125; <span class="keyword">else</span> &#123;      <span class="keyword">return</span> <span class="keyword">false</span>;    &#125;  &#125;  <span class="function"><span class="keyword">public</span> Collection&lt;V&gt; <span class="title">get</span><span class="params">(<span class="meta">@Nullable</span> K key)</span> </span>&#123;    Collection&lt;V&gt; collection = map.get(key);    <span class="keyword">if</span> (collection == <span class="keyword">null</span>) &#123;      collection = createCollection(key);    &#125;    <span class="keyword">return</span> wrapCollection(key, collection);  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Multimap.get(key)总是返回非null、但是可能空的集合。</li>
+<li>如果你更喜欢像Map那样，为Multimap中没有的键返回null，请使用asMap()视图获取一个Map&lt;K, Collection<V>&gt;。（或者用静态方法Multimaps.asMap()为ListMultimap返回一个Map&lt;K, List<V>&gt;）</li>
+<li>当且仅当有值映射到键时，Multimap.containsKey(key)才会返回true。尤其需要注意的是，如果键k之前映射过一个或多个值，但它们都被移除后，Multimap.containsKey(key)会返回false。</li>
+<li>Multimap.entries()返回Multimap中所有”键-单个值映射”——包括重复键。如果你想要得到所有”键-值集合映射”，请使用asMap().entrySet()。</li>
+<li>Multimap.size()返回所有”键-单个值映射”的个数，而非不同键的个数。要得到不同键的个数，请改用Multimap.keySet().size()。</li>
+</ul>
+<h3 id="BiMap"><a href="#BiMap" class="headerlink" title="BiMap"></a>BiMap</h3><p>传统上，实现键值对的双向映射需要维护两个单独的map，并保持它们间的同步。但这种方式很容易出错，而且对于值已经在map中的情况，会变得非常混乱。<br>BiMap&lt;K, V&gt;是特殊的Map：<br>可以用 inverse()反转BiMap&lt;K, V&gt;的键值映射<br>保证值是唯一的，因此 values()返回Set而不是普通的Collection</p>
+<p>向BiMap中添加两个相同的value会抛异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">K-—&gt;Vprivate <span class="keyword">transient</span> BiEntry&lt;K, V&gt;[] hashTableKToV;V--&gt;Kprivate <span class="keyword">transient</span> BiEntry&lt;K, V&gt;[] hashTableVToK;</span><br></pre></td></tr></table></figure>
+
+<p>添加功能有两种，一个是put方法，一个是forcePut方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value)</span> </span>&#123;    <span class="keyword">return</span> <span class="keyword">this</span>.put(key, value, <span class="keyword">false</span>);&#125;<span class="function"><span class="keyword">public</span> V <span class="title">forcePut</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value)</span> </span>&#123;    <span class="keyword">return</span> <span class="keyword">this</span>.put(key, value, <span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> V <span class="title">put</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value, <span class="keyword">boolean</span> force)</span> </span>&#123;    <span class="keyword">int</span> keyHash = smearedHash(key);    <span class="keyword">int</span> valueHash = smearedHash(value);    <span class="comment">//去hashTableKToV里根据key寻找Entry    BiEntry&lt;K, V&gt; oldEntryForKey = seekByKey(key, keyHash);    if (oldEntryForKey != null        &amp;&amp; valueHash == oldEntryForKey.valueHash        &amp;&amp; Objects.equal(value, oldEntryForKey.value)) &#123;        //如果这个key值存在，并且value也相等，无需更新，则返回这个value      return value;    &#125;    //去hashTableVToK里根据value选择Entry    BiEntry&lt;K, V&gt; oldEntryForValue = seekByValue(value, valueHash);    if (oldEntryForValue != null) &#123;      //如果存在，则判断force（第三个参数）是否为false      if (force) &#123;          //如果force（第三个参数）为true，则删除这个节点，这个方法是双向删除        delete(oldEntryForValue);      &#125; else &#123;           //抛出异常，否则会出现一个value对应多个key的情况，inverse后无法处理        throw new IllegalArgumentException(&quot;value already present: &quot; + value);      &#125;    &#125;	//根据key，value，keyHash，valueHash创建一个BiEntry    BiEntry&lt;K, V&gt; newEntry = new BiEntry&lt;&gt;(key, keyHash, value, valueHash);    if (oldEntryForKey != null) &#123;       //删除旧的BiEntry      delete(oldEntryForKey);        //插入新的BiEntry      insert(newEntry, oldEntryForKey);      oldEntryForKey.prevInKeyInsertionOrder = null;      oldEntryForKey.nextInKeyInsertionOrder = null;      return oldEntryForKey.value;    &#125; else &#123;        //插入新的BiEntry      insert(newEntry, null);      rehashIfNecessary();      return null;    &#125;  &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/";
+            const title         = "「Java集合分享」";
+            const excerpt       = `集合继承体系
+
+
+
+List平时都用到那哪些方式遍历一个list？ 每种方式之前有什么区别吗？
+1234567891011121314151617181920List&lt;Integer&gt; list = Lists.newAr...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-09-12</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" arthas-and-javaagent" href="/2021/09/12/arthas-and-javaagent/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Nginx搭建手册" href="/2021/09/12/Nginx搭建手册/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/head.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">爱的小窝吧</p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E7%BB%A7%E6%89%BF%E4%BD%93%E7%B3%BB"><span class="toc-text">集合继承体系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List"><span class="toc-text">List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArrayList"><span class="toc-text">ArrayList</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9"><span class="toc-text">扩容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fail-fast"><span class="toc-text">fail-fast</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fail-safe"><span class="toc-text">fail-safe</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E5%8F%8A%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="toc-text">一些问题及可能会踩的坑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap"><span class="toc-text">HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#put"><span class="toc-text">put</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="toc-text">扩容机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#guava%E6%89%A9%E5%B1%95%E9%9B%86%E5%90%88"><span class="toc-text">guava扩展集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiset"><span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multimap"><span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BiMap"><span class="toc-text">BiMap</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/Java/" style="font-size: 0.67em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.67em;">Nginx</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/arthas/" style="font-size: 0.6em;">arthas</a> <a href="/tags/guava/" style="font-size: 0.6em;">guava</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E7%89%87%E6%BA%90/" style="font-size: 0.6em;">片源</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" style="font-size: 0.6em;">系统检测</a> <a href="/tags/%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" style="font-size: 0.6em;">配置修改</a> <a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" style="font-size: 0.6em;">问题排查</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 0.67em;">集合</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/"><i class="fa  fa-book"></i> Nginx搭建手册</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/"><i class="fa  fa-book"></i> Java集合分享</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/arthas-and-javaagent/"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/guava-collect/"><i class="fa  fa-book"></i> guava-collect</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Windows%E4%B8%8B%E5%AE%89%E8%A3%85nodejs/"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 小窝吧 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="776590239"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
