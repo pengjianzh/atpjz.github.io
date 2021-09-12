@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/head.webp">
+  <title>guava-collect | 小窝吧</title>
+  <meta name="author" content="pengjianzhong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Java, guava, 集合" />
+  
+  <meta name="description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="guava-collect">
+<meta property="og:url" content="http://example.com/2021/09/12/guava-collect/index.html">
+<meta property="og:site_name" content="小窝吧">
+<meta property="og:description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/head.webp">
+<meta property="article:published_time" content="2021-09-12T03:34:30.000Z">
+<meta property="article:modified_time" content="2021-09-12T03:43:28.707Z">
+<meta property="article:author" content="pengjianzhong">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="guava">
+<meta property="article:tag" content="集合">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/head.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">小窝吧</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>小窝吧</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">guava-collect</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 pengjianzhong</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~28.56K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1631418208707"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guava-collect%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-number">1.1.</span> <span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="guava-collect分享"><a href="#guava-collect分享" class="headerlink" title="guava-collect分享"></a>guava-collect分享</h1><p>Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。<br>这些高质量的API可以使你的java代码更加优雅，更加简洁，让你的工作更加轻松愉悦，<br>类似Apache Commons工具集</p>
+<p>com.google.common.annotations：普通注解类型。<br>com.google.common.base：基本工具类库和接口。<br>com.google.common.cache：缓存工具包，非常简单易用且功能强大的JVM内缓存。<br><strong>com.google.common.collect：带泛型的集合接口扩展和实现，以及工具类。</strong><br>com.google.common.eventbus：发布订阅风格的事件总线。<br>com.google.common.hash： 哈希工具包。<br>com.google.common.io：I/O工具包。<br>com.google.common.math：原始算术类型和<br>超大数的运算工具包。<br>com.google.common.net：网络工具包。<br>com.google.common.primitives：八种原始类型和无符号类型的静态工具包。<br>com.google.common.reflect：反射工具包。<br>com.google.common.util.concurrent：多线程工具包。</p>
+<h2 id="集合-Collections"><a href="#集合-Collections" class="headerlink" title="集合[Collections]"></a>集合[Collections]</h2><p>com.google.common.collect</p>
+<p>guava对jdk集合类的扩展，包括不可变集合，新集合类型:，集合工具类: 提供java.util.Collections中没有的集合工具，扩展工具类：让实现和扩展集合类变得更容易，比如创建Collection的装饰器，或实现迭代器。</p>
+<hr>
+<p><strong>主要内容</strong>：</p>
+<ol>
+<li><p><strong>不可变集合</strong></p>
+</li>
+<li><p><strong>新集合类型</strong></p>
+</li>
+<li><p><strong>集合工具类</strong></p>
+</li>
+</ol>
+<h3 id="guava的不可变集合"><a href="#guava的不可变集合" class="headerlink" title="guava的不可变集合"></a>guava的不可变集合</h3><p>不可变对象有很多优点：</p>
+<pre><code>1. 当对象被不可信的库调用时，不可变形式是安全的。
+2. 当不可变对象被对个线程调用时，不存在竞态条件问题。
+3. 不可变集合不需要考虑变化，因此可以节约时间和空间，所有不可变集合都比可变集合形式有更好的内存利用率（分析和测试细节）。
+4. 不可变对象因为有固定不变，可以用作常量来安全使用。
+5. 数据不可变；不需要同步逻辑；线程安全；自由共享；容易设计和实现；内存和时间高效。
+</code></pre>
+<h4 id="Collections-unmodifiableXXX和ImmutableXXX"><a href="#Collections-unmodifiableXXX和ImmutableXXX" class="headerlink" title="Collections.unmodifiableXXX和ImmutableXXX"></a>Collections.unmodifiableXXX和ImmutableXXX</h4><p>在JDK中提供了Collections.unmodifiableXXX系列方法来实现不可变集合, 但是存在一些问题，下面我们先看一个具体实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(<span class="string">&quot;old&quot;</span>);</span><br><span class="line">    List&lt;String&gt; unmodifiableList = Collections.unmodifiableList(list);</span><br><span class="line">    List&lt;String&gt; immutableList = ImmutableList.copyOf(list);</span><br><span class="line">    unmodifiableList.add(<span class="string">&quot;new&quot;</span>);</span><br><span class="line">    immutableList.add(<span class="string">&quot;new&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBea1a24937f1517195c18a4d92b0caa02?method=download&shareKey=868b8035b0514e34eb4720a52a6665a2"></p>
+<p>不支持的操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       list.add(<span class="string">&quot;old&quot;</span>);</span><br><span class="line">       List&lt;String&gt; unmodifiableList = Collections.unmodifiableList(list);</span><br><span class="line">       System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">       System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line"></span><br><span class="line">       list.set(<span class="number">0</span>, <span class="string">&quot;new&quot;</span>);</span><br><span class="line">       System.out.println();</span><br><span class="line">       System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">       System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>来看下ImmutableList</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       list.add(<span class="string">&quot;old&quot;</span>);</span><br><span class="line"></span><br><span class="line">       List&lt;String&gt; unmodifiableList = Collections.unmodifiableList(list);</span><br><span class="line">       ImmutableList&lt;String&gt; immutableList = ImmutableList.copyOf(list);</span><br><span class="line"></span><br><span class="line">       System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">       System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line">       System.out.println(<span class="string">&quot;immutableList-----------&gt;&quot;</span> + immutableList);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// list.add(&quot;new&quot;);</span></span><br><span class="line">       list.set(<span class="number">0</span>, <span class="string">&quot;new&quot;</span>);</span><br><span class="line">       System.out.println();</span><br><span class="line"></span><br><span class="line">       System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">       System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line">       System.out.println(<span class="string">&quot;immutableList-----------&gt;&quot;</span> + immutableList);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么immutable集合是绝对不会改变吗</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list0 = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list0.add(<span class="string">&quot;old&quot;</span>);</span><br><span class="line">    List&lt;List&lt;String&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    list.add(list0);</span><br><span class="line"></span><br><span class="line">    List&lt;List&lt;String&gt;&gt; unmodifiableList = Collections.unmodifiableList(list);</span><br><span class="line">    ImmutableList&lt;List&lt;String&gt;&gt; immutableList = ImmutableList.copyOf(list);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">    System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line">    System.out.println(<span class="string">&quot;immutableList-----------&gt;&quot;</span> + immutableList);</span><br><span class="line"></span><br><span class="line">    list0.add(<span class="string">&quot;new&quot;</span>);</span><br><span class="line">    list0.set(<span class="number">0</span>, <span class="string">&quot;new&quot;</span>);</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;list--------------------&gt;&quot;</span> + list);</span><br><span class="line">    System.out.println(<span class="string">&quot;unmodifiableList--------&gt;&quot;</span> + unmodifiableList);</span><br><span class="line">    System.out.println(<span class="string">&quot;immutableList-----------&gt;&quot;</span> + immutableList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Collections.unmodifiableXXX返回的是原来容器的<strong>视图</strong>：</p>
+<ul>
+<li><p>返回的容器无法修改</p>
+</li>
+<li><p>对原有容器进行修改，会影响返回容器的内容，没有做到真正的不可变：<br>例如：通过Collections.unmodifiablelist(originList)得到一个不可变容器unmodifiableList，当修改originList时，unmodifiableList也会受到影响。</p>
+</li>
+<li><p>透过视图查看容器的内容</p>
+</li>
+<li><p>容器内容的变更也会通过视图展现出来</p>
+</li>
+</ul>
+<p>Collections.unmodifiableXXX系列方法源码：<br><img src="https://note.youdao.com/yws/api/personal/file/WEBe2c664d866e64e08359f8f280fe42608?method=download&shareKey=f5fe7a0e8adde9f99a0f949b2cd0e3b0"><br>只是屏蔽了原来能改变集合的一些方法。</p>
+<p><strong>Guava提供的不可变容器</strong></p>
+<ul>
+<li>返回的不是原对象的视图，而是原容器的一份<strong>拷贝</strong>；调用add() / set() 方法是报出异常</li>
+<li>因为只是copy了原容器本身（reference），并不是deep copy，因此，对容器中的元素内容的修改，也会影响ImmutableXXX</li>
+</ul>
+<p>以ImmutableList为例，它内部维护了一个Object数组<br><img src="https://note.youdao.com/yws/api/personal/file/WEB05ca1eb2b377888c53d3e15c8c2cf721?method=download&shareKey=e67fb9dc041ff25556b7bb81cbc9fa80"><br><img src="https://note.youdao.com/yws/api/personal/file/WEBa58b4ac3f410c200fc0f3a77d687fddf?method=download&shareKey=f306810d1749627e3bd6d83ce039ec77"></p>
+<p>内部对象的地址不再是原来List的地址，因此只是改变原来list的值，ImmutableList的值不会改变。但也仅仅是不能改变地址而已，如果改变改地址指向对象的值，集合内容还是会改变。</p>
+<h4 id="创建不可变集合"><a href="#创建不可变集合" class="headerlink" title="创建不可变集合"></a>创建不可变集合</h4><p>不可变集合可以用如下多种方式创建:</p>
+<ul>
+<li>copyOf 方法</li>
+<li>of 方法</li>
+<li>Builder 工具</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings(&quot;unused&quot;)</span></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Set&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;String&gt;();</span><br><span class="line">      set.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">      set.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">      set.add(<span class="string">&quot;c&quot;</span>);</span><br><span class="line">      ImmutableSet&lt;String&gt; immutableSet1 = ImmutableSet.copyOf(set);</span><br><span class="line">      ImmutableSet&lt;String&gt; immutableSet2 = ImmutableSet.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>);</span><br><span class="line">      ImmutableSet&lt;String&gt; immutableSet3</span><br><span class="line">          = ImmutableSet.&lt;String&gt;builder().add(<span class="string">&quot;a&quot;</span>).add(<span class="string">&quot;b&quot;</span>).add(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>).addAll(immutableSet1).build();</span><br><span class="line">      ImmutableMap&lt;String, Integer&gt; immutableMap = ImmutableMap.of(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>, <span class="string">&quot;b&quot;</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 此外,对有序不可变集合来说,排序是在构造集合的时候完成的,如:</span></span><br><span class="line">      ImmutableSet&lt;String&gt; immutableSet4 = ImmutableSortedSet.of(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="string">&quot;d&quot;</span>, <span class="string">&quot;b&quot;</span>);</span><br><span class="line">      <span class="comment">// 构造时就把元素排序为 a, b, c, d。</span></span><br><span class="line">      System.out.println(immutableSet4);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="新集合类型"><a href="#新集合类型" class="headerlink" title="新集合类型"></a>新集合类型</h3><table>
+<thead>
+<tr>
+<th>集合接口</th>
+<th>属于JDK还是Guava</th>
+<th>对应的Guava工具类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Collection</td>
+<td>JDK</td>
+<td>Collections2：不要和java.util.Collections混淆</td>
+</tr>
+<tr>
+<td>List</td>
+<td>JDK</td>
+<td>Lists</td>
+</tr>
+<tr>
+<td>Set</td>
+<td>JDK</td>
+<td>Sets</td>
+</tr>
+<tr>
+<td>SortedSet</td>
+<td>JDK</td>
+<td>Sets</td>
+</tr>
+<tr>
+<td>Map</td>
+<td>JDK</td>
+<td>Maps</td>
+</tr>
+<tr>
+<td>SortedMap</td>
+<td>JDK</td>
+<td>Maps</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>JDK</td>
+<td>Queues</td>
+</tr>
+<tr>
+<td>Multiset</td>
+<td>Guava</td>
+<td>Multisets</td>
+</tr>
+<tr>
+<td>Multimap</td>
+<td>Guava</td>
+<td>Multimaps</td>
+</tr>
+<tr>
+<td>BiMap</td>
+<td>Guava</td>
+<td>Maps</td>
+</tr>
+<tr>
+<td>Table</td>
+<td>Guava</td>
+<td>Tables</td>
+</tr>
+</tbody></table>
+<p>Multiset 元素可重复的set<br>Multimap 一键多值的Map<br>BiMap 键值对双向的Map<br>Table 表格<br>ClassToInstanceMap<br>RangeSet<br>RangeMap</p>
+<h4 id="Multiset"><a href="#Multiset" class="headerlink" title="Multiset"></a><strong>Multiset</strong></h4><p>看一段代码，统计单词出现的次数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; counts = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</span><br><span class="line"><span class="keyword">for</span> (String word : words) &#123;</span><br><span class="line">    Integer count = counts.get(word);</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="keyword">null</span>) &#123;</span><br><span class="line">        counts.put(word, <span class="number">1</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        counts.put(word, count + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Integer count=counts.get(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>虽然没什么问题，但是看起来很繁琐。<br>而且不支持统计多种信息，比如总元素数量。<br>看看Multiset如何实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Multiset&lt;String&gt; multiSet = HashMultiset.create(); </span><br><span class="line"> multiSet.addAll(words);</span><br><span class="line"> multiSet.count(“world”);</span><br></pre></td></tr></table></figure>
+
+<p>常用实现 Multiset 接口的类有：</p>
+<ul>
+<li>HashMultiset: 元素存放于 HashMap</li>
+<li>LinkedHashMultiset: 元素存放于 LinkedHashMap，即元素的排列顺序由第一次放入的顺序决定</li>
+<li>TreeMultiset:元素被排序存放于TreeMap</li>
+<li>EnumMultiset: 元素必须是 enum 类型</li>
+<li>ImmutableMultiset: 不可修改的 Mutiset</li>
+</ul>
+<p>Multiset不是一个Set，它没有继承Set接口，它继承的是Collection<E>接口，你可以向Multiset中添加重复的元素，Multiset会对添加的元素做一个计数。<br>Multiset接口定义的方法主要有：　　      </p>
+<ul>
+<li>add(E element) :向其中添加单个元素     </li>
+<li>add(E element,int occurrences) : 向其中添加指定个数的元素  </li>
+<li>count(Object element) : 返回给定参数元素的个数 int</li>
+<li>remove(E element) : 移除一个元素，其count值会相应减少</li>
+<li>remove(E element,int occurrences): 移除相应个数的元素</li>
+<li>elementSet() : 将不同的元素放入一个Set中</li>
+<li>entrySet(): 类似与Map.entrySet 返回Set&lt;Multiset.Entry&gt;。包含的Entry支持使用getElement()和getCount()</li>
+<li>setCount(E element ,int count): 设定某一个元素的重复次数</li>
+<li>setCount(E element,int oldCount,int newCount): 将符合原有重复个数的元素修改为新的重复次数</li>
+<li>retainAll(Collection c) : 保留出现在给定集合参数的所有的元素 </li>
+<li>removeAll(Collectionc) : 去除出现给给定集合参数的所有的元素</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun6</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       String str = <span class="string">&quot;no no zuo no die why you try no try no high give me me five&quot;</span>;</span><br><span class="line">       List&lt;String&gt; wordList=Arrays.asList(str.split(<span class="string">&quot; &quot;</span>));</span><br><span class="line">       Multiset&lt;String&gt; multiSet = HashMultiset.create(); </span><br><span class="line">       multiSet.addAll(wordList);</span><br><span class="line">       System.out.println(multiSet);</span><br><span class="line">       System.out.println(multiSet.count(<span class="string">&quot;no&quot;</span>));</span><br><span class="line">       System.out.println(multiSet.size());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>看下源码：Multiset的接口中方法的实现在AbstractMapBasedMultiset抽象类中</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256804">Multiset的接口中方法</a></p>
+<p>HashMultiset是最常用的，其实现是以Map&lt;T,Count&gt;为存储结构，其中的add和remove方法是对Count进行的操作（Count并不是线程安全的），Multiset与Map&lt;T,Integer&gt;最大的不同是，Multiset遍历时可以遍历出Map.keySize * count个元素，而map却不可以，最大的区别就在于其itertator和Entry&lt;T,Count&gt;的iterator实现代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span>  Iterator&lt;Entry&lt;E&gt;&gt; entryIterator() &#123;    <span class="keyword">final</span> Iterator&lt;Map.Entry&lt;E, Count&gt;&gt; backingEntries = backingMap.entrySet().iterator();    <span class="keyword">return</span> <span class="keyword">new</span> Iterator&lt;Multiset.Entry&lt;E&gt;&gt;() &#123;      Map.<span class="meta">@Nullable</span> Entry&lt;E, Count&gt; toRemove;      <span class="meta">@Override</span>      <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;        <span class="keyword">return</span> backingEntries.hasNext();      &#125;      <span class="meta">@Override</span>      <span class="keyword">public</span> Multiset.<span class="function">Entry&lt;E&gt; <span class="title">next</span><span class="params">()</span> </span>&#123;        <span class="keyword">final</span> Map.Entry&lt;E, Count&gt; mapEntry = backingEntries.next();        toRemove = mapEntry;        <span class="keyword">return</span> <span class="keyword">new</span> Multisets.AbstractEntry&lt;E&gt;() &#123;          <span class="meta">@Override</span>          <span class="function"><span class="keyword">public</span> E <span class="title">getElement</span><span class="params">()</span> </span>&#123;            <span class="keyword">return</span> mapEntry.getKey();          &#125;        <span class="comment">//getcount操作          @Override          public int getCount() &#123;            Count count = mapEntry.getValue();            if (count == null || count.get() == 0) &#123;              Count frequency = backingMap.get(getElement());              if (frequency != null) &#123;                return frequency.get();              &#125;            &#125;            return (count == null) ? 0 : count.get();          &#125;        &#125;;      &#125;      @Override      public void remove() &#123;            checkRemove(toRemove != null);   //在next的时候记录元素，可以被remove        size -= toRemove.getValue().getAndSet(0);        backingEntries.remove();        toRemove = null;      &#125;    &#125;;  &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>关于Multiset和Map的显著区别还包括：</p>
+<ul>
+<li><p>Multiset中的元素计数只能是正数。</p>
+</li>
+<li><p>multiset.size()返回集合的大小，等同于所有元素计数的总和。对于不重复元素的个数，应使用elementSet().size()方法。（因此，add(E)把multiset.size()增加1）</p>
+</li>
+<li><p>multiset.iterator()会迭代重复元素，因此迭代长度等于multiset.size()。</p>
+</li>
+<li><p>Multiset支持直接增加、减少或设置元素的计数。setCount(elem, 0)等同于移除所有elem。</p>
+</li>
+<li><p>对multiset 中没有的元素，multiset.count(elem)始终返回0。</p>
+</li>
+</ul>
+<h4 id="Multimap"><a href="#Multimap" class="headerlink" title="Multimap"></a>Multimap</h4><p>大家一定写过Map&lt;K, List<V>&gt;或Map&lt;K, Set<V>&gt;这样的结构，Guava的 Multimap可以很容易地把一个键映射到多个值。<br>可以用两种方式思考Multimap的概念：</p>
+<ol>
+<li><p>”键-单个值映射”的集合：<br>a -&gt; 1 a -&gt; 2 a -&gt;4 b -&gt; 3 c -&gt; 5</p>
+</li>
+<li><p>”键-值集合映射”的映射：<br>a -&gt; [1, 2, 4] b -&gt; 3 c -&gt; 5<br>一般来说，Multimap接口应该用第一种方式看待，但asMap()视图返回Map&lt;K, Collection<V>&gt;，让你可以按另一种方式看待Multimap。重要的是，不会有任何键映射到空集合：一个键要么至少到一个值，要么根本就不在Multimap中。</p>
+</li>
+</ol>
+<p>修改Multimap<br>Multimap.get(key)以集合形式返回键所对应的值视图，即使没有任何对应的值，也会返回空集合。ListMultimap.get(key)返回List，SetMultimap.get(key)返回Set。对值视图集合进行的修改最终都会反映到底层的Multimap。</p>
+<p>修改Multimap的方法有：</p>
+<ul>
+<li>put(K, V) 添加键到单个值的映射                       multimap.get(key).add(value)</li>
+<li>putAll(K, Iterable<V>)    依次添加键到多个值的映射    Iterables.addAll(multimap.get(key), values)</li>
+<li>remove(K, V)    移除键到值的映射；如果有这样的键值并成功移除，返回true。    multimap.get(key).remove(value)</li>
+<li>removeAll(K)    清除键对应的所有值，返回的集合包含所有之前映射到K的值，但修改这个集合就不会影响Multimap了。    multimap.get(key).clear()</li>
+<li>replaceValues(K, Iterable<V>)    清除键对应的所有值，并重新把key关联到Iterable中的每个元素。返回的集合包含所有之前映射到K的值。    multimap.get(key).clear();</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun7</span><span class="params">()</span> </span>&#123;        String str = <span class="string">&quot;no no zuo no die why you try no try no high give me me five&quot;</span>;        Multimap&lt;String, Integer&gt; multiMap = ArrayListMultimap.create();        String[] strArr = str.split(<span class="string">&quot; &quot;</span>);        <span class="keyword">for</span> (String s : strArr) &#123;            multiMap.put(s, System.identityHashCode(s));        &#125;        System.out.println(multiMap);        <span class="comment">// 移除no--&gt;1942406066        multiMap.remove(&quot;no&quot;, 1942406066);        System.out.println(multiMap);        // 清除no对应的所有值        multiMap.removeAll(&quot;no&quot;);        System.out.println(multiMap);        // 清除no对应的所有值，并重新把no关联到Iterable中的每个元素。相对于把no对值替换为新值        multiMap.replaceValues(&quot;no&quot;, Lists.newArrayList(1, 2, 3));        System.out.println(multiMap);        // 返回no对应的所有值        System.out.println(multiMap.get(&quot;no&quot;));        // 没有key 返回空collection而并非null        System.out.println(multiMap.get(&quot;hahah&quot;));        // 若为Multimap的视图，则会返回null        System.out.println(multiMap.asMap().get(&quot;hahah&quot;));          //返回Multimap的键值对个数        System.out.println(multiMap.size());    &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>Multimap.get(key)总是返回非null、但是可能空的集合。这并不意味着Multimap为相应的键花费内存创建了集合，而只是提供一个集合视图方便你为键增加映射值</p>
+<blockquote>
+<p>如果有这样的键，返回的集合只是包装了Multimap中已有的集合；如果没有这样的键，返回的空集合也只是持有Multimap引用的栈对象，让你可以用来操作底层的Multimap。因此，返回的集合不会占据太多内存，数据实际上还是存放在Multimap中。</p>
+</blockquote>
+<p>如果想Multimap中没有的键返回null，使用asMap()视图获取一个Map&lt;K, Collection<V>&gt;。（或者用静态方法Multimaps.asMap()为ListMultimap返回一个Map&lt;K, List<V>&gt;。对于SetMultimap和SortedSetMultimap，也有类似的静态方法存在）</p>
+<p>当且仅当有值映射到键时，Multimap.containsKey(key)才会返回true。尤其需要注意的是，如果键k之前映射过一个或多个值，但它们都被移除后，Multimap.containsKey(key)会返回false。</p>
+<p>Multimap.entries()返回Multimap中所有”键-单个值映射”——包括重复键。如果你想要得到所有”键-值集合映射”，请使用asMap().entrySet()。<br>Multimap.size()返回所有”键-单个值映射”的个数，而非不同键的个数。要得到不同键的个数，请改用Multimap.keySet().size()。</p>
+<table>
+<thead>
+<tr>
+<th>实现</th>
+<th>键行为类似</th>
+<th>值行为类似</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ArrayListMultimap</td>
+<td>HashMap</td>
+<td>ArrayList</td>
+</tr>
+<tr>
+<td>HashMultimap</td>
+<td>HashMap</td>
+<td>HashSet</td>
+</tr>
+<tr>
+<td>LinkedListMultimap</td>
+<td>LinkedHashMap</td>
+<td>LinkedList</td>
+</tr>
+<tr>
+<td>LinkedHashMultimap</td>
+<td>LinkedHashMap</td>
+<td>LinkedHashMap</td>
+</tr>
+<tr>
+<td>TreeMultimap</td>
+<td>TreeMap</td>
+<td>TreeSet</td>
+</tr>
+<tr>
+<td>ImmutableListMultimap</td>
+<td>ImmutableMap</td>
+<td>ImmutableList</td>
+</tr>
+<tr>
+<td>ImmutableSetMultimap</td>
+<td>ImmutableMap</td>
+<td>ImmutableSet</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256876">HashMultimap</a></p>
+<p>除了两个不可变形式的实现，其他所有实现都支持null键和null值</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe31d4d3468dd2090a78bd85a2dcafb6d?method=download&shareKey=73d9960eedca5018e97e5a8319f4baf7" alt="内部有totalSize记录元素总个数"></p>
+<p>内部有totalSize记录元素总个数</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB1f15feb10d0b7b1021d693b69b14ead0?method=download&shareKey=8c81ef3a8b91c71f3c000bea4b0fea4a" alt="get方法不会返回null"></p>
+<p>get方法不会返回null</p>
+<h4 id="BiMap"><a href="#BiMap" class="headerlink" title="BiMap"></a>BiMap</h4><p>传统上，实现键值对的双向映射需要维护两个单独的map，并保持它们间的同步。但这种方式很容易出错，而且对于值已经在map中的情况，会变得非常混乱。<br>BiMap&lt;K, V&gt;是特殊的Map：<br>可以用 inverse()反转BiMap&lt;K, V&gt;的键值映射<br>保证值是唯一的，因此 values()返回Set而不是普通的Collection</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun8</span><span class="params">()</span> </span>&#123;        BiMap&lt;String, String&gt; weekNameMap = HashBiMap.create();        weekNameMap.put(<span class="string">&quot;星期一&quot;</span>, <span class="string">&quot;Monday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期二&quot;</span>, <span class="string">&quot;Tuesday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期三&quot;</span>, <span class="string">&quot;Wednesday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期四&quot;</span>, <span class="string">&quot;Thursday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期五&quot;</span>, <span class="string">&quot;Friday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期六&quot;</span>, <span class="string">&quot;Saturday&quot;</span>);        weekNameMap.put(<span class="string">&quot;星期日&quot;</span>, <span class="string">&quot;Sunday&quot;</span>);        System.out.println(<span class="string">&quot;星期日的英文名是&quot;</span> + weekNameMap.get(<span class="string">&quot;星期日&quot;</span>));        System.out.println(<span class="string">&quot;Sunday的中文是&quot;</span> + weekNameMap.inverse().get(<span class="string">&quot;Sunday&quot;</span>));    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>向BiMap中添加两个相同的value会抛异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun9</span><span class="params">()</span> </span>&#123;        BiMap&lt;String, String&gt; biMap = HashBiMap.create();        biMap.put(<span class="string">&quot;小猫&quot;</span>, <span class="string">&quot;喵喵喵&quot;</span>);        biMap.put(<span class="string">&quot;小狗&quot;</span>, <span class="string">&quot;汪汪汪&quot;</span>);        biMap.put(<span class="string">&quot;小猪&quot;</span>, <span class="string">&quot;哼哼哼&quot;</span>);        <span class="comment">// 有个讨厌鬼，也是一天到晚哼哼哼        // biMap.put(&quot;讨厌鬼&quot;, &quot;哼哼哼&quot;);        // forcePut 当value相同而key不同时，删除原来的，再新加入一个元素        //biMap.forcePut(&quot;讨厌鬼&quot;, &quot;哼哼哼&quot;);        // java.lang.IllegalArgumentException 参数非法        // 哪天小狗突然成精了        biMap.put(&quot;小狗&quot;, &quot;你好啊&quot;);        Map&lt;String, String&gt; map = biMap.inverse();        System.out.println(map);    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面看一下BiMap的 添加删除和插入方法</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256945">BiMap</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> V <span class="title">put</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value, <span class="keyword">boolean</span> force)</span> </span>&#123;    <span class="comment">//获取传入key的hash值    int keyHash = smearedHash(key);    //获取传入value的hash值    int valueHash = smearedHash(value);	//去hashTableKToV里根据key寻找Entry    BiEntry&lt;K, V&gt; oldEntryForKey = seekByKey(key, keyHash);    if (oldEntryForKey != null        &amp;&amp; valueHash == oldEntryForKey.valueHash        &amp;&amp; Objects.equal(value, oldEntryForKey.value)) &#123;        //如果这个key值存在，并且value也相等，无需更新，则返回这个value      return value;    &#125;	//去hashTableVToK里根据value选择Entry    BiEntry&lt;K, V&gt; oldEntryForValue = seekByValue(value, valueHash);    if (oldEntryForValue != null) &#123;        //如果存在，则判断force（第三个参数）是否为false      if (force) &#123;          //如果force（第三个参数）为true，则删除这个节点，这个方法是双向删除        delete(oldEntryForValue);      &#125; else &#123;          //抛出异常，否则会出现一个value对应多个key的情况，inverse后无法处理        throw new IllegalArgumentException(&quot;value already present: &quot; + value);      &#125;    &#125;    	//根据key，value，keyHash，valueHash创建一个BiEntry    BiEntry&lt;K, V&gt; newEntry = new BiEntry&lt;K, V&gt;(key, keyHash, value, valueHash);    if (oldEntryForKey != null) &#123;//？？      delete(oldEntryForKey);        //插入新的BiEntry      insert(newEntry, oldEntryForKey);      oldEntryForKey.prevInKeyInsertionOrder = null;      oldEntryForKey.nextInKeyInsertionOrder = null;      rehashIfNecessary();//扩容      return oldEntryForKey.value;    &#125; else &#123;//插入新键值对的情况      insert(newEntry, null);      rehashIfNecessary();//扩容      return null;    &#125;  &#125;  private void delete(BiEntry&lt;K, V&gt; entry) &#123;    int keyBucket = entry.keyHash &amp; mask;//删除hashTableKToV中的Entry    BiEntry&lt;K, V&gt; prevBucketEntry = null;    for (BiEntry&lt;K, V&gt; bucketEntry = hashTableKToV[keyBucket];        true;        bucketEntry = bucketEntry.nextInKToVBucket) &#123;      if (bucketEntry == entry) &#123;        if (prevBucketEntry == null) &#123;          hashTableKToV[keyBucket] = entry.nextInKToVBucket;        &#125; else &#123;          prevBucketEntry.nextInKToVBucket = entry.nextInKToVBucket;        &#125;        break;      &#125;      prevBucketEntry = bucketEntry;    &#125;    int valueBucket = entry.valueHash &amp; mask;//删除hashTableVToK中的Entry    prevBucketEntry = null;    for (BiEntry&lt;K, V&gt; bucketEntry = hashTableVToK[valueBucket];        true;        bucketEntry = bucketEntry.nextInVToKBucket) &#123;      if (bucketEntry == entry) &#123;        if (prevBucketEntry == null) &#123;          hashTableVToK[valueBucket] = entry.nextInVToKBucket;        &#125; else &#123;          prevBucketEntry.nextInVToKBucket = entry.nextInVToKBucket;        &#125;        break;      &#125;      prevBucketEntry = bucketEntry;    &#125;    if (entry.prevInKeyInsertionOrder == null) &#123;      firstInKeyInsertionOrder = entry.nextInKeyInsertionOrder;    &#125; else &#123;      entry.prevInKeyInsertionOrder.nextInKeyInsertionOrder = entry.nextInKeyInsertionOrder;    &#125;    if (entry.nextInKeyInsertionOrder == null) &#123;      lastInKeyInsertionOrder = entry.prevInKeyInsertionOrder;    &#125; else &#123;      entry.nextInKeyInsertionOrder.prevInKeyInsertionOrder = entry.prevInKeyInsertionOrder;    &#125;    size--;    modCount++;  &#125;  private void insert(BiEntry&lt;K, V&gt; entry, @Nullable BiEntry&lt;K, V&gt; oldEntryForKey) &#123;    int keyBucket = entry.keyHash &amp; mask;    entry.nextInKToVBucket = hashTableKToV[keyBucket];    hashTableKToV[keyBucket] = entry;    int valueBucket = entry.valueHash &amp; mask;    entry.nextInVToKBucket = hashTableVToK[valueBucket];    hashTableVToK[valueBucket] = entry;    if (oldEntryForKey == null) &#123;      entry.prevInKeyInsertionOrder = lastInKeyInsertionOrder;      entry.nextInKeyInsertionOrder = null;      if (lastInKeyInsertionOrder == null) &#123;        firstInKeyInsertionOrder = entry;      &#125; else &#123;        lastInKeyInsertionOrder.nextInKeyInsertionOrder = entry;      &#125;      lastInKeyInsertionOrder = entry;    &#125; else &#123;      entry.prevInKeyInsertionOrder = oldEntryForKey.prevInKeyInsertionOrder;      if (entry.prevInKeyInsertionOrder == null) &#123;        firstInKeyInsertionOrder = entry;      &#125; else &#123;        entry.prevInKeyInsertionOrder.nextInKeyInsertionOrder = entry;      &#125;      entry.nextInKeyInsertionOrder = oldEntryForKey.nextInKeyInsertionOrder;      if (entry.nextInKeyInsertionOrder == null) &#123;        lastInKeyInsertionOrder = entry;      &#125; else &#123;        entry.nextInKeyInsertionOrder.prevInKeyInsertionOrder = entry;      &#125;    &#125;    size++;    modCount++;  &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意！</strong>inverse方法返回一个反转后的BiMap，即key/value互相切换的映射。这个反转的map并不是一个新的map，而是一个<strong>视图</strong>，这意味着，你在这个反转后的map中的任何增删改操作都会影响原来的map</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun10</span><span class="params">()</span> </span>&#123;        BiMap&lt;String, Integer&gt; biMap = HashBiMap.create();        biMap.put(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>);        biMap.put(<span class="string">&quot;b&quot;</span>, <span class="number">2</span>);        biMap.put(<span class="string">&quot;c&quot;</span>, <span class="number">3</span>);        biMap.put(<span class="string">&quot;d&quot;</span>, <span class="number">4</span>);        biMap.put(<span class="string">&quot;e&quot;</span>, <span class="number">5</span>);        Map&lt;Integer, String&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, String&gt;();        map = biMap.inverse();        System.out.println(biMap);        System.out.println(map);        map.put(<span class="number">1</span>, <span class="string">&quot;aaa&quot;</span>);        System.out.println(<span class="string">&quot;=========================&quot;</span>);        System.out.println(biMap);        System.out.println(map);    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="集合工具类"><a href="#集合工具类" class="headerlink" title="集合工具类"></a>集合工具类</h3><h4 id="Collection2"><a href="#Collection2" class="headerlink" title="Collection2"></a>Collection2</h4><p>filter（）：只保留集合中满足特定要求的元素</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun11</span><span class="params">()</span> </span>&#123;        String str = <span class="string">&quot;no zuo no die why you try no try no high give me five&quot;</span>;        List&lt;String&gt; list = Lists.newArrayList(str.split(<span class="string">&quot; &quot;</span>));        Collection&lt;String&gt; filterList = Collections2.filter(list, input -&gt; &#123;            <span class="keyword">return</span> input.length() &gt; <span class="number">3</span>;<span class="comment">// 找长度大于3的单词        &#125;);        System.out.println(filterList);        /*             [high, give, five]         */    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>transform（）：类型转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun12</span><span class="params">()</span> </span>&#123;        Set&lt;Long&gt; times = Sets.newHashSet(<span class="number">91299990701L</span>, <span class="number">9320001010L</span>, <span class="number">9920170621L</span>);        Collection&lt;String&gt; timeStrCol = Collections2.transform(times, <span class="keyword">new</span> Function&lt;Long, String&gt;() &#123;            <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(Long input)</span> </span>&#123;                <span class="keyword">return</span> <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>).format(input);            &#125;        &#125;);        System.out.println(timeStrCol);        <span class="comment">/*              [1970-04-19, 1970-04-26, 1972-11-23]         */</span>    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>多个Function组合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun13</span><span class="params">()</span> </span>&#123;        String str = <span class="string">&quot;no zuo no die why you try no try no high give me five&quot;</span>;        List&lt;String&gt; list = Lists.newArrayList(str.split(<span class="string">&quot; &quot;</span>));        <span class="comment">// 只要前三个字符        Function&lt;String, String&gt; f1 = new Function&lt;String, String&gt;() &#123;            @Override            public String apply(String input) &#123;                return input.length() &gt; 3 ? input.substring(0, 3) : input;            &#125;        &#125;;        // 转成大写        Function&lt;String, String&gt; f2 = new Function&lt;String, String&gt;() &#123;            @Override            public String apply(String input) &#123;                return input.toUpperCase();            &#125;        &#125;;        // 拼接字符串        Function&lt;String, String&gt; f3 = new Function&lt;String, String&gt;() &#123;            @Override            public String apply(String input) &#123;                return input + &quot;end&quot;;            &#125;        &#125;;        Function&lt;String, String&gt; f4 = Functions.compose(f1, f2);        Function&lt;String, String&gt; function = Functions.compose(f3, f4);        Collection&lt;String&gt; results = Collections2.transform(list, function);        System.out.println(results);        /*            [NOend, ZUOend, NOend, DIEend, WHYend, YOUend, TRYend, NOend, TRYend, NOend, HIGend, GIVend, MEend, FIVend]        */    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的transform(function1,function2)是有顺序的，会先执行function2函数，再执行function1<br>比如这里如果把f3和f4的位置交换，结果就变成：<br>[NOE, ZUO, NOE, DIE, WHY, YOU, TRY, NOE, TRY, NOE, HIG, GIV, MEE, FIV]</p>
+<h4 id="Iterables-迭代器工具集"><a href="#Iterables-迭代器工具集" class="headerlink" title="Iterables 迭代器工具集"></a>Iterables 迭代器工具集</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun15</span><span class="params">()</span> </span>&#123;        Iterable&lt;Integer&gt; concate = Iterables.concat(Ints.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>), Ints.asList(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>));        System.out.println(<span class="string">&quot;链接：&quot;</span> + concate);        System.out.println(<span class="string">&quot;元素2出现次数：&quot;</span> + Iterables.frequency(concate, <span class="number">2</span>));        System.out.println(<span class="string">&quot;按照指定长度拆分集合：&quot;</span> + Iterables.partition(concate, <span class="number">2</span>));        System.out.println(<span class="string">&quot;第一个元素，为空返回默认：&quot;</span> + Iterables.getFirst(concate, <span class="number">99</span>));        System.out.println(<span class="string">&quot;最后元素：&quot;</span> + Iterables.getLast(concate));    &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Lists-列表工具集"><a href="#Lists-列表工具集" class="headerlink" title="Lists 列表工具集"></a>Lists 列表工具集</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; list = Lists.newArrayList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);        List&lt;Integer&gt; reverseList = Lists.reverse(list);        System.out.println(<span class="string">&quot;反转：&quot;</span> + reverseList);        System.out.println(<span class="string">&quot;拆分:&quot;</span> + Lists.partition(list, <span class="number">2</span>));        list.set(<span class="number">4</span>, <span class="number">10</span>);        <span class="comment">// 并不是真的把List的元素倒转了，之前改变了index的值;改变原List，reserveList也会改变;反之亦然        System.out.println(reverseList); // &#123;10, 4, 3, 2, 1&#125;        reverseList.set(4, 100);        System.out.println(list); // &#123;100, 2, 3, 4, 10&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Sets-集合工具集"><a href="#Sets-集合工具集" class="headerlink" title="Sets 集合工具集"></a>Sets 集合工具集</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun14</span><span class="params">()</span> </span>&#123;        Set&lt;Integer&gt; set1 = Sets.newHashSet(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);        Set&lt;Integer&gt; set2 = Sets.newHashSet(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>);        <span class="comment">// 交集        Sets.SetView&lt;Integer&gt; inter = Sets.intersection(set1, set2);        System.out.println(inter);        // 差集,在A中不在B中        Sets.SetView&lt;Integer&gt; diff = Sets.difference(set1, set2);        System.out.println(diff);        // 并集        Sets.SetView&lt;Integer&gt; union = Sets.union(set1, set2);        System.out.println(union);        // 笛卡尔积        Set&lt;List&lt;Integer&gt;&gt; cartesian = Sets.cartesianProduct(set1, set2);        System.out.println(cartesian);        // 子集        Set&lt;Set&lt;Integer&gt;&gt; power = Sets.powerSet(set1);        power.forEach(System.out::print);        /*            [3, 4, 5]            [1, 2]            [1, 2, 3, 4, 5, 6]            [1, 2, 6]            [[1, 3], [1, 4], [1, 5], [1, 6], [2, 3], [2, 4], [2, 5], [2, 6], [3, 3], [3, 4], [3, 5], [3, 6], [4, 3], [4, 4], [4, 5], [4, 6], [5, 3], [5, 4], [5, 5], [5, 6]]            [][1][2][1, 2][3][1, 3][2, 3][1, 2, 3][4][1, 4][2, 4][1, 2, 4][3, 4][1, 3, 4][2, 3, 4][1, 2, 3, 4][5][1, 5][2, 5][1, 2, 5][3, 5][1, 3, 5][2, 3, 5][1, 2, 3, 5][4, 5][1, 4, 5][2, 4, 5][1, 2, 4, 5][3, 4, 5][1, 3, 4, 5][2, 3, 4, 5][1, 2, 3, 4, 5]                */    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Maps-集合工具集"><a href="#Maps-集合工具集" class="headerlink" title="Maps 集合工具集"></a>Maps 集合工具集</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun17</span><span class="params">()</span> </span>&#123;        Map&lt;String, Integer&gt; map1 = Maps.newHashMap();        map1.put(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>);        map1.put(<span class="string">&quot;b&quot;</span>, <span class="number">2</span>);        map1.put(<span class="string">&quot;d&quot;</span>, <span class="number">5</span>);        Map&lt;String, Integer&gt; map2 = Maps.newHashMap();        map2.put(<span class="string">&quot;a&quot;</span>, <span class="number">1</span>);        map2.put(<span class="string">&quot;b&quot;</span>, <span class="number">3</span>);        map2.put(<span class="string">&quot;c&quot;</span>, <span class="number">4</span>);        MapDifference&lt;String, Integer&gt; mapDifference = Maps.difference(map1, map2);        System.out.println(<span class="string">&quot;共有的：&quot;</span> + mapDifference.entriesInCommon());        System.out.println(<span class="string">&quot;key相同，value不同：&quot;</span> + mapDifference.entriesDiffering());        System.out.println(<span class="string">&quot;左边独有的：&quot;</span> + mapDifference.entriesOnlyOnLeft());        System.out.println(<span class="string">&quot;右边独有的：&quot;</span> + mapDifference.entriesOnlyOnRight());    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>Maps.uniqueIndex(Iterable,Function)通常针对的场景是：有一组对象，它们在某个属性上分别有独一无二的值，而我们希望能够按照这个属性值查找对象——译者注：这个方法返回一个Map，键为Function返回的属性值，值为Iterable中相应的元素，因此我们可以反复用这个Map进行查找操作。</p>
+<p>比方说，我们有一堆字符串，这些字符串的长度都是独一无二的，而我们希望能够按照特定长度查找字符串：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun18</span><span class="params">()</span> </span>&#123;                String str = <span class="string">&quot;I love you&quot;</span>;        ImmutableMap&lt;Integer, String&gt; stringsByIndex            = Maps.uniqueIndex(Lists.newArrayList(str.split(<span class="string">&quot; &quot;</span>)), <span class="keyword">new</span> Function&lt;String, Integer&gt;() &#123;                <span class="function"><span class="keyword">public</span> Integer <span class="title">apply</span><span class="params">(String string)</span> </span>&#123;                    <span class="keyword">return</span> string.length();                &#125;            &#125;);        System.out.println(stringsByIndex);        <span class="comment">/*        &#123;1=I, 4=love, 3=you&#125;        */</span>    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>作为Maps.uniqueIndex的兄弟方法，Multimaps.index(Iterable, Function)通常针对的场景是：有一组对象，它们有共同的特定属性，我们希望按照这个属性的值查询对象，但属性值不一定是独一无二的。</p>
+<p>比方说，我们想把字符串按长度分组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">&quot;no zuo no die why you try no try no high give me five&quot;</span>;        ImmutableSet&lt;String&gt; digits = ImmutableSet.copyOf(Lists.newArrayList(str.split(<span class="string">&quot; &quot;</span>)));        Function&lt;String, Integer&gt; lengthFunction = <span class="keyword">new</span> Function&lt;String, Integer&gt;() &#123;            <span class="function"><span class="keyword">public</span> Integer <span class="title">apply</span><span class="params">(String string)</span> </span>&#123;                <span class="keyword">return</span> string.length();            &#125;        &#125;;        ImmutableListMultimap&lt;Integer, String&gt; digitsByLength= Multimaps.index(digits, lengthFunction);        System.out.println(digitsByLength);		<span class="comment">/*		&#123;2=[no, me], 3=[zuo, die, why, you, try], 4=[high, give, five]&#125;		*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="PeekingIterator"><a href="#PeekingIterator" class="headerlink" title="PeekingIterator"></a><strong>PeekingIterator</strong></h4><p>有时候普通的Iterator 接口不够。<br>Iterators 支持方法 Iterators.peekingIterator(Iterator), 其 包装了一个 Iterator 返回 PeekingIterator, 是一种Iterator 的子类能够让你 peek() 在下一次调用next()时返回的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">&quot;no no zuo no die why you try no try no high give me me five&quot;</span>;        List&lt;String&gt; source = Lists.newArrayList(str.split(<span class="string">&quot; &quot;</span>));        List&lt;String&gt; result = Lists.newArrayList();        PeekingIterator&lt;String&gt; iter = Iterators.peekingIterator(source.iterator());        <span class="keyword">while</span> (iter.hasNext()) &#123;            String current = iter.next();            <span class="keyword">while</span> (iter.hasNext() &amp;&amp; iter.peek().equals(current)) &#123;                iter.next();            &#125;            result.add(current);        &#125;        System.out.println(result);		<span class="comment">/*		[no, zuo, no, die, why, you, try, no, try, no, high, give, me, five]		*/</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>: Iterators 返回 PeekingIterator 。peekingIterator 不支持 在调用 peek()之后.remove() 。</p>
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/09/12/guava-collect/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/09/12/guava-collect/";
+            const title         = "「guava-collect」";
+            const excerpt       = `guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitive...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/guava/" rel="tag">guava</a>, <a class="tag-none-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-09-12</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Windows下安装nodejs" href="/2021/09/12/Windows下安装nodejs/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" arthas-and-javaagent" href="/2021/09/12/arthas-and-javaagent/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/head.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">爱的小窝吧</p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guava-collect%E5%88%86%E4%BA%AB"><span class="toc-text">guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%88%86%E4%BA%AB/">Java分享</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/Java/" style="font-size: 0.6em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/arthas/" style="font-size: 0.6em;">arthas</a> <a href="/tags/guava/" style="font-size: 0.6em;">guava</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E7%89%87%E6%BA%90/" style="font-size: 0.6em;">片源</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" style="font-size: 0.6em;">系统检测</a> <a href="/tags/%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" style="font-size: 0.6em;">配置修改</a> <a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" style="font-size: 0.6em;">问题排查</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 0.6em;">集合</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/arthas-and-javaagent/"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/guava-collect/"><i class="fa  fa-book"></i> guava-collect</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Windows%E4%B8%8B%E5%AE%89%E8%A3%85nodejs/"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/%E7%89%87%E6%BA%90%E7%BD%91%E7%AB%99%E5%90%88%E9%9B%86/"><i class="fa  fa-book"></i> 片源网站合集</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/IDEA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"><i class="fa  fa-book"></i> IDEA安装配置</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 小窝吧 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="776590239"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

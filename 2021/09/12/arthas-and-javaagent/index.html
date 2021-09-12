@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/head.webp">
+  <title>arthas-and-javaagent | 小窝吧</title>
+  <meta name="author" content="pengjianzhong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="arthas, javaagent, 系统检测, 问题排查" />
+  
+  <meta name="description" content="ArthasArthas（阿尔萨斯） 是基于 Greys 进行二次开发的全新在线诊断工具，利用Java6的Instrumentation特性，动态增强你所指定的类，获取你想要到的信息, 采用命令行交互模式，同时提供丰富的 Tab 自动补全功能，让你轻松定位、分析诊断问题 Arthas 能为你做什么？ 这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？ 我改的代码为什么没有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="arthas-and-javaagent">
+<meta property="og:url" content="http://example.com/2021/09/12/arthas-and-javaagent/index.html">
+<meta property="og:site_name" content="小窝吧">
+<meta property="og:description" content="ArthasArthas（阿尔萨斯） 是基于 Greys 进行二次开发的全新在线诊断工具，利用Java6的Instrumentation特性，动态增强你所指定的类，获取你想要到的信息, 采用命令行交互模式，同时提供丰富的 Tab 自动补全功能，让你轻松定位、分析诊断问题 Arthas 能为你做什么？ 这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？ 我改的代码为什么没有">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/head.webp">
+<meta property="article:published_time" content="2021-09-12T03:35:11.000Z">
+<meta property="article:modified_time" content="2021-09-12T03:39:51.514Z">
+<meta property="article:author" content="pengjianzhong">
+<meta property="article:tag" content="arthas">
+<meta property="article:tag" content="javaagent">
+<meta property="article:tag" content="系统检测">
+<meta property="article:tag" content="问题排查">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/head.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">小窝吧</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>小窝吧</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">arthas-and-javaagent</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 pengjianzhong</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.97K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1631417991514"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Arthas"><span class="toc-number">1.</span> <span class="toc-text">Arthas</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Arthas-%E8%83%BD%E4%B8%BA%E4%BD%A0%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">Arthas 能为你做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Arthas%E7%9A%84%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Arthas的安装以及使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#logger"><span class="toc-number">1.3.1.</span> <span class="toc-text">logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jad"><span class="toc-number">1.3.2.</span> <span class="toc-text">jad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mc"><span class="toc-number">1.3.3.</span> <span class="toc-text">mc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redefine"><span class="toc-number">1.3.4.</span> <span class="toc-text">redefine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">1.3.5.</span> <span class="toc-text">热更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#watch"><span class="toc-number">1.3.6.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trace"><span class="toc-number">1.3.7.</span> <span class="toc-text">trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ognl"><span class="toc-number">1.3.8.</span> <span class="toc-text">ognl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-number">1.3.9.</span> <span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shutdown"><span class="toc-number">1.3.10.</span> <span class="toc-text">shutdown</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDEA%E6%8F%92%E4%BB%B6"><span class="toc-number">1.4.</span> <span class="toc-text">IDEA插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Javaagent"><span class="toc-number">2.</span> <span class="toc-text">Javaagent</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E6%88%90"><span class="toc-number">2.2.</span> <span class="toc-text">集成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#agent-properties%E8%AF%B4%E6%98%8E"><span class="toc-number">2.2.1.</span> <span class="toc-text">agent.properties说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#agent%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="toc-number">2.3.</span> <span class="toc-text">agent日志分析器使用</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <h1 id="Arthas"><a href="#Arthas" class="headerlink" title="Arthas"></a>Arthas</h1><p>Arthas（阿尔萨斯） 是基于 Greys 进行二次开发的全新在线诊断工具，利用Java6的Instrumentation特性，<br>动态增强你所指定的类，获取你想要到的信息, 采用命令行交互模式，同时提供丰富的 Tab 自动补全功能，<br>让你轻松定位、分析诊断问题</p>
+<h2 id="Arthas-能为你做什么？"><a href="#Arthas-能为你做什么？" class="headerlink" title="Arthas 能为你做什么？"></a>Arthas 能为你做什么？</h2><ul>
+<li>这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？</li>
+<li>我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？</li>
+<li>遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？</li>
+<li>线上遇到某个用户的数据处理有问题，但线上同样无法 debug，线下无法重现！</li>
+<li>是否有一个全局视角来查看系统的运行状况？</li>
+<li>有什么办法可以监控到JVM的实时运行状态？</li>
+<li>怎么快速定位应用的热点，生成火焰图？</li>
+</ul>
+<h2 id="Arthas的安装以及使用"><a href="#Arthas的安装以及使用" class="headerlink" title="Arthas的安装以及使用"></a>Arthas的安装以及使用</h2><p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/install-detail.html">下载安装</a></p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/commands.html">命令列表</a></p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h3><p>查看logger信息，更新logger level</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/logger.html">使用参考</a></p>
+<p>代码中打印日志写的logger.debug，现场日志配置的error，怎么办</p>
+<p>logger -n 查看 某个类或某个包的日志级别</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@13388]$</span><span class="bash"> logger -n com.thunisoft.arthasandjavaagent.Controller.MyController</span></span><br><span class="line"> name                com.thunisoft.arthasandjavaagent.Controller.MyController</span><br><span class="line"> class               ch.qos.logback.classic.Logger</span><br><span class="line"> classLoader         sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line"> classLoaderHash     18b4aac2</span><br><span class="line"> level               null</span><br><span class="line"> effectiveLevel      ERROR</span><br><span class="line"> additivity          true</span><br><span class="line"> codeSource          file:/F:/repository/maven2/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar</span><br></pre></td></tr></table></figure>
+
+<p>logger -n [类名/包名] –level [日志级别]</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@13388]$</span><span class="bash"> logger -n com.thunisoft.arthasandjavaagent.Controller.MyController --level debug</span></span><br><span class="line">Update logger level success.</span><br></pre></td></tr></table></figure>
+
+<h3 id="jad"><a href="#jad" class="headerlink" title="jad"></a>jad</h3><p>反编译指定已加载类的源码</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/jad.html">使用参考</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[arthas@<span class="number">13388</span>]$ jad com.thunisoft.arthasandjavaagent.Controller.MyController</span><br><span class="line"></span><br><span class="line">ClassLoader:</span><br><span class="line">+-sun.misc.Launcher$AppClassLoader@18b4aac2</span><br><span class="line">  +-sun.misc.Launcher$ExtClassLoader@7f77e91b</span><br><span class="line"></span><br><span class="line">Location:</span><br><span class="line">/E:/code_git/arthas-and-javaagent/target/classes/</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Decompiled with CFR.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> com.thunisoft.arthasandjavaagent.Controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController(value=&quot;/&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value=&#123;&quot;dog&quot;&#125;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">dog</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.logger.debug(<span class="string">&quot;打印日志--dog&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;请求的是dog&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value=&#123;&quot;cat&quot;&#125;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">cat</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;请求的是cat&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Affect(row-cnt:<span class="number">1</span>) cost in <span class="number">619</span> ms.</span><br></pre></td></tr></table></figure>
+
+<h3 id="mc"><a href="#mc" class="headerlink" title="mc"></a>mc</h3><p>Memory Compiler/内存编译器，编译<code>.java</code>文件生成<code>.class</code></p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/mc.html">使用参考</a></p>
+<ul>
+<li>在 Arthas Console 上，反编译出来的源码是带语法高亮的，阅读更方便</li>
+<li>当然，反编译出来的 java 代码可能会存在语法错误，但不影响你进行阅读理解</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@20752]$</span><span class="bash"> mc -c 18b4aac2 -d d:/arthas d:/arthas/MyController.java</span></span><br><span class="line">Memory compiler output:</span><br><span class="line">d:\arthas\com\thunisoft\arthasandjavaagent\Controller\MyController.class</span><br><span class="line">Affect(row-cnt:1) cost in 151 ms.</span><br></pre></td></tr></table></figure>
+
+<h3 id="redefine"><a href="#redefine" class="headerlink" title="redefine"></a>redefine</h3><p>加载外部的<code>.class</code>文件，redefine jvm已加载的类。</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/redefine.html">使用参考</a></p>
+<ul>
+<li>redefine的class不能修改、添加、删除类的field和method，包括方法参数、方法名称及返回值</li>
+<li>如果mc失败，可以在本地开发环境编译好class文件，上传到目标系统，使用redefine热加载class</li>
+<li>目前redefine 和watch/trace/jad/tt等命令冲突，以后重新实现redefine功能会解决此问题</li>
+</ul>
+<blockquote>
+<p>注意， redefine后的原来的类不能恢复，redefine有可能失败（比如增加了新的field），参考jdk本身的文档。</p>
+</blockquote>
+<blockquote>
+<p><code>reset</code>命令对<code>redefine</code>的类无效。如果想重置，需要<code>redefine</code>原始的字节码。</p>
+</blockquote>
+<blockquote>
+<p><code>redefine</code>命令和<code>jad</code>/<code>watch</code>/<code>trace</code>/<code>monitor</code>/<code>tt</code>等命令会冲突。执行完<code>redefine</code>之后，如果再执行上面提到的命令，则会把<code>redefine</code>的字节码重置。 原因是jdk本身redefine和Retransform是不同的机制，同时使用两种机制来更新字节码，只有最后修改的会生效。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@20752]$</span><span class="bash"> redefine  d:/arthas/com/thunisoft/arthasandjavaagent/Controller/MyController.class</span></span><br><span class="line">redefine success, size: 1, classes:</span><br><span class="line">com.thunisoft.arthasandjavaagent.Controller.MyController</span><br></pre></td></tr></table></figure>
+
+<h3 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a><font color="red">热更新</font></h3><ul>
+<li>背景：项目部署到现场之后发现出现了一个BUG，查看日志发现日志内发现抛出了一个空指针，本地不能复现。</li>
+<li>before：远程到生产环境，或者驻地操作，将现场环境的报错的class发回，用反编译软件打开，看下代码是否和本地研发环境一致。然后再出错的地方加日志然后发替换文件给驻地替换重启，操作之后发回日志，定位问题然后修改。缺点：耗时太长并且生产环境不能随便重启，万一驻地不配合或者有事外出那就阻断在了这里，而且辛辛苦苦哪个替换文件只是加个日志太浪费资源了，并且在后期docker化之后，出替换文件很困难，驻地不一定会配合了。</li>
+<li>after：丢一个Arthas到生成环境上（或者可以将Arthas安装到你的镜像里或者在docker上启动，就可以在docker容器里利用Arthas来排查问题），然后启动Arthas，利用Arthas的watch命令查看函数的返回值，如果需要添加日志或者修改代码测试，可以利用Arthas的热更新，来不重启立即更新代码检测，立马就可以定位问题，如果的确是代码问题就走流程解决。比起之前的方法的优点就是可以很快的定位问题不用重启系统也可以解决，缺点是如果不慎重用热更新会被同事追杀的。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. 反编译代码保存到本地。</span><br><span class="line">	jad --source-only packagename.classname &gt; 本地位置/文件名.java</span><br><span class="line">	例：jad --source-only com.thunisoft.arthasandjavaagent.Controller.MyController &gt; d:/arthas/MyController .java</span><br><span class="line">2. 修改反编译的java文件</span><br><span class="line">3. sc命令查找该类的类加载器。</span><br><span class="line">	sc -d 类名 | grep classLoaderHash</span><br><span class="line">	例：$ sc -d com.thunisoft.arthasandjavaagent.Controller.MyController | grep classLoaderHash</span><br><span class="line">4. mc内存编译代码,-c参数</span><br><span class="line">   	mc -c 类加载器ID /文件路径/文件名.java -d /目标路径</span><br><span class="line">   	例：$ mc -c 18b4aac2 d:/arthas/MyController.java -d d:/arthas</span><br><span class="line">5. redefine热更新代码，再使用redefine命令重新加载新编译好的class</span><br><span class="line">   	redefine mc命令执行后输出的class文件路径</span><br><span class="line">   	例：$ redefine d:/arthas/com/thunisoft/arthasandjavaagent/Controller/MyController.class</span><br><span class="line">6. 检验热更新结果</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果本地有源码且和生产环境一致，可直接在本地修改java文件，编译为class后放到服务器上，直接到步骤5</strong></p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a><font color ="red">watch</font></h3><p>方法执行数据观测</p>
+<p>让你能方便的观察到指定方法的调用情况。能观察到的范围为：<code>返回值</code>、<code>抛出异常</code>、<code>入参</code>，通过编写 OGNL 表达式进行对应变量的查看。</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/watch.html">使用参考</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@18832]$</span><span class="bash"> watch com.thunisoft.arthasandjavaagent.Controller.MyController cat <span class="string">&#x27;&#123;target,params,returnObj&#125;&#x27;</span>  -x 2</span></span><br><span class="line">Press Q or Ctrl+C to abort.</span><br><span class="line">Affect(class count: 1 , method count: 2) cost in 25 ms, listenerId: 12</span><br><span class="line">ts=2020-11-11 15:28:46; [cost=0.0563ms] result=@ArrayList[</span><br><span class="line">    @MyController[</span><br><span class="line">        logger=@Logger[Logger[com.thunisoft.arthasandjavaagent.Controller.MyController]],</span><br><span class="line">        type=@Integer[1],</span><br><span class="line">    ],</span><br><span class="line">    @Object[][</span><br><span class="line">        @Integer[666],</span><br><span class="line">    ],</span><br><span class="line">    @String[请求的是cat,id?666],</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>target ：类属性</li>
+<li>params ：方法入参</li>
+<li>returnObj：方法返回值</li>
+<li>-x 遍历深度</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>class-pattern</em></td>
+<td>类名表达式匹配</td>
+</tr>
+<tr>
+<td><em>method-pattern</em></td>
+<td>方法名表达式匹配</td>
+</tr>
+<tr>
+<td><em>express</em></td>
+<td>观察表达式</td>
+</tr>
+<tr>
+<td><em>condition-express</em></td>
+<td>条件表达式</td>
+</tr>
+<tr>
+<td>[b]</td>
+<td>在<strong>方法调用之前</strong>观察</td>
+</tr>
+<tr>
+<td>[e]</td>
+<td>在<strong>方法异常之后</strong>观察</td>
+</tr>
+<tr>
+<td>[s]</td>
+<td>在<strong>方法返回之后</strong>观察</td>
+</tr>
+<tr>
+<td>[f]</td>
+<td>在<strong>方法结束之后</strong>(正常返回和异常返回)观察</td>
+</tr>
+<tr>
+<td>[E]</td>
+<td>开启正则表达式匹配，默认为通配符匹配</td>
+</tr>
+<tr>
+<td>[x:]</td>
+<td>指定输出结果的属性遍历深度，默认为 1</td>
+</tr>
+</tbody></table>
+<h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a><font color="red">trace</font></h3><p>方法内部调用路径，并输出方法路径上的每个节点上耗时</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@15120]$</span><span class="bash"> trace com.thunisoft.arthasandjavaagent.Controller.MyController bird</span></span><br><span class="line">Press Q or Ctrl+C to abort.</span><br><span class="line">Affect(class count: 1 , method count: 1) cost in 37 ms, listenerId: 4</span><br><span class="line">`---ts=2020-11-11 16:04:26;thread_name=http-nio-8080-exec-8;id=22;is_daemon=true;priority=5;TCCL=org.springframework.boot.web.embedded.tomcat.TomcatEmbeddedWebappClassLoader@281ce6bb</span><br><span class="line">    `---[4103.1963ms] com.thunisoft.arthasandjavaagent.Controller.MyController:bird()</span><br><span class="line">        +---[min=104.876ms,max=112.3655ms,total=1095.7671ms,count=10] com.thunisoft.arthasandjavaagent.Controller.MyController:sleep100ms() #42</span><br><span class="line">        +---[1003.7103ms] com.thunisoft.arthasandjavaagent.Controller.MyController:sleep1s() #44</span><br><span class="line">        `---[2003.1442ms] com.thunisoft.arthasandjavaagent.Controller.MyController:sleep2s() #45</span><br></pre></td></tr></table></figure>
+
+<h3 id="ognl"><a href="#ognl" class="headerlink" title="ognl"></a>ognl</h3><p>执行ognl表达式</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/ognl.html">使用参考</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@15180]$</span><span class="bash"> ognl  <span class="string">&quot;@com.thunisoft.arthasandjavaagent.Controller.MyController@name&quot;</span>@String[com.thunisoft.arthasandjavaagent.Controller.MyController]</span></span><br></pre></td></tr></table></figure>
+
+<p>一般项目中总能找到静态获取ApplicationContext的方法，通过这个方法获取到ApplicationContext，然后几乎可以执行所有context中bean 的方法</p>
+<p>其他用法自行学习ognl表达式</p>
+<h3 id="options"><a href="#options" class="headerlink" title="options"></a>options</h3><p>全局开关</p>
+<p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/options.html#">使用参考</a></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unsafe</td>
+<td>false</td>
+<td>是否支持对系统级别的类进行增强，打开该开关可能导致把JVM搞挂，请慎重选择！</td>
+</tr>
+<tr>
+<td>dump</td>
+<td>false</td>
+<td>是否支持被增强了的类dump到外部文件中，如果打开开关，class文件会被dump到<code>/$&#123;application working dir&#125;/arthas-class-dump/</code>目录下，具体位置详见控制台输出</td>
+</tr>
+<tr>
+<td>batch-re-transform</td>
+<td>true</td>
+<td>是否支持批量对匹配到的类执行retransform操作</td>
+</tr>
+<tr>
+<td><strong>json-format</strong></td>
+<td>false</td>
+<td>是否支持json化的输出</td>
+</tr>
+<tr>
+<td>disable-sub-class</td>
+<td>false</td>
+<td>是否禁用子类匹配，默认在匹配目标类的时候会默认匹配到其子类，如果想精确匹配，可以关闭此开关</td>
+</tr>
+<tr>
+<td>support-default-method</td>
+<td>true</td>
+<td>是否支持匹配到default method，默认会查找interface，匹配里面的default method。参考 <a target="_blank" rel="noopener" href="https://github.com/alibaba/arthas/issues/1105">#1105</a></td>
+</tr>
+<tr>
+<td><strong>save-result</strong></td>
+<td>false</td>
+<td>是否打开执行结果存日志功能，打开之后所有命令的运行结果都将保存到<code>~/logs/arthas-cache/result.log</code>中</td>
+</tr>
+<tr>
+<td>job-timeout</td>
+<td>1d</td>
+<td>异步后台任务的默认超时时间，超过这个时间，任务自动停止；比如设置 1d, 2h, 3m, 25s，分别代表天、小时、分、秒</td>
+</tr>
+<tr>
+<td>print-parent-fields</td>
+<td>true</td>
+<td>是否打印在parent class里的filed</td>
+</tr>
+</tbody></table>
+<p>保存运行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[arthas@15120]$</span><span class="bash"> options save-result <span class="literal">true</span> NAME         BEFORE-VALUE  AFTER-VALUE---------------------------------------- save-result  <span class="literal">false</span>         <span class="literal">true</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h3><p>如果只是退出当前的连接，可以用quit或者exit命令。Attach到目标进程上的arthas还会继续运行，端口会保持开放，下次连接时可以直接连接上。</p>
+<p>如果想完全退出arthas，可以执行shutdown命令。</p>
+<h2 id="IDEA插件"><a href="#IDEA插件" class="headerlink" title="IDEA插件"></a>IDEA插件</h2><p><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/idea-plugin.html">使用文档</a></p>
+<p>更多Arthas操作看<a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/">官方文档</a></p>
+<h1 id="Javaagent"><a href="#Javaagent" class="headerlink" title="Javaagent"></a>Javaagent</h1><p>以下内容复制于<a target="_blank" rel="noopener" href="https://github.com/dingjs/javaagent">官方文档中</a>的readme</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>javaagent是一个简单优雅的java agent,利用java自带的instrument特性+javassist字节码编辑技术，实现了无侵入的方法级性能监控。相比于NewRelic或者开源的<a target="_blank" rel="noopener" href="https://github.com/naver/pinpoint">pinpoint</a>,以及阿里的<a target="_blank" rel="noopener" href="https://github.com/alibaba/arthas">arthas</a>,本工具主打的是简单，我们只记录每个方法的执行次数和时间，并输出到json格式的日志文件中。基于javaagent的日志，你可以使用严丽同学开发的<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Ma4iEWRmBonGO1TapeEF-g">agent日志分析工具</a>进行分析查询，也可以使用<a target="_blank" rel="noopener" href="http://47.96.150.36:8080/">在线日志分析器</a>，或者可以自己去写分析器，这样可以让你快速定位生产环境的性能瓶颈。</p>
+<h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><p>java启动参数中就有javaagent,你只需要在JAVA_OPTS中加入<code>-javaagent:/opt/javaagent/javaagent.jar=/opt/javaagent/agent.properties</code>就实现了方法级监控。其中<code>=</code>前指定的是jar包的路径，<code>=</code>后指定的是对agent的一些配置参数。</p>
+<h3 id="agent-properties说明"><a href="#agent-properties说明" class="headerlink" title="agent.properties说明"></a>agent.properties说明</h3><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要监控的包，多个包用分号分隔agent.include.package=com.XXX# 不需要监控的包，多个包用分号分隔。 需要监控的包-不需要监控的包就是真正要监控的包agent.exclude.package=# 日志文件，会自动增加日期后缀agent.log.file=d\:\\agent.log# 日志输出周期agent.log.interval.seconds=600# 不需要监控的类的正则表达式agent.exclude.class.regex=# 是否记录平均时间agent.log.avg.execute.time=false# 默认不需要监控的类的正则表达式agent.exclude.class.regex.default=.*EnhancerByCGLIB.*;.*FastClassByCGLIB.*# 记录方法的耗时时是采用nanoTime,还是currentTimeMillis,nanoTime更准确，但是会耗时一些agent.log.nano=true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="agent日志分析器使用"><a href="#agent日志分析器使用" class="headerlink" title="agent日志分析器使用"></a>agent日志分析器使用</h2><p>agent日志分析器是我同事严丽使用SpringBoot+h2数据库开发的分析工具，除了基础功能，对于有sql能力的同学，你可以直接使用<a target="_blank" rel="noopener" href="http://47.96.150.36:8080/console">console</a>登录后，直接写sql进行统计，你可以按自己想要的维度来进行处理。</p>
+<ul>
+<li>JDBC URL: jdbc:h2:mem:~/h2test</li>
+<li>USer Name : sa</li>
+<li>Password : 空 登录后，你就可以尽情的写sql了。</li>
+</ul>
+<p>例：</p>
+<p>增加启动参数 -javaagent:D:/javaagent/javaagent-2.1.0.jar=D:/javaagent/agent.properties</p>
+<p>然后等着看日志</p>
+<p>日志记录一个周期内监控的包下，方法调用次数和时间</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[	&#123;		<span class="attr">&quot;class&quot;</span>: <span class="string">&quot;com.thunisoft.arthasandjavaagent.ArthasAndJavaagentApplication&quot;</span>,		<span class="attr">&quot;start&quot;</span>: <span class="string">&quot;2020-11-11 18:12:12&quot;</span>,		<span class="attr">&quot;end&quot;</span>: <span class="string">&quot;2020-11-11 18:13:12&quot;</span>,		<span class="attr">&quot;methods&quot;</span>: [			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;main&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">1</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">1970</span>			&#125;		]	&#125;,	&#123;		<span class="attr">&quot;class&quot;</span>: <span class="string">&quot;com.thunisoft.arthasandjavaagent.Controller.MyController&quot;</span>,		<span class="attr">&quot;start&quot;</span>: <span class="string">&quot;2020-11-11 18:12:12&quot;</span>,		<span class="attr">&quot;end&quot;</span>: <span class="string">&quot;2020-11-11 18:13:12&quot;</span>,		<span class="attr">&quot;methods&quot;</span>: [			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;sleep100ms&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">20</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">2190</span>			&#125;,			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;bird&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">2</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">8227</span>			&#125;,			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;cat&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">2</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">0</span>			&#125;,			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;dog&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">1</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">0</span>			&#125;,			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;sleep2s&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">2</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">4016</span>			&#125;,			&#123;				<span class="attr">&quot;name&quot;</span>: <span class="string">&quot;sleep1s&quot;</span>,				<span class="attr">&quot;counter&quot;</span>: <span class="number">2</span>,				<span class="attr">&quot;time&quot;</span>: <span class="number">2019</span>			&#125;		]	&#125;]</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2021/09/12/arthas-and-javaagent/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2021/09/12/arthas-and-javaagent/";
+            const title         = "「arthas-and-javaagent」";
+            const excerpt       = `ArthasArthas（阿尔萨斯） 是基于 Greys 进行二次开发的全新在线诊断工具，利用Java6的Instrumentation特性，动态增强你所指定的类，获取你想要到的信息, 采用命令行交互模式，同时提供丰富的 Tab 自动...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/arthas/" rel="tag">arthas</a>, <a class="tag-none-link" href="/tags/javaagent/" rel="tag">javaagent</a>, <a class="tag-none-link" href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" rel="tag">系统检测</a>, <a class="tag-none-link" href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" rel="tag">问题排查</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-09-12</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" guava-collect" href="/2021/09/12/guava-collect/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/head.webp" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">爱的小窝吧</p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Arthas"><span class="toc-text">Arthas</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Arthas-%E8%83%BD%E4%B8%BA%E4%BD%A0%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">Arthas 能为你做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Arthas%E7%9A%84%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="toc-text">Arthas的安装以及使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#logger"><span class="toc-text">logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jad"><span class="toc-text">jad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mc"><span class="toc-text">mc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redefine"><span class="toc-text">redefine</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="toc-text">热更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#watch"><span class="toc-text">watch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#trace"><span class="toc-text">trace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ognl"><span class="toc-text">ognl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#options"><span class="toc-text">options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shutdown"><span class="toc-text">shutdown</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDEA%E6%8F%92%E4%BB%B6"><span class="toc-text">IDEA插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Javaagent"><span class="toc-text">Javaagent</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E6%88%90"><span class="toc-text">集成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#agent-properties%E8%AF%B4%E6%98%8E"><span class="toc-text">agent.properties说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#agent%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="toc-text">agent日志分析器使用</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java%E5%88%86%E4%BA%AB/">Java分享</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/Java/" style="font-size: 0.6em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.6em;">Nginx</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/arthas/" style="font-size: 0.6em;">arthas</a> <a href="/tags/guava/" style="font-size: 0.6em;">guava</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E7%89%87%E6%BA%90/" style="font-size: 0.6em;">片源</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" style="font-size: 0.6em;">系统检测</a> <a href="/tags/%E9%85%8D%E7%BD%AE%E4%BF%AE%E6%94%B9/" style="font-size: 0.6em;">配置修改</a> <a href="/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" style="font-size: 0.6em;">问题排查</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 0.6em;">集合</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/arthas-and-javaagent/"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/guava-collect/"><i class="fa  fa-book"></i> guava-collect</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/Windows%E4%B8%8B%E5%AE%89%E8%A3%85nodejs/"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/%E7%89%87%E6%BA%90%E7%BD%91%E7%AB%99%E5%90%88%E9%9B%86/"><i class="fa  fa-book"></i> 片源网站合集</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/09/12/IDEA%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/"><i class="fa  fa-book"></i> IDEA安装配置</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 小窝吧 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="776590239"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
