@@ -116,13 +116,6 @@
   </url>
   
   <url>
-    <loc>http://atpjz.github.io/tags/Nginx/</loc>
-    <lastmod>2021-09-13</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://atpjz.github.io/tags/CentOs/</loc>
     <lastmod>2021-09-13</lastmod>
     <changefreq>daily</changefreq>
@@ -131,6 +124,13 @@
   
   <url>
     <loc>http://atpjz.github.io/tags/%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2021-09-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://atpjz.github.io/tags/Nginx/</loc>
     <lastmod>2021-09-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

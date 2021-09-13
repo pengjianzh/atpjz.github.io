@@ -1,0 +1,5 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+Sitemap: https://atpjz.github.io/sitemap.xml
+Sitemap: https://atpjz.github.io/baidusitemap.xml
