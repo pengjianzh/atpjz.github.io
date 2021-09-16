@@ -5,20 +5,20 @@
   <meta charset="utf-8">
   <link rel="icon" href="/images/head.webp">
   <title>guava-collect | 小窝吧</title>
-  <meta name="author" content="pengjianzhong" />
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="robots" content="index,follow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="format-detection" content="telphone=no, email=no" />
+  <meta name="author" content="pengjianzhong">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="index,follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="format-detection" content="telphone=no, email=no">
   
-    <meta name="keywords" content="Java, guava, 集合" />
+    <meta name="keywords" content="Java, guava, 集合">
   
   <meta name="description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="guava-collect">
-<meta property="og:url" content="http://atpjz.github.io/2021/09/12/guava-collect/index.html">
+<meta property="og:url" content="http://atpjz.github.io/post/ba118fad.html">
 <meta property="og:site_name" content="小窝吧">
 <meta property="og:description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
 <meta property="og:locale" content="en_US">
@@ -36,7 +36,7 @@
   <!-- 站点验证相关 -->
   
     
-      <meta name="google-site-verification" content="ViVvbaNbaSyVmH-nIojX3iU9Mp_H6TBl08N_-Wychys" />
+      <meta name="google-site-verification" content="ViVvbaNbaSyVmH-nIojX3iU9Mp_H6TBl08N_-Wychys">
     
     
     
@@ -122,7 +122,7 @@
             <div class="kratos-cover kratos-cover-2 text-center">
                 <div class="desc desc2 animate-box">
                     <a href="/">
-                        <h2>小窝吧</h2> <br />
+                        <h2>小窝吧</h2> <br>
                         <span></span>
                     </a>
                 </div>
@@ -170,7 +170,7 @@
                     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guava-collect%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-number">1.1.</span> <span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
                 </div>
             
-            <hr />
+            <hr>
             <h1 id="guava-collect分享"><a href="#guava-collect分享" class="headerlink" title="guava-collect分享"></a>guava-collect分享</h1><p>Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。<br>这些高质量的API可以使你的java代码更加优雅，更加简洁，让你的工作更加轻松愉悦，<br>类似Apache Commons工具集</p>
 <p>com.google.common.annotations：普通注解类型。<br>com.google.common.base：基本工具类库和接口。<br>com.google.common.cache：缓存工具包，非常简单易用且功能强大的JVM内缓存。<br><strong>com.google.common.collect：带泛型的集合接口扩展和实现，以及工具类。</strong><br>com.google.common.eventbus：发布订阅风格的事件总线。<br>com.google.common.hash： 哈希工具包。<br>com.google.common.io：I/O工具包。<br>com.google.common.math：原始算术类型和<br>超大数的运算工具包。<br>com.google.common.net：网络工具包。<br>com.google.common.primitives：八种原始类型和无符号类型的静态工具包。<br>com.google.common.reflect：反射工具包。<br>com.google.common.util.concurrent：多线程工具包。</p>
 <h2 id="集合-Collections"><a href="#集合-Collections" class="headerlink" title="集合[Collections]"></a>集合[Collections]</h2><p>com.google.common.collect</p>
@@ -315,7 +315,7 @@
 <li>EnumMultiset: 元素必须是 enum 类型</li>
 <li>ImmutableMultiset: 不可修改的 Mutiset</li>
 </ul>
-<p>Multiset不是一个Set，它没有继承Set接口，它继承的是Collection<E>接口，你可以向Multiset中添加重复的元素，Multiset会对添加的元素做一个计数。<br>Multiset接口定义的方法主要有：　　      </p>
+<p>Multiset不是一个Set，它没有继承Set接口，它继承的是Collection<e>接口，你可以向Multiset中添加重复的元素，Multiset会对添加的元素做一个计数。<br>Multiset接口定义的方法主要有：　　      </e></p>
 <ul>
 <li>add(E element) :向其中添加单个元素     </li>
 <li>add(E element,int occurrences) : 向其中添加指定个数的元素  </li>
@@ -334,7 +334,7 @@
 
 
 <p>看下源码：Multiset的接口中方法的实现在AbstractMapBasedMultiset抽象类中</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256804">Multiset的接口中方法</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/dancheng1/article/details/85256804">Multiset的接口中方法</a></p>
 <p>HashMultiset是最常用的，其实现是以Map&lt;T,Count&gt;为存储结构，其中的add和remove方法是对Count进行的操作（Count并不是线程安全的），Multiset与Map&lt;T,Integer&gt;最大的不同是，Multiset遍历时可以遍历出Map.keySize * count个元素，而map却不可以，最大的区别就在于其itertator和Entry&lt;T,Count&gt;的iterator实现代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span>  Iterator&lt;Entry&lt;E&gt;&gt; entryIterator() &#123;    <span class="keyword">final</span> Iterator&lt;Map.Entry&lt;E, Count&gt;&gt; backingEntries = backingMap.entrySet().iterator();    <span class="keyword">return</span> <span class="keyword">new</span> Iterator&lt;Multiset.Entry&lt;E&gt;&gt;() &#123;      Map.<span class="meta">@Nullable</span> Entry&lt;E, Count&gt; toRemove;      <span class="meta">@Override</span>      <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;        <span class="keyword">return</span> backingEntries.hasNext();      &#125;      <span class="meta">@Override</span>      <span class="keyword">public</span> Multiset.<span class="function">Entry&lt;E&gt; <span class="title">next</span><span class="params">()</span> </span>&#123;        <span class="keyword">final</span> Map.Entry&lt;E, Count&gt; mapEntry = backingEntries.next();        toRemove = mapEntry;        <span class="keyword">return</span> <span class="keyword">new</span> Multisets.AbstractEntry&lt;E&gt;() &#123;          <span class="meta">@Override</span>          <span class="function"><span class="keyword">public</span> E <span class="title">getElement</span><span class="params">()</span> </span>&#123;            <span class="keyword">return</span> mapEntry.getKey();          &#125;        <span class="comment">//getcount操作          @Override          public int getCount() &#123;            Count count = mapEntry.getValue();            if (count == null || count.get() == 0) &#123;              Count frequency = backingMap.get(getElement());              if (frequency != null) &#123;                return frequency.get();              &#125;            &#125;            return (count == null) ? 0 : count.get();          &#125;        &#125;;      &#125;      @Override      public void remove() &#123;            checkRemove(toRemove != null);   //在next的时候记录元素，可以被remove        size -= toRemove.getValue().getAndSet(0);        backingEntries.remove();        toRemove = null;      &#125;    &#125;;  &#125;</span></span><br></pre></td></tr></table></figure>
 
@@ -351,21 +351,21 @@
 <li><p>对multiset 中没有的元素，multiset.count(elem)始终返回0。</p>
 </li>
 </ul>
-<h4 id="Multimap"><a href="#Multimap" class="headerlink" title="Multimap"></a>Multimap</h4><p>大家一定写过Map&lt;K, List<V>&gt;或Map&lt;K, Set<V>&gt;这样的结构，Guava的 Multimap可以很容易地把一个键映射到多个值。<br>可以用两种方式思考Multimap的概念：</p>
+<h4 id="Multimap"><a href="#Multimap" class="headerlink" title="Multimap"></a>Multimap</h4><p>大家一定写过Map&lt;K, List<v>&gt;或Map&lt;K, Set<v>&gt;这样的结构，Guava的 Multimap可以很容易地把一个键映射到多个值。<br>可以用两种方式思考Multimap的概念：</v></v></p>
 <ol>
 <li><p>”键-单个值映射”的集合：<br>a -&gt; 1 a -&gt; 2 a -&gt;4 b -&gt; 3 c -&gt; 5</p>
 </li>
-<li><p>”键-值集合映射”的映射：<br>a -&gt; [1, 2, 4] b -&gt; 3 c -&gt; 5<br>一般来说，Multimap接口应该用第一种方式看待，但asMap()视图返回Map&lt;K, Collection<V>&gt;，让你可以按另一种方式看待Multimap。重要的是，不会有任何键映射到空集合：一个键要么至少到一个值，要么根本就不在Multimap中。</p>
+<li><p>”键-值集合映射”的映射：<br>a -&gt; [1, 2, 4] b -&gt; 3 c -&gt; 5<br>一般来说，Multimap接口应该用第一种方式看待，但asMap()视图返回Map&lt;K, Collection<v>&gt;，让你可以按另一种方式看待Multimap。重要的是，不会有任何键映射到空集合：一个键要么至少到一个值，要么根本就不在Multimap中。</v></p>
 </li>
 </ol>
 <p>修改Multimap<br>Multimap.get(key)以集合形式返回键所对应的值视图，即使没有任何对应的值，也会返回空集合。ListMultimap.get(key)返回List，SetMultimap.get(key)返回Set。对值视图集合进行的修改最终都会反映到底层的Multimap。</p>
 <p>修改Multimap的方法有：</p>
 <ul>
 <li>put(K, V) 添加键到单个值的映射                       multimap.get(key).add(value)</li>
-<li>putAll(K, Iterable<V>)    依次添加键到多个值的映射    Iterables.addAll(multimap.get(key), values)</li>
+<li>putAll(K, Iterable<v>)    依次添加键到多个值的映射    Iterables.addAll(multimap.get(key), values)</v></li>
 <li>remove(K, V)    移除键到值的映射；如果有这样的键值并成功移除，返回true。    multimap.get(key).remove(value)</li>
 <li>removeAll(K)    清除键对应的所有值，返回的集合包含所有之前映射到K的值，但修改这个集合就不会影响Multimap了。    multimap.get(key).clear()</li>
-<li>replaceValues(K, Iterable<V>)    清除键对应的所有值，并重新把key关联到Iterable中的每个元素。返回的集合包含所有之前映射到K的值。    multimap.get(key).clear();</li>
+<li>replaceValues(K, Iterable<v>)    清除键对应的所有值，并重新把key关联到Iterable中的每个元素。返回的集合包含所有之前映射到K的值。    multimap.get(key).clear();</v></li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun7</span><span class="params">()</span> </span>&#123;        String str = <span class="string">&quot;no no zuo no die why you try no try no high give me me five&quot;</span>;        Multimap&lt;String, Integer&gt; multiMap = ArrayListMultimap.create();        String[] strArr = str.split(<span class="string">&quot; &quot;</span>);        <span class="keyword">for</span> (String s : strArr) &#123;            multiMap.put(s, System.identityHashCode(s));        &#125;        System.out.println(multiMap);        <span class="comment">// 移除no--&gt;1942406066        multiMap.remove(&quot;no&quot;, 1942406066);        System.out.println(multiMap);        // 清除no对应的所有值        multiMap.removeAll(&quot;no&quot;);        System.out.println(multiMap);        // 清除no对应的所有值，并重新把no关联到Iterable中的每个元素。相对于把no对值替换为新值        multiMap.replaceValues(&quot;no&quot;, Lists.newArrayList(1, 2, 3));        System.out.println(multiMap);        // 返回no对应的所有值        System.out.println(multiMap.get(&quot;no&quot;));        // 没有key 返回空collection而并非null        System.out.println(multiMap.get(&quot;hahah&quot;));        // 若为Multimap的视图，则会返回null        System.out.println(multiMap.asMap().get(&quot;hahah&quot;));          //返回Multimap的键值对个数        System.out.println(multiMap.size());    &#125;</span></span><br></pre></td></tr></table></figure>
 
@@ -375,7 +375,7 @@
 <blockquote>
 <p>如果有这样的键，返回的集合只是包装了Multimap中已有的集合；如果没有这样的键，返回的空集合也只是持有Multimap引用的栈对象，让你可以用来操作底层的Multimap。因此，返回的集合不会占据太多内存，数据实际上还是存放在Multimap中。</p>
 </blockquote>
-<p>如果想Multimap中没有的键返回null，使用asMap()视图获取一个Map&lt;K, Collection<V>&gt;。（或者用静态方法Multimaps.asMap()为ListMultimap返回一个Map&lt;K, List<V>&gt;。对于SetMultimap和SortedSetMultimap，也有类似的静态方法存在）</p>
+<p>如果想Multimap中没有的键返回null，使用asMap()视图获取一个Map&lt;K, Collection<v>&gt;。（或者用静态方法Multimaps.asMap()为ListMultimap返回一个Map&lt;K, List<v>&gt;。对于SetMultimap和SortedSetMultimap，也有类似的静态方法存在）</v></v></p>
 <p>当且仅当有值映射到键时，Multimap.containsKey(key)才会返回true。尤其需要注意的是，如果键k之前映射过一个或多个值，但它们都被移除后，Multimap.containsKey(key)会返回false。</p>
 <p>Multimap.entries()返回Multimap中所有”键-单个值映射”——包括重复键。如果你想要得到所有”键-值集合映射”，请使用asMap().entrySet()。<br>Multimap.size()返回所有”键-单个值映射”的个数，而非不同键的个数。要得到不同键的个数，请改用Multimap.keySet().size()。</p>
 <table>
@@ -422,7 +422,7 @@
 <td>ImmutableSet</td>
 </tr>
 </tbody></table>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256876">HashMultimap</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/dancheng1/article/details/85256876">HashMultimap</a></p>
 <p>除了两个不可变形式的实现，其他所有实现都支持null键和null值</p>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEBe31d4d3468dd2090a78bd85a2dcafb6d?method=download&shareKey=73d9960eedca5018e97e5a8319f4baf7" alt="内部有totalSize记录元素总个数"></p>
 <p>内部有totalSize记录元素总个数</p>
@@ -435,7 +435,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fun9</span><span class="params">()</span> </span>&#123;        BiMap&lt;String, String&gt; biMap = HashBiMap.create();        biMap.put(<span class="string">&quot;小猫&quot;</span>, <span class="string">&quot;喵喵喵&quot;</span>);        biMap.put(<span class="string">&quot;小狗&quot;</span>, <span class="string">&quot;汪汪汪&quot;</span>);        biMap.put(<span class="string">&quot;小猪&quot;</span>, <span class="string">&quot;哼哼哼&quot;</span>);        <span class="comment">// 有个讨厌鬼，也是一天到晚哼哼哼        // biMap.put(&quot;讨厌鬼&quot;, &quot;哼哼哼&quot;);        // forcePut 当value相同而key不同时，删除原来的，再新加入一个元素        //biMap.forcePut(&quot;讨厌鬼&quot;, &quot;哼哼哼&quot;);        // java.lang.IllegalArgumentException 参数非法        // 哪天小狗突然成精了        biMap.put(&quot;小狗&quot;, &quot;你好啊&quot;);        Map&lt;String, String&gt; map = biMap.inverse();        System.out.println(map);    &#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>下面看一下BiMap的 添加删除和插入方法</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dancheng1/article/details/85256945">BiMap</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/dancheng1/article/details/85256945">BiMap</a></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> V <span class="title">put</span><span class="params">(<span class="meta">@Nullable</span> K key, <span class="meta">@Nullable</span> V value, <span class="keyword">boolean</span> force)</span> </span>&#123;    <span class="comment">//获取传入key的hash值    int keyHash = smearedHash(key);    //获取传入value的hash值    int valueHash = smearedHash(value);	//去hashTableKToV里根据key寻找Entry    BiEntry&lt;K, V&gt; oldEntryForKey = seekByKey(key, keyHash);    if (oldEntryForKey != null        &amp;&amp; valueHash == oldEntryForKey.valueHash        &amp;&amp; Objects.equal(value, oldEntryForKey.value)) &#123;        //如果这个key值存在，并且value也相等，无需更新，则返回这个value      return value;    &#125;	//去hashTableVToK里根据value选择Entry    BiEntry&lt;K, V&gt; oldEntryForValue = seekByValue(value, valueHash);    if (oldEntryForValue != null) &#123;        //如果存在，则判断force（第三个参数）是否为false      if (force) &#123;          //如果force（第三个参数）为true，则删除这个节点，这个方法是双向删除        delete(oldEntryForValue);      &#125; else &#123;          //抛出异常，否则会出现一个value对应多个key的情况，inverse后无法处理        throw new IllegalArgumentException(&quot;value already present: &quot; + value);      &#125;    &#125;    	//根据key，value，keyHash，valueHash创建一个BiEntry    BiEntry&lt;K, V&gt; newEntry = new BiEntry&lt;K, V&gt;(key, keyHash, value, valueHash);    if (oldEntryForKey != null) &#123;//？？      delete(oldEntryForKey);        //插入新的BiEntry      insert(newEntry, oldEntryForKey);      oldEntryForKey.prevInKeyInsertionOrder = null;      oldEntryForKey.nextInKeyInsertionOrder = null;      rehashIfNecessary();//扩容      return oldEntryForKey.value;    &#125; else &#123;//插入新键值对的情况      insert(newEntry, null);      rehashIfNecessary();//扩容      return null;    &#125;  &#125;  private void delete(BiEntry&lt;K, V&gt; entry) &#123;    int keyBucket = entry.keyHash &amp; mask;//删除hashTableKToV中的Entry    BiEntry&lt;K, V&gt; prevBucketEntry = null;    for (BiEntry&lt;K, V&gt; bucketEntry = hashTableKToV[keyBucket];        true;        bucketEntry = bucketEntry.nextInKToVBucket) &#123;      if (bucketEntry == entry) &#123;        if (prevBucketEntry == null) &#123;          hashTableKToV[keyBucket] = entry.nextInKToVBucket;        &#125; else &#123;          prevBucketEntry.nextInKToVBucket = entry.nextInKToVBucket;        &#125;        break;      &#125;      prevBucketEntry = bucketEntry;    &#125;    int valueBucket = entry.valueHash &amp; mask;//删除hashTableVToK中的Entry    prevBucketEntry = null;    for (BiEntry&lt;K, V&gt; bucketEntry = hashTableVToK[valueBucket];        true;        bucketEntry = bucketEntry.nextInVToKBucket) &#123;      if (bucketEntry == entry) &#123;        if (prevBucketEntry == null) &#123;          hashTableVToK[valueBucket] = entry.nextInVToKBucket;        &#125; else &#123;          prevBucketEntry.nextInVToKBucket = entry.nextInVToKBucket;        &#125;        break;      &#125;      prevBucketEntry = bucketEntry;    &#125;    if (entry.prevInKeyInsertionOrder == null) &#123;      firstInKeyInsertionOrder = entry.nextInKeyInsertionOrder;    &#125; else &#123;      entry.prevInKeyInsertionOrder.nextInKeyInsertionOrder = entry.nextInKeyInsertionOrder;    &#125;    if (entry.nextInKeyInsertionOrder == null) &#123;      lastInKeyInsertionOrder = entry.prevInKeyInsertionOrder;    &#125; else &#123;      entry.nextInKeyInsertionOrder.prevInKeyInsertionOrder = entry.prevInKeyInsertionOrder;    &#125;    size--;    modCount++;  &#125;  private void insert(BiEntry&lt;K, V&gt; entry, @Nullable BiEntry&lt;K, V&gt; oldEntryForKey) &#123;    int keyBucket = entry.keyHash &amp; mask;    entry.nextInKToVBucket = hashTableKToV[keyBucket];    hashTableKToV[keyBucket] = entry;    int valueBucket = entry.valueHash &amp; mask;    entry.nextInVToKBucket = hashTableVToK[valueBucket];    hashTableVToK[valueBucket] = entry;    if (oldEntryForKey == null) &#123;      entry.prevInKeyInsertionOrder = lastInKeyInsertionOrder;      entry.nextInKeyInsertionOrder = null;      if (lastInKeyInsertionOrder == null) &#123;        firstInKeyInsertionOrder = entry;      &#125; else &#123;        lastInKeyInsertionOrder.nextInKeyInsertionOrder = entry;      &#125;      lastInKeyInsertionOrder = entry;    &#125; else &#123;      entry.prevInKeyInsertionOrder = oldEntryForKey.prevInKeyInsertionOrder;      if (entry.prevInKeyInsertionOrder == null) &#123;        firstInKeyInsertionOrder = entry;      &#125; else &#123;        entry.prevInKeyInsertionOrder.nextInKeyInsertionOrder = entry;      &#125;      entry.nextInKeyInsertionOrder = oldEntryForKey.nextInKeyInsertionOrder;      if (entry.nextInKeyInsertionOrder == null) &#123;        lastInKeyInsertionOrder = entry;      &#125; else &#123;        entry.nextInKeyInsertionOrder.prevInKeyInsertionOrder = entry;      &#125;    &#125;    size++;    modCount++;  &#125;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>注意！</strong>inverse方法返回一个反转后的BiMap，即key/value互相切换的映射。这个反转的map并不是一个新的map，而是一个<strong>视图</strong>，这意味着，你在这个反转后的map中的任何增删改操作都会影响原来的map</p>
@@ -481,7 +481,7 @@
         </div>
         
             <div class="kratos-copyright text-center clearfix">
-                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+                <h5>本作品采用 <a rel="external nofollow noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
             </div>
         
         <footer class="kratos-entry-footer clearfix">
@@ -530,7 +530,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "http://atpjz.github.io/2021/09/12/guava-collect/",
+                text: "http://atpjz.github.io/post/ba118fad.html",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -542,7 +542,7 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "http://atpjz.github.io/2021/09/12/guava-collect/";
+            const hostUrl       = "http://atpjz.github.io/post/ba118fad.html";
             const title         = "「guava-collect」";
             const excerpt       = `guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitive...`;
             let _URL;
@@ -575,12 +575,12 @@
         <nav class="navigation post-navigation clearfix" role="navigation">
             
             <div class="nav-previous clearfix">
-                <a title=" Windows下安装nodejs" href="/2021/09/12/Windows下安装nodejs/">&lt; 上一篇</a>
+                <a title=" Windows下安装nodejs" href="/post/29038b71.html">&lt; 上一篇</a>
             </div>
             
             
             <div class="nav-next clearfix">
-                <a title=" arthas-and-javaagent" href="/2021/09/12/arthas-and-javaagent/">下一篇 &gt;</a>
+                <a title=" arthas-and-javaagent" href="/post/d57220e9.html">下一篇 &gt;</a>
             </div>
             
         </nav>
@@ -605,7 +605,7 @@
     <div class="photo-background"></div>
     <div class="photo-wrapper clearfix">
         <div class="photo-wrapper-tip text-center">
-            <img class="about-photo" src="/images/head.webp" />
+            <img class="about-photo" src="/images/head.webp">
         </div>
     </div>
     <div class="textwidget">
@@ -653,31 +653,31 @@
         
           
           
-            <a class="list-group-item" href="/2021/09/12/Nginx%E6%90%AD%E5%BB%BA%E6%89%8B%E5%86%8C/"><i class="fa  fa-book"></i> Nginx搭建手册</a>
+            <a class="list-group-item" href="/post/bfa40fac.html"><i class="fa  fa-book"></i> Nginx搭建手册</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/09/12/Java%E9%9B%86%E5%90%88%E5%88%86%E4%BA%AB/"><i class="fa  fa-book"></i> Java集合分享</a>
+            <a class="list-group-item" href="/post/d25a5ce4.html"><i class="fa  fa-book"></i> Java集合分享</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/09/12/arthas-and-javaagent/"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            <a class="list-group-item" href="/post/d57220e9.html"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/09/12/guava-collect/"><i class="fa  fa-book"></i> guava-collect</a>
+            <a class="list-group-item" href="/post/ba118fad.html"><i class="fa  fa-book"></i> guava-collect</a>
             
           
         
           
           
-            <a class="list-group-item" href="/2021/09/12/Windows%E4%B8%8B%E5%AE%89%E8%A3%85nodejs/"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
+            <a class="list-group-item" href="/post/29038b71.html"><i class="fa  fa-book"></i> Windows下安装nodejs</a>
             
           
         
@@ -709,7 +709,7 @@
     </div>
 </div>
 <footer>
-    <div id="footer"  class="ap-lrc"  >
+    <div id="footer" class="ap-lrc">
         <div class="kr-tool text-center">
             <div class="tool">
                 
@@ -741,7 +741,7 @@
                         
                         
                         
-                        <li><a target="_blank" rel="nofollow" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
                         
                     </ul>
                     <ul class="kratos-copyright">
@@ -750,12 +750,12 @@
                             <li>本站已运行<span id="span_dt">Loading...</span></li>
                         </div>
                         <div>
-                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank" rel="external nofollow noopener noreferrer">Kratos:Rebirth</a></li>
                             <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
                         </div>
                         <div>
-                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
-                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></li>
                         </div>
                         <div>
                             
@@ -793,13 +793,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
     
     <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-    <meting-js
-        server="netease"
-        type="playlist"
-        id="776590239"
-        order="random"
-        fixed="true"
-    >
+    <meting-js server="netease" type="playlist" id="776590239" order="random" fixed="true">
     </meting-js>
 
 
