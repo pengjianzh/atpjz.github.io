@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/images/head.webp">
-  <title>guava-collect | 小窝吧</title>
+  <title>Guava-collect | 小窝吧</title>
   <meta name="author" content="pengjianzhong">
   <meta http-equiv="Cache-Control" content="no-transform">
   <meta http-equiv="Cache-Control" content="no-siteapp">
@@ -13,22 +13,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="format-detection" content="telphone=no, email=no">
   
-    <meta name="keywords" content="Java, guava, 集合">
+    <meta name="keywords" content="Guava, Java, 集合">
   
-  <meta name="description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
+  <meta name="description" content="Guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="guava-collect">
+<meta property="og:title" content="Guava-collect">
 <meta property="og:url" content="https://atpjz.github.io/post/ba118fad.html">
 <meta property="og:site_name" content="小窝吧">
-<meta property="og:description" content="guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
+<meta property="og:description" content="Guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string p">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://atpjz.github.io/images/head.webp">
 <meta property="article:published_time" content="2021-09-12T03:34:30.000Z">
-<meta property="article:modified_time" content="2021-09-16T14:05:15.506Z">
+<meta property="article:modified_time" content="2021-09-26T11:26:45.235Z">
 <meta property="article:author" content="pengjianzhong">
 <meta property="article:tag" content="集合">
 <meta property="article:tag" content="Java">
-<meta property="article:tag" content="guava">
+<meta property="article:tag" content="Guava">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://atpjz.github.io/images/head.webp">
 <meta name="twitter:site" content="@null">
@@ -144,7 +144,7 @@
     <div class="kratos-hentry kratos-post-inner clearfix">
         <header class="kratos-entry-header">
             
-                <h1 class="kratos-entry-title text-center">guava-collect</h1>
+                <h1 class="kratos-entry-title text-center">Guava-collect</h1>
             
             
             <ul class="kratos-post-meta text-center">
@@ -163,15 +163,15 @@
         </header>
         <div class="kratos-post-content">
             <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                本文最后编辑于 <time datetime="1631801115506"></time> 前，其中的内容可能需要更新。
+                本文最后编辑于 <time datetime="1632655605235"></time> 前，其中的内容可能需要更新。
             </div>
             
                 <div class="kratos-post-inner-toc">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guava-collect%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-number">1.1.</span> <span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Guava-collect%E5%88%86%E4%BA%AB"><span class="toc-number">1.</span> <span class="toc-text">Guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-number">1.1.</span> <span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.1.3.</span> <span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
                 </div>
             
             <hr>
-            <h1 id="guava-collect分享"><a href="#guava-collect分享" class="headerlink" title="guava-collect分享"></a>guava-collect分享</h1><p>Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。<br>这些高质量的API可以使你的java代码更加优雅，更加简洁，让你的工作更加轻松愉悦，<br>类似Apache Commons工具集</p>
+            <h1 id="Guava-collect分享"><a href="#Guava-collect分享" class="headerlink" title="Guava-collect分享"></a>Guava-collect分享</h1><p>Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitives support] 、并发库 [concurrency libraries] 、通用注解 [common annotations] 、字符串处理 [string processing] 、I/O 等等。<br>这些高质量的API可以使你的java代码更加优雅，更加简洁，让你的工作更加轻松愉悦，<br>类似Apache Commons工具集</p>
 <p>com.google.common.annotations：普通注解类型。<br>com.google.common.base：基本工具类库和接口。<br>com.google.common.cache：缓存工具包，非常简单易用且功能强大的JVM内缓存。<br><strong>com.google.common.collect：带泛型的集合接口扩展和实现，以及工具类。</strong><br>com.google.common.eventbus：发布订阅风格的事件总线。<br>com.google.common.hash： 哈希工具包。<br>com.google.common.io：I/O工具包。<br>com.google.common.math：原始算术类型和<br>超大数的运算工具包。<br>com.google.common.net：网络工具包。<br>com.google.common.primitives：八种原始类型和无符号类型的静态工具包。<br>com.google.common.reflect：反射工具包。<br>com.google.common.util.concurrent：多线程工具包。</p>
 <h2 id="集合-Collections"><a href="#集合-Collections" class="headerlink" title="集合[Collections]"></a>集合[Collections]</h2><p>com.google.common.collect</p>
 <p>guava对jdk集合类的扩展，包括不可变集合，新集合类型:，集合工具类: 提供java.util.Collections中没有的集合工具，扩展工具类：让实现和扩展集合类变得更容易，比如创建Collection的装饰器，或实现迭代器。</p>
@@ -543,8 +543,8 @@
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
             const hostUrl       = "https://atpjz.github.io/post/ba118fad.html";
-            const title         = "「guava-collect」";
-            const excerpt       = `guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitive...`;
+            const title         = "「Guava-collect」";
+            const excerpt       = `Guava-collect分享Guava是一种基于开源的Java库，它包含了若干被Google的 Java项目广泛依赖 的核心库，例如：集合 [collections] 、缓存 [caching] 、原生类型支持 [primitive...`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -563,10 +563,10 @@
             <div class="footer-tag clearfix">
                 <div class="pull-left">
                 <i class="fa fa-tags"></i>
-                    <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/guava/" rel="tag">guava</a>, <a class="tag-none-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a>
+                    <a class="tag-none-link" href="/tags/Guava/" rel="tag">Guava</a>, <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/%E9%9B%86%E5%90%88/" rel="tag">集合</a>
                 </div>
                 <div class="pull-date">
-                <span>最后编辑：2021-09-16</span>
+                <span>最后编辑：2021-09-26</span>
                 </div>
             </div>
         </footer>
@@ -580,7 +580,7 @@
             
             
             <div class="nav-next clearfix">
-                <a title=" arthas-and-javaagent" href="/post/d57220e9.html">下一篇 &gt;</a>
+                <a title=" Arthas-and-Javaagent" href="/post/d57220e9.html">下一篇 &gt;</a>
             </div>
             
         </nav>
@@ -623,14 +623,14 @@
         <span class="toc-progress-bar"></span>
     </h4>
     <div class="textwidget">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#guava-collect%E5%88%86%E4%BA%AB"><span class="toc-text">guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Guava-collect%E5%88%86%E4%BA%AB"><span class="toc-text">Guava-collect分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88-Collections"><span class="toc-text">集合[Collections]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#guava%E7%9A%84%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">guava的不可变集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collections-unmodifiableXXX%E5%92%8CImmutableXXX"><span class="toc-text">Collections.unmodifiableXXX和ImmutableXXX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88"><span class="toc-text">创建不可变集合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B"><span class="toc-text">新集合类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Multiset"><span class="toc-text">Multiset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multimap"><span class="toc-text">Multimap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BiMap"><span class="toc-text">BiMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">集合工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Collection2"><span class="toc-text">Collection2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Iterables-%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Iterables 迭代器工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lists-%E5%88%97%E8%A1%A8%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Lists 列表工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sets-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Sets 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maps-%E9%9B%86%E5%90%88%E5%B7%A5%E5%85%B7%E9%9B%86"><span class="toc-text">Maps 集合工具集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PeekingIterator"><span class="toc-text">PeekingIterator</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
 </aside>
                 
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">使用教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">使用教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
   </aside>
 
 
@@ -639,7 +639,7 @@
   <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
     <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
       <div class="tag-clouds">
-        <a href="/tags/7-Zip/" style="font-size: 0.6em;">7-Zip</a> <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/Java/" style="font-size: 0.67em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.67em;">Nginx</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/arthas/" style="font-size: 0.6em;">arthas</a> <a href="/tags/guava/" style="font-size: 0.6em;">guava</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" style="font-size: 0.6em;">使用教程</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 0.6em;">命令行</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a> <a href="/tags/%E7%89%87%E6%BA%90/" style="font-size: 0.6em;">片源</a> <a href="/tags/%E7%B3%BB%E7%BB%9F%E6%A3%80%E6%B5%8B/" style="font-size: 0.6em;">系统检测</a>
+        <a href="/tags/7-Zip/" style="font-size: 0.6em;">7-Zip</a> <a href="/tags/Arthas/" style="font-size: 0.6em;">Arthas</a> <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/Guava/" style="font-size: 0.6em;">Guava</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/JDBC/" style="font-size: 0.6em;">JDBC</a> <a href="/tags/Java/" style="font-size: 0.73em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.67em;">Nginx</a> <a href="/tags/Spring/" style="font-size: 0.6em;">Spring</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" style="font-size: 0.6em;">使用教程</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 0.6em;">命令行</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a>
       </div>
   </aside>
 
@@ -659,7 +659,7 @@
         
           
           
-            <a class="list-group-item" href="/post/bfa40fac.html"><i class="fa  fa-book"></i> Nginx搭建手册</a>
+            <a class="list-group-item" href="/post/bfa40fac.html"><i class="fa  fa-book"></i> Nginx离线安装手册</a>
             
           
         
@@ -671,16 +671,18 @@
         
           
           
-            <a class="list-group-item" href="/post/d57220e9.html"><i class="fa  fa-book"></i> arthas-and-javaagent</a>
+            <a class="list-group-item" href="/post/be627d82.html"><i class="fa  fa-book"></i> Spring Dao 与JDBC</a>
             
           
         
           
           
-            <a class="list-group-item" href="/post/ba118fad.html"><i class="fa  fa-book"></i> guava-collect</a>
+            <a class="list-group-item" href="/post/d57220e9.html"><i class="fa  fa-book"></i> Arthas-and-Javaagent</a>
             
           
         
+          
+            
           
             
           

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/head.webp">
+  <title>Spring Dao 与JDBC | 小窝吧</title>
+  <meta name="author" content="pengjianzhong">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="index,follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="format-detection" content="telphone=no, email=no">
+  
+    <meta name="keywords" content="JDBC, Java, Spring">
+  
+  <meta name="description" content="Spring DAO使用和介绍 DAO支持Spring对数据访问对象（DAO） 的支持旨在使以一致的方式轻松使用数据访问技术（例如JDBC，Hibernate或JPA）。这使您可以轻松地在上述持久性技术之间进行切换，还使您无需担心捕获每种技术特有的异常即可进行编码。   The Data Access Object (DAO) support in Spring is aimed at makin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Dao 与JDBC">
+<meta property="og:url" content="https://atpjz.github.io/post/be627d82.html">
+<meta property="og:site_name" content="小窝吧">
+<meta property="og:description" content="Spring DAO使用和介绍 DAO支持Spring对数据访问对象（DAO） 的支持旨在使以一致的方式轻松使用数据访问技术（例如JDBC，Hibernate或JPA）。这使您可以轻松地在上述持久性技术之间进行切换，还使您无需担心捕获每种技术特有的异常即可进行编码。   The Data Access Object (DAO) support in Spring is aimed at makin">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://atpjz.github.io/images/head.webp">
+<meta property="article:published_time" content="2021-09-12T11:16:55.000Z">
+<meta property="article:modified_time" content="2021-09-26T11:19:20.724Z">
+<meta property="article:author" content="pengjianzhong">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="JDBC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://atpjz.github.io/images/head.webp">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="ViVvbaNbaSyVmH-nIojX3iU9Mp_H6TBl08N_-Wychys">
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">小窝吧</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>小窝吧</h2> <br>
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">Spring Dao 与JDBC</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-09-12</li>
+                <li><i class="fa fa-user"></i> 作者 pengjianzhong</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~24.79K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1632655160724"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-DAO%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Spring DAO使用和介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DAO%E6%94%AF%E6%8C%81"><span class="toc-number">1.1.</span> <span class="toc-text">DAO支持</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-DAO%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.0.0.1.</span> <span class="toc-text">Spring DAO的内容</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="toc-number">1.2.</span> <span class="toc-text">异常体系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.3.</span> <span class="toc-text">统一数据访问模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">访问数据库的流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-DAO%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.3.2.</span> <span class="toc-text">Spring DAO的模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%8C%81%E4%B9%85%E5%8C%96%E6%8A%80%E6%9C%AF%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-number">1.3.3.</span> <span class="toc-text">不同持久化技术的模板类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC"><span class="toc-number">1.4.</span> <span class="toc-text">JDBC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E7%9A%84JDBC"><span class="toc-number">1.4.1.</span> <span class="toc-text">Spring的JDBC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.2.</span> <span class="toc-text">常用增删改查操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8F%92%E5%85%A5insert"><span class="toc-number">1.4.2.0.1.</span> <span class="toc-text">插入insert</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8Fcount"><span class="toc-number">1.4.2.0.2.</span> <span class="toc-text">查询数量count</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.4.2.0.3.</span> <span class="toc-text">查询单个对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.4.2.0.4.</span> <span class="toc-text">查询多个对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9Cdelete"><span class="toc-number">1.4.2.0.5.</span> <span class="toc-text">删除操作delete</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9Cupdate"><span class="toc-number">1.4.2.0.6.</span> <span class="toc-text">更新操作update</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0"><span class="toc-number">1.4.2.0.7.</span> <span class="toc-text">批量更新</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JdbcTemplate%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.4.3.</span> <span class="toc-text">JdbcTemplate查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.</span> <span class="toc-text">事务控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">编程式事务控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">声明式事务控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">声明式事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">XML方式实现声明式事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-number">1.5.3.</span> <span class="toc-text">使用注解的方法实现事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Transactional-%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%82%B9"><span class="toc-number">1.5.4.</span> <span class="toc-text">使用@Transactional 需要注意的一些点</span></a></li>
+                </div>
+            
+            <hr>
+            <h1 id="Spring-DAO使用和介绍"><a href="#Spring-DAO使用和介绍" class="headerlink" title="Spring DAO使用和介绍"></a>Spring DAO使用和介绍</h1><p><img src="https://note.youdao.com/yws/api/personal/file/WEB0957869f2458f8fc3bea00b14af494f4?method=download&shareKey=c989550d2bdc24dc363181a8d362819e" alt="Spring 框架图示"></p>
+<h2 id="DAO支持"><a href="#DAO支持" class="headerlink" title="DAO支持"></a>DAO支持</h2><p>Spring对数据访问对象（DAO） 的支持旨在使以一致的方式轻松使用数据访问技术（例如JDBC，Hibernate或JPA）。这使您可以轻松地在上述持久性技术之间进行切换，还使您无需担心捕获每种技术特有的异常即可进行编码。</p>
+<blockquote>
+<p> The Data Access Object (DAO) support in Spring is aimed at making it easy to work with data access technologies (such as JDBC, Hibernate, or JPA) in a consistent way. This lets you switch between the aforementioned persistence technologies fairly easily, and it also lets you code without worrying about catching exceptions that are specific to each technology. </p>
+</blockquote>
+<h5 id="Spring-DAO的内容"><a href="#Spring-DAO的内容" class="headerlink" title="Spring DAO的内容"></a>Spring DAO的内容</h5><ul>
+<li>Spring对多个<strong>持久化技术提供了集成支持</strong>，包括 Hibernate、 MyBatis、JPA、JDO；</li>
+<li>Spring提供一个简化JDBC API操作的<strong>Spring JDBC框架</strong>。</li>
+<li>Spring面向DAO制定了一个<strong>通用的异常体系</strong>，屏蔽具体持久化技术的异常，使业务层和具体的持久化技术实现解耦。</li>
+<li>Spring提供了<strong>模板类</strong>简化各种持久化技术的使用。</li>
+</ul>
+<h2 id="异常体系"><a href="#异常体系" class="headerlink" title="异常体系"></a>异常体系</h2><p>spring 在 <code>org.springframework.dao</code> 中提供了一套优雅的 DAO 异常体系，  这些异常都继承自 <code>DataAccessException</code>，  <code>DataAccessException</code> 继承自<code>NestedRuntimeException</code>,   <code>NestedRuntimeException</code> 异常以嵌套的方式封装了源异常 。  因此，虽然不同的持久化技术的特定异常被转换到 Spring 的 DAO 异常体系中，但我们可以通过 <code>getCause()</code>  方法获取原始异常信息 。</p>
+<p>Spring提供了从技术特定的异常（如<code>SQLException）</code>到其自己的异常类层次结构（以 <code>DataAccessException</code>作为根异常）的便捷转换。这些异常包装了原始异常，因此永远不会冒任何可能丢失任何错误信息的风险。</p>
+<p>Spring提供的异常层次结构可以在下面看到</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB057921d3058fdf3ecfd0db4524a52abf?method=download&shareKey=fac48d3e60bafab59ac9efaf83780878" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>异常</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CleanupFailureDataAccessException</td>
+<td>DAO操作成功执行，但在释放数据资源时发生异常，如关闭 Connection时发生异常等</td>
+</tr>
+<tr>
+<td>ConcurrencyFailureException</td>
+<td>表示在进行并发数据操作时发生异常,如乐观锁无法获取、悲观锁无法获取、死锁引发的失败等</td>
+</tr>
+<tr>
+<td>DataAccessResourceFailureException</td>
+<td>访问数据资源时失败，如无法获取数据连接、无法获取Hibernate的会话等</td>
+</tr>
+<tr>
+<td>DataRetrievalFailureException</td>
+<td>获取数据失败，如找不到对应主键的数据、使用了错误的列索引等</td>
+</tr>
+<tr>
+<td>DataSourceLookupFailure Exception</td>
+<td>无法从JNDI中查找到数据源</td>
+</tr>
+<tr>
+<td>DatalntegrityViolationException</td>
+<td>当数据操作违反了数据一致性限制时抛出的异常,如插入重复的主键、引用不存在的外键等</td>
+</tr>
+<tr>
+<td>InvalidDataAccessApiUsageException</td>
+<td>不正确地调用某一持久化技术时抛出的异常，如在 Spring JDBC中查询对象，在调用前必须进行编译操作,如果忘记这项操作则会产生该异常。这种异常不是由底层数据资源产生的，而是由不正确地使用持久化技术产生的</td>
+</tr>
+<tr>
+<td>InvalidDataAccessResourceUsageException</td>
+<td>在访问数据源时使用了不正确的方法所抛出的异常，如SQL语句错误将抛出该异常</td>
+</tr>
+<tr>
+<td>PermissionDeniedDataAccessException</td>
+<td>数据访问时由于权限不足引发的异常，如仅拥有只读权限的用户试图进行数据更改操作时将抛出该异常</td>
+</tr>
+<tr>
+<td>UncategorizedAccessException</td>
+<td>其他未分类的异常都归到该异常中</td>
+</tr>
+</tbody></table>
+<h2 id="统一数据访问模板"><a href="#统一数据访问模板" class="headerlink" title="统一数据访问模板"></a>统一数据访问模板</h2><h3 id="访问数据库的流程"><a href="#访问数据库的流程" class="headerlink" title="访问数据库的流程"></a>访问数据库的流程</h3><p>以JDBC为例，访问数据库的操作大致按照以下流程进行：准备资源、启动事务、在事务中执行具体的数据访问操作、提交/回滚事务、关闭资源及处理异常。而其中除了在事务中执行具体的数据访问操作是业务相关的，其他代码都是几乎固定不变的。</p>
+<h3 id="Spring-DAO的模板"><a href="#Spring-DAO的模板" class="headerlink" title="Spring DAO的模板"></a>Spring DAO的模板</h3><p>Spring将这个相同的数据访问流程固化到模板类中，并将数据访问中固定和变化的部分分开，同时保证模板类是线程安全的，以便多个数据访问线程共享同一个模板实例。固定的部分在模板类中已经准备好，而变化的部分通过回调接口开放出来，用于定义具体数据访问和结果返回的操作。这样，只要编写好回调接口，并调用模板类进行数据访问，就可以得到预想的结果。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14623831-6a6035841cf3394e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/602/format/webp" alt="img"></p>
+<p>Spring DAO的模板和回调</p>
+<h3 id="不同持久化技术的模板类"><a href="#不同持久化技术的模板类" class="headerlink" title="不同持久化技术的模板类"></a>不同持久化技术的模板类</h3><p>Spring为各种支持的持久化技术都提供了简化操作的模板和回调，在回调中编写具体的数据操作逻辑，使用模板执行数据操作。</p>
+<table>
+<thead>
+<tr>
+<th>ORM持久化技术</th>
+<th>模板类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JDBC</td>
+<td><code>org.springframework.jdbc.core.JdbcTemplate</code></td>
+</tr>
+<tr>
+<td>Hibernate</td>
+<td><code>org.springframework.orm.hibernate.HibernateTemplate</code></td>
+</tr>
+<tr>
+<td>JPA</td>
+<td><code>org.springframework.orm.JpaTemplate</code></td>
+</tr>
+<tr>
+<td>JDO</td>
+<td><code>org.springframework.orm.jdo.JdoTemplate</code></td>
+</tr>
+</tbody></table>
+<p>如果直接使用模板类，则一般需要在DAO中定义一个模板对象并提供数据资源。Spring为每种持久化技术都提供了支持类，支持类中已经完成了这样的功能。这样，只需扩展这些支持类，就可以直接编写实际的数据访问逻辑，因此更加方便。这些支持类都继承于<code>dao.support.DaoSupport</code>类，DaoSupport类实现了InitializingBean接口，在afterPropertiesSet()接口方法中检査模板对象和数据源是否被正确设置，否则将抛出异常。</p>
+<table>
+<thead>
+<tr>
+<th>ORM持久化技术</th>
+<th>支持类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JDBC</td>
+<td><code>org.springframework.jdbc.core.JdbcDaoSupport</code></td>
+</tr>
+<tr>
+<td>Hibernate</td>
+<td><code>org.springframework.orm.hibernate.HibernateDaoSupport</code></td>
+</tr>
+<tr>
+<td>JPA</td>
+<td><code>org.springframework.orm.jpa.JpaDaoSupport</code></td>
+</tr>
+<tr>
+<td>JDO</td>
+<td><code>org.springframework.orm.jdo.JdoSupport</code></td>
+</tr>
+</tbody></table>
+<h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><p>看一下使用原生的JDBC执行SQL会经历那些操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String JDBC_DRIVER = <span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DB_URL = <span class="string">&quot;jdbc:mysql://localhost/pjz&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">excute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Connection connection = <span class="keyword">null</span>;</span><br><span class="line">        Statement statement = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            String sql = <span class="string">&quot;INSERT INTO person(id,name,age,sex)VALUES(&#x27;001&#x27;,&#x27;路人甲&#x27;,20,0)&quot;</span>;</span><br><span class="line">            <span class="comment">//加载驱动</span></span><br><span class="line">            Class.forName(JDBC_DRIVER);</span><br><span class="line">            <span class="comment">//取得数据库连接对象Connection</span></span><br><span class="line">            connection = DriverManager.getConnection(DB_URL, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root&quot;</span>);</span><br><span class="line">            <span class="comment">//创建Statement实例</span></span><br><span class="line">            statement = connection.createStatement();</span><br><span class="line">            <span class="comment">//执行SQL</span></span><br><span class="line">            statement.execute(sql);            </span><br><span class="line"><span class="comment">/*executeQuery：返回结果集(ResultSet)。</span></span><br><span class="line"><span class="comment">executeUpdate: 执行给定SQL语句,该语句可能为 INSERT、UPDATE 或 DELETE 语句， 或者不返回任何内容的SQL语句（如 SQL DDL 语句）。</span></span><br><span class="line"><span class="comment">execute: 可用于执行任何SQL语句，返回一个boolean值，</span></span><br><span class="line"><span class="comment">表明执行该SQL语句是否返回了ResultSet。如果执行后第一个结果是ResultSet，则返回true，否则返回false。*/</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;出错啦！&quot;</span>, e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">//关闭连接</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != statement) &#123;</span><br><span class="line">                    statement.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;statementg关闭失败&quot;</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != connection) &#123;</span><br><span class="line">                    connection.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                log.error(<span class="string">&quot;connection&quot;</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p> 因为JDBC是面向接口编程的，因此数据库的驱动都是由数据库的厂商给做到好了，我们只要加载对应的数据库驱动，便可以获取对应的数据库连接，因此，我们可以封装成一个工具类来使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCUtils</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * 连接数据库的driver，url，username，password通过配置文件来配置，可以增加灵活性</span></span><br><span class="line"><span class="comment">     * 当我们需要切换数据库的时候，只需要在配置文件中改以上的信息即可</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String  driver = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String  url = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String  username = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String password = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            InputStream inputStream = JDBCUtils.class.getClassLoader().getResourceAsStream(<span class="string">&quot;db.properties&quot;</span>);</span><br><span class="line">            Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">            properties.load(inputStream);</span><br><span class="line">            driver = properties.getProperty(<span class="string">&quot;driver&quot;</span>);</span><br><span class="line">            url = properties.getProperty(<span class="string">&quot;url&quot;</span>);</span><br><span class="line">            username = properties.getProperty(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">            password = properties.getProperty(<span class="string">&quot;password&quot;</span>);</span><br><span class="line">            Class.forName(driver);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           log.error(<span class="string">&quot;读取配置出错&quot;</span>,e);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;驱动加载出错&quot;</span>,e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DriverManager.getConnection(url,username,password);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">excute</span><span class="params">(Connection connection, Statement statement, ResultSet resultSet)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (resultSet != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                resultSet.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (statement != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                statement.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (connection != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                connection.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring的JDBC"><a href="#Spring的JDBC" class="headerlink" title="Spring的JDBC"></a><strong>Spring的JDBC</strong></h3><p>上面已经回顾了一下使用原生JDBC的开发步骤，那么看看Spring对JDBC又是怎么优化的</p>
+<p>首先需要引入两个依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-tx<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> <strong>Spring jdbc</strong>：对JDBC 的简单封装 </p>
+<p> <strong>Spring tx</strong>：为JDBC、Hibernate、JDO、JPA等提供的一致的声明式和编程式事务管理。 </p>
+<ul>
+<li>配置dataSource</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;$&#123;dataSource&#125;&quot;</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driverClass&#125;&quot;</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbcUrl&#125;&quot;</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;user&#125;&quot;</span> /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span> /&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>与此同时</p>
+<ul>
+<li><strong>Spring来提供了JdbcTemplate这么一个类给我们使用！它封装了DataSource，也就是说我们可以在Dao中使用JdbcTemplate就行了。</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//读取配置</span></span><br><span class="line"> Properties properties=JDBCUtils.loadProperties();</span><br><span class="line"> <span class="comment">//初始化DataSource</span></span><br><span class="line"> DriverManagerDataSource dataSource = <span class="keyword">new</span> DriverManagerDataSource();</span><br><span class="line"> dataSource.setDriverClass(properties.getProperty(<span class="string">&quot;driverClass&quot;</span>));</span><br><span class="line"> dataSource.setJdbcUrl(properties.getProperty(<span class="string">&quot;jdbcUrl&quot;</span>));</span><br><span class="line"> dataSource.setUser(properties.getProperty(<span class="string">&quot;user&quot;</span>));</span><br><span class="line"> dataSource.setPassword(properties.getProperty(<span class="string">&quot;password&quot;</span>));</span><br><span class="line"> <span class="comment">//创建JDBCTemplate</span></span><br><span class="line"> JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate();</span><br><span class="line"> jdbcTemplate.setDataSource(dataSource);</span><br><span class="line"> String sql = <span class="string">&quot;SELECT count(*) FROM person&quot;</span>;</span><br><span class="line"> <span class="comment">//执行sql</span></span><br><span class="line"> Long num = (Long) jdbcTemplate.queryForObject(sql, Long.class);</span><br><span class="line"> System.out.println(<span class="string">&quot;行数为:&quot;</span>+num);</span><br></pre></td></tr></table></figure>
+
+<p>当然，大家应该不会这样干，将JDBC交给spring管理，需要使用时直接注入进来就行了</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;$&#123;dataSource&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;driverClass&#125;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbcUrl&#125;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;user&#125;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;password&#125;&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!--扫描注解--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.pjz&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 创建JdbcTemplate对象 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;jdbcTemplate&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.core.JdbcTemplate&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>直接从容器中获取JdbcTemplate实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//创建容器对象</span></span><br><span class="line">      ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;spring/applicationContext.xml&quot;</span>);</span><br><span class="line">      <span class="comment">//从容器中获取Bean实例</span></span><br><span class="line">      JdbcTemplate jdbcTemplate = (JdbcTemplate) ac.getBean(<span class="string">&quot;jdbcTemplate&quot;</span>);</span><br><span class="line">      String sql = String.format(<span class="string">&quot;INSERT INTO person(id,name,age,sex)VALUES(&#x27;%s&#x27;,&#x27;路人甲&#x27;,20,0)&quot;</span>, UUIDUtils.getUUID());</span><br><span class="line"><span class="comment">//调用jdbcTemplate的execute执行sql</span></span><br><span class="line">      jdbcTemplate.execute(sql);</span><br><span class="line">      System.out.println(<span class="string">&quot;执行完毕！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>JdbcTemplate 的<strong>execute</strong>方法一般来说可以<strong>执行任何sql</strong>语句，但是一般用于执行DDL语句，<strong>不用于增删改查</strong>。</p>
+<p>关于最常用的增删改查操作看下面</p>
+<h3 id="常用增删改查操作"><a href="#常用增删改查操作" class="headerlink" title="常用增删改查操作"></a>常用增删改查操作</h3><h5 id="插入insert"><a href="#插入insert" class="headerlink" title="插入insert"></a>插入<strong>insert</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">insert</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       String sql = <span class="string">&quot;insert into person value(?,?,?,?)&quot;</span>;</span><br><span class="line">       Object []param=<span class="keyword">new</span> Object[]&#123;<span class="string">&quot;001&quot;</span>,<span class="string">&quot;路人甲&quot;</span>,<span class="number">25</span>,<span class="number">1</span>&#125;;</span><br><span class="line">       <span class="keyword">int</span> rows = jdbcTemplate.update(sql, param);</span><br><span class="line">       System.out.println(<span class="string">&quot;插入行数：&quot;</span> + rows);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>insert后返回自动增加的ID</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KeyHolder keyHolder = <span class="keyword">new</span> GeneratedKeyHolder();        jdbcTemplate.update(<span class="keyword">new</span> PreparedStatementCreator() &#123;            <span class="meta">@Override</span>            <span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">createPreparedStatement</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException </span>&#123;                PreparedStatement ps = connection.prepareStatement(realSql,PreparedStatement.RETURN_GENERATED_KEYS);                <span class="keyword">return</span> ps;            &#125;        &#125;,keyHolder);        <span class="keyword">return</span>  keyHolder.getKey().toString();</span><br></pre></td></tr></table></figure>
+
+<h5 id="查询数量count"><a href="#查询数量count" class="headerlink" title="查询数量count"></a>查询数量<strong>count</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">queryNumber</span><span class="params">()</span> </span>&#123;        String sql = <span class="string">&quot;select count(*) from person&quot;</span>;        <span class="keyword">int</span> count = jdbcTemplate.queryForObject(sql, Integer.class);        System.out.println(<span class="string">&quot;数据总数：&quot;</span> + count);    &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查询单个对象"><a href="#查询单个对象" class="headerlink" title="查询单个对象"></a>查询<strong>单个对象</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;select * from person where id = ?&quot;</span>;        Person person = jdbcTemplate.queryForObject(sql, <span class="keyword">new</span> PersonMapper(), <span class="string">&quot;001&quot;</span>);        System.out.println(person.toString());</span><br></pre></td></tr></table></figure>
+
+<h5 id="查询多个对象"><a href="#查询多个对象" class="headerlink" title="查询多个对象"></a>查询<strong>多个对象</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;select * from person&quot;</span>;        List&lt;Person&gt; personList = jdbcTemplate.query(sql, <span class="keyword">new</span> PersonMapper());        System.out.println(personList);</span><br></pre></td></tr></table></figure>
+
+<h5 id="删除操作delete"><a href="#删除操作delete" class="headerlink" title="删除操作delete"></a>删除操作<strong>delete</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;delete from person where id = ?&quot;</span>;        Object []params = <span class="keyword">new</span> Object[]&#123;<span class="number">001</span>&#125;;        <span class="keyword">int</span> temp = jdbcTemplate.update(sql,params);</span><br></pre></td></tr></table></figure>
+
+<h5 id="更新操作update"><a href="#更新操作update" class="headerlink" title="更新操作update"></a>更新操作<strong>update</strong></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;UPDATE person SET  age=? WHERE id=?&quot;</span>;            Object []params = <span class="keyword">new</span> Object[]&#123;<span class="number">23</span>,<span class="string">&quot;001&quot;</span>&#125;;            <span class="keyword">int</span> temp = jdbcTemplate.update(sql,params);</span><br></pre></td></tr></table></figure>
+
+<h5 id="批量更新"><a href="#批量更新" class="headerlink" title="批量更新"></a><strong>批量</strong>更新</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;UPDATE person SET  age=? WHERE id=?&quot;</span>;            Object []params1 = <span class="keyword">new</span> Object[]&#123;<span class="number">23</span>,<span class="string">&quot;001&quot;</span>&#125;;            Object []params2 = <span class="keyword">new</span> Object[]&#123;<span class="number">50</span>,<span class="string">&quot;002&quot;</span>&#125;;            List&lt;Object[]&gt; paramsList= Lists.newArrayList(params1,params2);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>我们平时操作的最多的其实还是查询操作</p>
+<h3 id="JdbcTemplate查询"><a href="#JdbcTemplate查询" class="headerlink" title="JdbcTemplate查询"></a>JdbcTemplate查询</h3><p>使用JdbcTemplate查询会发现有很多**重载了query()**方法：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf318f6b6a821664be204d475ab607ede?method=download&shareKey=8579d7bf725530703bb3a210fd55a8a1"></p>
+<p>这些查询的方法中回调的接口主有三种，<strong>ResultSetExtractor、RowCallbackHandler、RowMapper</strong> </p>
+<p>我们一起来看一下：</p>
+<p><strong>ResultSetExtractor</strong>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.创建容器对象        ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;spring/applicationContext.xml&quot;);        //从容器中获取Bean实例        JdbcTemplate jdbcTemplate = (JdbcTemplate) ac.getBean(&quot;jdbcTemplate&quot;);        String sql = &quot;SELECT * FROM person&quot;;        List&lt;Person&gt; userList= (List&lt;Person&gt;) jdbcTemplate.query(sql, new ResultSetExtractor() &#123;            @Override            public Object extractData(ResultSet resultSet) throws SQLException, DataAccessException &#123;                List&lt;Person&gt; userList = new ArrayList&lt;Person&gt;();                while (resultSet.next()) &#123;                    Person person = new Person();                    person.setId(resultSet.getString(&quot;id&quot;));                    person.setName(resultSet.getString(&quot;name&quot;));                    person.setAge(resultSet.getInt(&quot;age&quot;));                    person.setSex(resultSet.getInt(&quot;sex&quot;));                    userList.add(person);                &#125;                return userList;            &#125;        &#125;);        System.out.println(userList);        System.out.println(&quot;执行完毕！&quot;);</span></span><br></pre></td></tr></table></figure>
+
+<p>CallbackHandler方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;spring/applicationContext.xml&quot;</span>);        JdbcTemplate jdbcTemplate = (JdbcTemplate) ac.getBean(<span class="string">&quot;jdbcTemplate&quot;</span>);        <span class="keyword">final</span> List&lt;Person&gt; userList = <span class="keyword">new</span> ArrayList&lt;Person&gt;();        String sql = <span class="string">&quot;SELECT * FROM person&quot;</span>;        jdbcTemplate.query(sql, <span class="keyword">new</span> RowCallbackHandler() &#123;            <span class="meta">@Override</span>            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processRow</span><span class="params">(ResultSet resultSet)</span> <span class="keyword">throws</span> SQLException </span>&#123;                <span class="keyword">while</span> (resultSet.next()) &#123;                    Person person = <span class="keyword">new</span> Person();                    person.setId(resultSet.getString(<span class="string">&quot;id&quot;</span>));                    person.setName(resultSet.getString(<span class="string">&quot;name&quot;</span>));                    person.setAge(resultSet.getInt(<span class="string">&quot;age&quot;</span>));                    person.setSex(resultSet.getInt(<span class="string">&quot;sex&quot;</span>));                    userList.add(person);                &#125;            &#125;        &#125;);        System.out.println(userList);        System.out.println(<span class="string">&quot;执行完毕！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Mapper方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;spring/applicationContext.xml&quot;</span>);        JdbcTemplate jdbcTemplate = (JdbcTemplate) ac.getBean(<span class="string">&quot;jdbcTemplate&quot;</span>);        <span class="keyword">final</span> List&lt;Person&gt; userList = <span class="keyword">new</span> ArrayList&lt;Person&gt;();        String sql = <span class="string">&quot;SELECT * FROM person&quot;</span>;        List&lt;Person&gt; personList= jdbcTemplate.query(sql,<span class="keyword">new</span> RowMapper&lt;Person&gt;()&#123;            <span class="meta">@Override</span>            <span class="function"><span class="keyword">public</span> Person <span class="title">mapRow</span><span class="params">(ResultSet resultSet, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> SQLException </span>&#123;                Person person=<span class="keyword">new</span> Person();                person.setId(resultSet.getString(<span class="string">&quot;id&quot;</span>));                person.setName(resultSet.getString(<span class="string">&quot;name&quot;</span>));                person.setAge(resultSet.getInt(<span class="string">&quot;age&quot;</span>));                person.setSex(resultSet.getInt(<span class="string">&quot;sex&quot;</span>));                <span class="keyword">return</span> person;            &#125;        &#125;);        System.out.println(personList);        System.out.println(<span class="string">&quot;执行完毕！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>一般一个bean单独创建一个mapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; personList= jdbcTemplate.query(sql,<span class="keyword">new</span> RowMapper&lt;Person&gt;()&#123;            <span class="meta">@Override</span>            <span class="function"><span class="keyword">public</span> Person <span class="title">mapRow</span><span class="params">(ResultSet resultSet, <span class="keyword">int</span> i)</span> <span class="keyword">throws</span> SQLException </span>&#123;               Person person=<span class="keyword">new</span> Person();               person.setId(resultSet.getString(<span class="string">&quot;id&quot;</span>));               person.setName(resultSet.getString(<span class="string">&quot;name&quot;</span>));               person.setAge(resultSet.getInt(<span class="string">&quot;age&quot;</span>));               person.setSex(resultSet.getInt(<span class="string">&quot;sex&quot;</span>));<span class="keyword">return</span> person;            &#125;        &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用三种Callback接口作为参数的query方法的返回值不同:<ul>
+<li>以ResultSetExtractor作为方法参数的query方法返回Object型结果，要使用查询结果，我们需要对其进行强制转型；</li>
+<li>以RowMapper接口作为方法参数的query方法直接返回List型的结果；</li>
+<li>以RowCallbackHandler作为方法参数的query方法，返回值为void；</li>
+</ul>
+</li>
+<li>使用ResultSetExtractor作为Callback接口处理查询结果，我们需要自己声明集合类，自己遍历ResultSet，自己根据每行数据组装Customer对象，自己将组装后的Customer对象添加到集合类中，方法最终只负责将组装完成的集合返回；</li>
+</ul>
+<p><strong>NamedParameterJdbcTemplate</strong></p>
+<p>JdbcTemplate中方法主要传递sql,和数组参数，其方法要求sql占位符和参数数组位置需要对应，这样有时会不太方便，这样对参数的顺序是又要求的，而且可读性也有待提高。</p>
+<p>NamedParameterJdbcTemplate是对JdbcTemplate进行了封装，主要多了一层对参数的解析，sql使用特殊组合的占位符，使得占位符和参数数据就不需要在顺序上一一进行对应。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 配置NamedParameterJdbcTemplate,该对象可以使用具名参数，其没有无参的构造器，所以必须为其构造器指定参数 --&gt;</span>	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;namedParameterJdbcTemplate&quot;</span>		<span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate&quot;</span>&gt;</span>		<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span>		<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用<strong>SqlParameterSource</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;insert into person (id,name,age,sex)value(:id,:name,:age,:sex)&quot;</span>;        Person person=<span class="keyword">new</span> Person();        person.setId(UUIDUtils.getUUID());        person.setName(<span class="string">&quot;王五&quot;</span>);        person.setAge(<span class="number">50</span>);        person.setSex(<span class="number">0</span>);        SqlParameterSource paramSource = <span class="keyword">new</span> BeanPropertySqlParameterSource(person); 		<span class="keyword">int</span> rows = namedParameterJdbcTemplate.update(sql, paramSource );</span><br></pre></td></tr></table></figure>
+
+<p>使用<strong>Map</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;spring/applicationContext.xml&quot;</span>);        IPersonService personService = (IPersonService) ac.getBean(<span class="string">&quot;personService&quot;</span>);        String sql = <span class="string">&quot;select * from person where age = :age and sex=:sex&quot;</span>;        Map&lt;String,Object&gt; param=<span class="keyword">new</span> HashMap();        param.put(<span class="string">&quot;sex&quot;</span>,<span class="number">0</span>);        param.put(<span class="string">&quot;age&quot;</span>,<span class="number">20</span>);        List&lt;Person&gt; personList= personService.query(sql, param);        System.out.println(personList);</span><br></pre></td></tr></table></figure>
+
+<p>参数设值有两种方式：java.util.Map和SqlParameterSource：</p>
+<ul>
+<li>Map：使用Map键数据来对于命名参数，而Map值数据用于设值；</li>
+<li>SqlParameterSource：可以使用SqlParameterSource实现作为来实现为命名参数设值，默认有MapSqlParameterSource和BeanPropertySqlParameterSource实现；MapSqlParameterSource实现非常简单，只是封装了java.util.Map；而BeanPropertySqlParameterSource封装了一个JavaBean对象，通过JavaBean对象属性来决定命名参数的值。</li>
+</ul>
+<h2 id="事务控制"><a href="#事务控制" class="headerlink" title="事务控制"></a>事务控制</h2><p>下面主要讲解Spring的事务控制，如何使用Spring来对程序进行事务控制….</p>
+<p><strong>Spring的事务控制是属于Spring Dao模块的</strong>。</p>
+<p>但是一般地，我们<strong>事务控制都是在service层做的</strong>。service层是业务逻辑层，service的方法一旦执行成功，那么说明该功能没有出错。</p>
+<p>一个service方法可能要<strong>调用dao层的多个方法</strong>，如果在dao层做事务控制的话，一个dao方法出错了，仅仅是回滚了当前dao所进行的操作，这是不合理的。因此需要在<strong>所有的业务逻辑</strong>走完并且没有错了再<strong>提交事务</strong>。</p>
+<p>事务控制分为两种：</p>
+<ul>
+<li><strong>编程式事务控制</strong></li>
+<li><strong>声明式事务控制</strong></li>
+</ul>
+<h4 id="编程式事务控制"><a href="#编程式事务控制" class="headerlink" title="编程式事务控制"></a><strong>编程式事务控制</strong></h4><p>自己手动控制事务，自己动手，丰衣足食</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">excute</span><span class="params">()</span> </span>&#123;        Connection connection = <span class="keyword">null</span>;        Statement statement = <span class="keyword">null</span>;        <span class="keyword">try</span> &#123;            String sql = <span class="string">&quot;INSERT INTO person(id,name,age,sex)VALUES(&#x27;001&#x27;,&#x27;路人甲&#x27;,20,0)&quot;</span>;            Class.forName(JDBC_DRIVER);            connection = DriverManager.getConnection(DB_URL, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;root&quot;</span>);            <span class="comment">//设置事务微手动提交            connection.setAutoCommit(false);            statement = connection.createStatement();            statement.execute(sql);            //手动提交事务            connection.commit();        &#125; catch (Exception e) &#123;            try&#123;                //事务回滚                connection.rollback();            &#125; catch (SQLException ex) &#123;                log.error(&quot;事务回滚失败&quot;, e);            &#125;            log.error(&quot;出错啦！&quot;, e);        &#125; finally &#123;            try &#123;                //重新设置事务为自动提交                connection.setAutoCommit(true);            &#125; catch (SQLException e) &#123;                log.error(&quot;开启自动提交事务失败&quot;, e);            &#125;            try &#123;                if (null != statement) &#123;                    statement.close();                &#125;            &#125; catch (SQLException e) &#123;                log.error(&quot;statementg关闭失败&quot;, e);            &#125;            try &#123;                if (null != connection) &#123;                    connection.close();                &#125;            &#125; catch (SQLException e) &#123;                log.error(&quot;connection&quot;, e);            &#125;        &#125;    &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样做有几个好处</p>
+<ul>
+<li><strong>细粒度的事务控制</strong>： 可以对指定的方法、指定的方法的某几行添加事务控制*</li>
+<li><strong>比较灵活</strong></li>
+</ul>
+<p>缺点就是开发起来比较繁琐： 每次都要开启、提交、回滚</p>
+<h4 id="声明式事务控制"><a href="#声明式事务控制" class="headerlink" title="声明式事务控制"></a><strong>声明式事务控制</strong></h4><p><strong>Spring提供对事务的控制管理就叫做声明式事务控制</strong>，就是已经做好了的，调用下就行了</p>
+<p>优点如下</p>
+<ul>
+<li><p>如果用户想要使用Spring的事务控制，只需要配置就行了。</p>
+</li>
+<li><p>当不用Spring事务的时候，直接移除就行了。</p>
+</li>
+<li><p>Spring的事务控制是基于AOP实现的。因此它的耦合度是非常低的。</p>
+</li>
+</ul>
+<p>总结起来就是方便</p>
+<p>缺点就是粒度不够细，因为aop拦截的是方法，只能给整个方法应用事务，不可以对方法的某几行应用事务</p>
+<h3 id="声明式事务控制-1"><a href="#声明式事务控制-1" class="headerlink" title="声明式事务控制"></a><strong>声明式事务控制</strong></h3><p>因为Spring的声明式事务控制是<strong>基于AOP</strong>的，那么就需要引入AOP的包</p>
+<h3 id="XML方式实现声明式事务控制"><a href="#XML方式实现声明式事务控制" class="headerlink" title="XML方式实现声明式事务控制"></a><strong>XML方式实现声明式事务控制</strong></h3><p><strong>配置事务的管理器类</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span>           <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span>    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置事务管理器类如何管理事务</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tx:advice</span> <span class="attr">id</span>=<span class="string">&quot;transactionAdvice&quot;</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span>&gt;</span>        <span class="tag">&lt;<span class="name">tx:attributes</span>&gt;</span>            <span class="tag">&lt;<span class="name">tx:method</span> <span class="attr">name</span>=<span class="string">&quot;*&quot;</span> <span class="attr">read-only</span>=<span class="string">&quot;false&quot;</span>/&gt;</span>        <span class="tag">&lt;/<span class="name">tx:attributes</span>&gt;</span>    <span class="tag">&lt;/<span class="name">tx:advice</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置拦截哪些方法，</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--pjz包下所有类和方法--&gt;</span>    <span class="tag">&lt;<span class="name">aop:config</span>&gt;</span>        <span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">id</span>=<span class="string">&quot;pt&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;execution(* com.pjz..*(..)  )&quot;</span>/&gt;</span>        <span class="tag">&lt;<span class="name">aop:advisor</span> <span class="attr">advice-ref</span>=<span class="string">&quot;transactionAdvice&quot;</span> <span class="attr">pointcut-ref</span>=<span class="string">&quot;pt&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:advisor</span>&gt;</span>    <span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用注解的方法实现事务控制"><a href="#使用注解的方法实现事务控制" class="headerlink" title="使用注解的方法实现事务控制"></a><strong>使用注解的方法实现事务控制</strong></h3><p>XML文件上配置太多东西了。Spring提供了<strong>使用注解</strong>的方式来实现对事务控制</p>
+<p>第一步和XML的是一样的，<strong>必须配置事务管理器类：</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置事务的管理器类C--&gt;</span>    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span>        <span class="comment">&lt;!--引用数据库连接池--&gt;</span>        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span>/&gt;</span>    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>开启以注解的方式来实现事务控制</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开启以注解的方式实现事务控制--&gt;</span>    <span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;transactionManager&quot;</span> <span class="attr">proxy-target-class</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后，<strong>想要控制哪个方法事务，在其前面添加@Transactional这个注解就行了！</strong>如果想要控制整个类的事务，那么在类上面添加就行了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional()</span><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceImpl</span> <span class="keyword">implements</span> <span class="title">IPersonService</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 当标于类前时, 标示类中所有方法都进行事物处理 , <strong>当类中某些方法不需要事务时:</strong> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional()</span><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonServiceImpl</span> <span class="keyword">implements</span> <span class="title">IPersonService</span> </span>&#123;    <span class="meta">@Autowired</span>    <span class="keyword">private</span> PersonDao personDao;    <span class="meta">@Override</span>    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;    &#125;    <span class="comment">//此方法不开启事务    @Transactional(propagation = Propagation.NOT_SUPPORTED)    public  void query()&#123;    &#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>看下事务的传播行为</p>
+<ul>
+<li><code>@Transactional(propagation=Propagation.REQUIRED)</code> ：如果有事务, 那么加入事务, 没有的话新建一个(默认情况下)</li>
+<li><code>@Transactional(propagation=Propagation.NOT_SUPPORTED)</code> ：容器不为这个方法开启事务</li>
+<li><code>@Transactional(propagation=Propagation.REQUIRES_NEW)</code> ：不管是否存在事务,都创建一个新的事务,原来的挂起,新的执行完毕,继续执行老的事务</li>
+<li><code>@Transactional(propagation=Propagation.MANDATORY)</code> ：必须在一个已有的事务中执行,否则抛出异常</li>
+<li><code>@Transactional(propagation=Propagation.NEVER)</code> ：必须在一个没有的事务中执行,否则抛出异常(与Propagation.MANDATORY相反)</li>
+<li><code>@Transactional(propagation=Propagation.SUPPORTS)</code> ：如果其他bean调用这个方法,在其他bean中声明事务,那就用事务.如果其他bean没有声明事务,那就不用事务.</li>
+</ul>
+<p>事务隔离级别:</p>
+<ul>
+<li>@Transactional(isolation = Isolation.READ_UNCOMMITTED)：读取未提交数据(会出现脏读, 不可重复读) 基本不使用</li>
+<li>@Transactional(isolation = Isolation.READ_COMMITTED)：读取已提交数据(会出现不可重复读和幻读)</li>
+<li>@Transactional(isolation = Isolation.REPEATABLE_READ)：可重复读(会出现幻读)</li>
+<li>@Transactional(isolation = Isolation.SERIALIZABLE)：串行化</li>
+</ul>
+<p>MYSQL: 默认为REPEATABLE_READ级别</p>
+<p>SQLSERVER: 默认为READ_COMMITTED</p>
+<ul>
+<li>脏读 : 一个事务读取到另一事务未提交的更新数据</li>
+<li>不可重复读 : 在同一事务中, 多次读取同一数据返回的结果有所不同, 换句话说, </li>
+<li>后续读取可以读到另一事务已提交的更新数据. 相反, “可重复读”在同一事务中多次</li>
+<li>读取数据时, 能够保证所读数据一样, 也就是后续读取不能读到另一事务已提交的更新数据</li>
+<li>幻读 : 一个事务读到另一个事务已提交的insert数据</li>
+</ul>
+<h3 id="使用-Transactional-需要注意的一些点"><a href="#使用-Transactional-需要注意的一些点" class="headerlink" title="使用@Transactional 需要注意的一些点"></a>使用@Transactional 需要注意的一些点</h3><p><code>@Transactional</code> 只能被应用到public方法上, 对于其它非public的方法,如果标记了@Transactional也不会报错,但方法没有事务功能.</p>
+<p>用 spring 事务管理器,由spring来负责数据库的打开,提交,回滚.默认遇到unchecked Exception 例如（*throw newRuntimeException()<em>）会回滚，但遇到checked Exception 例如（</em>throw Exception()*）不会回滚,需我们指定方式来让事务回滚要想所有异常都回滚,要加上 <code>@Transactional( rollbackFor=Exception.class)</code>.如果让unchecked例外不回滚：<code>@Transactional(notRollbackFor=RunTimeException.class)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional(rollbackFor=Exception.class)</span> <span class="comment">//指定回滚,遇到异常Exception时回滚public void methodName() &#123;　　　throw new Exception(&quot;注释&quot;);&#125;@Transactional(noRollbackFor=Exception.class)//指定不回滚,遇到运行期例外(throw new RuntimeException(&quot;注释&quot;);)会回滚public ItimDaoImpl getItemDaoImpl() &#123;　　　throw new RuntimeException(&quot;注释&quot;);&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>@Transactional</code> 注解应该只被应用到 public 可见度的方法上。 如果你在 protected、private 或者 package-visible 的方法上使用 <code>@Transactional</code> 注解，它也不会报错，但是事务将无效。</p>
+<p><code>@Transactional</code> 注解可以被应用于接口定义和接口方法、类定义和类的 public 方法上。然而，请注意仅仅 <code>@Transactional</code> 注解的出现不足于开启事务行为，它仅仅 是一种元数据，能够被可以识别 <code>@Transactional</code> 注解和上述的配置适当的具有事务行为的beans所使用。上面的例子中，其实正是 元素的出现 开启 了事务行为。</p>
+<p>Spring团队的建议是你具体的类（或类的方法）上使用 <code>@Transactional</code> 注解，而不要使用在类所要实现的任何接口上。你当然可以在接口上使用 <code>@Transactional</code> 注解，但是这将只能当你设置了基于接口的代理时它才生效。因为注解是不能继承的，这就意味着如果你正在使用基于类的代理时，那么事务的设置将不能被基于类的代理所识别，而且对象也将不会被事务代理所包装（将被确认为严重的）。因此，请接受Spring团队的建议并且在具体的类上使用 @Transactional 注解。</p>
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="external nofollow noopener noreferrer" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://atpjz.github.io/post/be627d82.html",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://atpjz.github.io/post/be627d82.html";
+            const title         = "「Spring Dao 与JDBC」";
+            const excerpt       = `Spring DAO使用和介绍
+DAO支持Spring对数据访问对象（DAO） 的支持旨在使以一致的方式轻松使用数据访问技术（例如JDBC，Hibernate或JPA）。这使您可以轻松地在上述持久性技术之间进行切换，还使您无需担心捕获...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/JDBC/" rel="tag">JDBC</a>, <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/Spring/" rel="tag">Spring</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-09-26</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Arthas-and-Javaagent" href="/post/d57220e9.html">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Java集合分享" href="/post/d25a5ce4.html">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/head.webp">
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">爱的小窝吧</p>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-DAO%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BB%8B%E7%BB%8D"><span class="toc-text">Spring DAO使用和介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DAO%E6%94%AF%E6%8C%81"><span class="toc-text">DAO支持</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-DAO%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">Spring DAO的内容</span></a></li></ol></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E4%BD%93%E7%B3%BB"><span class="toc-text">异常体系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%A8%A1%E6%9D%BF"><span class="toc-text">统一数据访问模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-text">访问数据库的流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-DAO%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="toc-text">Spring DAO的模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%8C%81%E4%B9%85%E5%8C%96%E6%8A%80%E6%9C%AF%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB"><span class="toc-text">不同持久化技术的模板类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC"><span class="toc-text">JDBC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E7%9A%84JDBC"><span class="toc-text">Spring的JDBC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%93%8D%E4%BD%9C"><span class="toc-text">常用增删改查操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8F%92%E5%85%A5insert"><span class="toc-text">插入insert</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E9%87%8Fcount"><span class="toc-text">查询数量count</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%8D%95%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="toc-text">查询单个对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E5%AF%B9%E8%B1%A1"><span class="toc-text">查询多个对象</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9Cdelete"><span class="toc-text">删除操作delete</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9Cupdate"><span class="toc-text">更新操作update</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%9B%B4%E6%96%B0"><span class="toc-text">批量更新</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JdbcTemplate%E6%9F%A5%E8%AF%A2"><span class="toc-text">JdbcTemplate查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-text">事务控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-text">编程式事务控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-text">声明式事务控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6-1"><span class="toc-text">声明式事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-text">XML方式实现声明式事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6"><span class="toc-text">使用注解的方法实现事务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Transactional-%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%82%B9"><span class="toc-text">使用@Transactional 需要注意的一些点</span></a></li>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Windows/">Windows</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">使用教程</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%90%88%E9%9B%86/">合集</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">安装教程</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%85%8D%E7%BD%AE/">配置</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/7-Zip/" style="font-size: 0.6em;">7-Zip</a> <a href="/tags/Arthas/" style="font-size: 0.6em;">Arthas</a> <a href="/tags/CentOS/" style="font-size: 0.73em;">CentOS</a> <a href="/tags/CentOs/" style="font-size: 0.6em;">CentOs</a> <a href="/tags/Guava/" style="font-size: 0.6em;">Guava</a> <a href="/tags/IDEA/" style="font-size: 0.6em;">IDEA</a> <a href="/tags/JDBC/" style="font-size: 0.6em;">JDBC</a> <a href="/tags/Java/" style="font-size: 0.73em;">Java</a> <a href="/tags/Nginx/" style="font-size: 0.67em;">Nginx</a> <a href="/tags/Spring/" style="font-size: 0.6em;">Spring</a> <a href="/tags/Windows/" style="font-size: 0.67em;">Windows</a> <a href="/tags/javaagent/" style="font-size: 0.6em;">javaagent</a> <a href="/tags/nodejs/" style="font-size: 0.6em;">nodejs</a> <a href="/tags/%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" style="font-size: 0.6em;">使用教程</a> <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 0.6em;">命令行</a> <a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 0.6em;">安全</a> <a href="/tags/%E5%AE%89%E8%A3%85/" style="font-size: 0.8em;">安装</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 0.6em;">工具</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/post/68d29a96.html"><i class="fa  fa-book"></i> 7-Zip命令行</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/post/bfa40fac.html"><i class="fa  fa-book"></i> Nginx离线安装手册</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/post/d25a5ce4.html"><i class="fa  fa-book"></i> Java集合分享</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/post/be627d82.html"><i class="fa  fa-book"></i> Spring Dao 与JDBC</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/post/d57220e9.html"><i class="fa  fa-book"></i> Arthas-and-Javaagent</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer" class="ap-lrc">
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/atpjz"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 小窝吧 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank" rel="external nofollow noopener noreferrer">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by pengjianzhong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank" rel="external nofollow noopener noreferrer">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js server="netease" type="playlist" id="776590239" order="random" fixed="true">
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
