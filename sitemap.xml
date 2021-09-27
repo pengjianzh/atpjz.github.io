@@ -58,14 +58,14 @@
   </url>
   
   <url>
-    <loc>https://atpjz.github.io/post/29038b71.html</loc>
+    <loc>https://atpjz.github.io/post/d25a5ce4.html</loc>
     
     <lastmod>2021-09-16</lastmod>
     
   </url>
   
   <url>
-    <loc>https://atpjz.github.io/post/d25a5ce4.html</loc>
+    <loc>https://atpjz.github.io/post/29038b71.html</loc>
     
     <lastmod>2021-09-16</lastmod>
     
@@ -186,6 +186,20 @@
   </url>
   
   <url>
+    <loc>https://atpjz.github.io/tags/%E9%9B%86%E5%90%88/</loc>
+    <lastmod>2021-09-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://atpjz.github.io/tags/Java/</loc>
+    <lastmod>2021-09-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://atpjz.github.io/tags/Spring/</loc>
     <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
@@ -194,13 +208,6 @@
   
   <url>
     <loc>https://atpjz.github.io/tags/JDBC/</loc>
-    <lastmod>2021-09-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://atpjz.github.io/tags/Java/</loc>
     <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -257,13 +264,6 @@
   
   <url>
     <loc>https://atpjz.github.io/tags/Guava/</loc>
-    <lastmod>2021-09-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://atpjz.github.io/tags/%E9%9B%86%E5%90%88/</loc>
     <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
